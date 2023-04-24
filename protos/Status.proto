@@ -1,6 +1,7 @@
 syntax = "proto3";
 import "MessageEnums.proto";
 import "AdvInfo.proto";
+
 package ru.sovcombank.hackaton.proto;
 option java_multiple_files = true;
 option java_outer_classname = "StatusProto";
