@@ -13,5 +13,5 @@ message Header {
     int64 timestamp = 2;   // Время создания сообщения в миллисекундах от начала эпохи.
     string sender = 3;     // Идентификатор отправителя.
     string receiver = 4;   // Идентификатор получателя.
-    string messageNumAnswer = 5 [optional = true]; // Номер сообщения на которое сформирован ответ.
+    optional string messageNumAnswer = 5; // Номер сообщения на которое сформирован ответ.
 }
