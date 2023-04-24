@@ -1,7 +1,8 @@
+syntax = "proto3";
+
 import "MessageEnums.proto";
 import "OwnCommand.proto";
 
-syntax = "proto3";
 package ru.sovcombank.hackaton.proto;
 option java_multiple_files = true;
 option java_outer_classname = "RequestProto";
