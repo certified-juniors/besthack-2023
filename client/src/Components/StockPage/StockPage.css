@@ -1,0 +1,9 @@
+.stock-graph {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.servicelist-searchbar {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
