@@ -1,0 +1,20 @@
+syntax = "proto3";
+import "Parameter.proto";
+
+package ru.sovcombank.hackaton.proto;
+
+option java_multiple_files = true;
+option java_outer_classname = "OwnCommandProto";
+option optimize_for = SPEED;
+
+// Тип собственной команды сервиса
+// Поле: alias - для заполнения
+// Поля: caption, description - опциональны, необходимы только для отображения
+// инфо о команде в GUI
+
+message OwnCommand {
+    string alias = 1; // Идентификатор команды
+    optional string caption = 2; // Заголовок команды
+    optional string description = 3; // Описание команды
+    repeated Parameter parameters = 4; // Список параметров для команды
+}
