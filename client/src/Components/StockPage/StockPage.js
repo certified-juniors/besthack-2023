@@ -10,8 +10,6 @@ import "./StockPage.css";
 const StockPage = () => {
     const [stocks, setstock] = useState([
         {
-    
-    
           name: 'Apple',
           price: 100,
         },
@@ -38,7 +36,6 @@ const StockPage = () => {
       ])
       return (
         <div className="stock-page-container">
-            <Navbar/>
             <div className="servicelist-searchbar">
                 <ServiceList/>
                 <SearchBar/>

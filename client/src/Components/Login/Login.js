@@ -33,6 +33,7 @@ const Login = (props) => {
         event.preventDefault();
         console.log("Send");
         props.loginUser(true);
+        props.handleCloseModal();
     }
 
     return (

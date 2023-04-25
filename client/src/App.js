@@ -26,10 +26,10 @@ function App() {
           loginUser={loginUser}
           auth={auth}
         />
-    
         <Routes>
           <Route exact path="/" element={<MainPage />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/stocks" element={<StockPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

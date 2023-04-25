@@ -23,9 +23,10 @@ const NavBar = (props) => {
             </div>
             :
             <div className="authLinks">
-                <a href="#"><button className="profile">Профиль</button></a>
-                <a href="#"><button className="balance">Баланс</button></a>
+                <a href="/stocks"><button className="stocks">Акции</button></a>
                 <a href="#"><button className="portfolio">Портфель</button></a>
+                <a href="#"><button className="balance">Баланс</button></a>
+                <a href="#"><button className="profile">Профиль</button></a>
                 <button className="logout" onClick={props.logoutUser}>Выход</button>
             </div>}
             {showModal &&

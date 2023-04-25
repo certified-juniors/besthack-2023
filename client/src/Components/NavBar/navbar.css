@@ -54,7 +54,7 @@ a {
 
 .authLinks {
     display: grid;
-    grid-template-columns: 100px 100px 100px 100px;
+    grid-template-columns: 100px 100px 100px 100px 100px;
     margin-top: auto;
     margin-bottom: auto;
     padding-right: 20px;
