@@ -1,0 +1,84 @@
+.navBar {
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 10%;
+    background-color: #48AAD9;
+}
+
+.navBar h1 {
+    font-size: 30px;
+    padding-left: 50px;
+    color: whitesmoke;
+}
+
+a {
+    text-decoration: none;
+}
+
+.unauthLinks {
+    display: grid;
+    grid-template-columns: 150px 150px;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-right: 20px;
+}
+
+.unauthLinks button {
+    width: 100%;
+    height: 30px;
+    margin-top:auto;
+    margin-bottom: auto;
+    color: whitesmoke;
+    justify-items: center;
+    background-color: transparent;
+    font-size: 15px;
+    border: 0px;
+}
+
+.unauthLinks button:hover {
+    transition: 0.3s;
+    margin-top:auto;
+    margin-bottom: auto;
+    text-decoration: none;
+    color: #48AAD9;
+    justify-items: center;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.authLinks {
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-right: 20px;
+}
+
+.authLinks button {
+    width: 100%;
+    height: 30px;
+    margin-top:auto;
+    margin-bottom: auto;
+    color: whitesmoke;
+    justify-items: center;
+    background-color: transparent;
+    font-size: 15px;
+    border: 0px;
+}
+
+.authLinks button:hover {
+    transition: 0.3s;
+    margin-top:auto;
+    margin-bottom: auto;
+    text-decoration: none;
+    color: #48AAD9;
+    justify-items: center;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}

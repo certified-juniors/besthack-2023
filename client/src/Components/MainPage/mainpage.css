@@ -1,0 +1,66 @@
+.mainPage {
+    height: 100vh;
+    background-size: 100%;
+    background: #797979 url(../../images/japaneseCandles.jpg) no-repeat;
+}
+
+.mainpgContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    background-color: #00000070;
+}
+
+.marketingPhrase {
+    margin-top:auto;
+    margin-bottom: auto;
+}
+
+.marketingPhrase p{
+    color: whitesmoke;
+    text-align: left;
+    margin-left: 50px;
+    font-size: 18px;
+}
+
+.marketingPhrase button{
+    margin-top:5px;
+    width: 40%;
+    height: 45px;
+    font-size: 20px;
+    background-color: #48AAD9;
+    color: whitesmoke;
+    border: 0;
+    border-radius: 10px;
+}
+
+.marketingPhrase button:hover{
+    transition: 0.3s;
+    transform: scale(1.1);
+    margin-top:5px;
+    width: 40%;
+    height: 45px;
+    font-size: 20px;
+    background-color: whitesmoke;
+    color: #48AAD9;
+    border: 0;
+    border-radius: 10px;
+}
+
+.davidStatue {
+    /* display:block;
+    position:absolute; */
+    height: 100%;
+    z-index: 2;
+}
+
+.davidStatue img{
+    height: 99.6%;
+    justify-content: center;
+    align-items: center;
+    transform: scale(-1, 1);
+    overflow: hidden;
+    background-size: cover;
+}
+
+

@@ -1,0 +1,43 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 30px;
+    background-color: #045880;
+}
+
+.register h1 {
+    color: whitesmoke;
+}
+
+.register form {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    background-color: whitesmoke;
+    padding: 40px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.register form input {
+    width: 80%;
+    height: 30px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 20px;
+}
+
+.register form button {
+    width: 60%;
+    height:40px;
+    background-color: #48AAD9;
+    color: whitesmoke;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    font-weight: 300;
+}
