@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/grpc
+/protobuf_compiler
 
 # testing
 /coverage

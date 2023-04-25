@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './App.css';
 import MainPage from './Components/MainPage/MainPage';
+import StockPage from './Components/StockPage/StockPage'
 import NavBar from './Components/NavBar/NavBar';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from './Components/Registration/Register';
@@ -25,6 +26,7 @@ function App() {
           loginUser={loginUser}
           auth={auth}
         />
+    
         <Routes>
           <Route exact path="/" element={<MainPage />}></Route>
           <Route path="/register" element={<Register />}></Route>
