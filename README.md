@@ -10,7 +10,7 @@
 ```console
 $ cd server
 $ npm install
-$ npm run dev
+$ npm run start
 ```
 ## Сервис биржевой информации
 Представленный в репозитории сервис представляет собой заглушку, которая просто выполняет рукопожатие и отправляет случайные данные по необходимому протоколу
@@ -26,13 +26,13 @@ $ npm run dev
 ```console
 $ cd client
 $ npm install
-$ npm run dev
+$ npm run start
 ```
 
 ## Участники команды
 1. [Крайников Иван](https://github.com/cry1s)
 2. [Азат Билалов](https://github.com/Azat-Bilalov)
 3. [Тимур Аюшиев](https://github.com/SicParv1sMagna)
-4. Иван Викулин
+4. [Иван Викулин](https://github.com/Vanv1k)
 
 > The best hackaton project - Вова Краснов
