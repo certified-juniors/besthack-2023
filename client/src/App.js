@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { MainPage, NavBar, Broker, Connection, About } from "./Components/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -6,14 +6,13 @@ import { io } from "socket.io-client";
 import './App.css';
 
 function App() {
-  const [socket, setSocket] = useState(null);
+  const socket = useRef(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8080");
-    setSocket(newSocket);
+    socket.current = io("http://localhost:8080");
 
     return () => {
-      newSocket.disconnect();
+      socket.disconnect();
     };
   }, [])
 
@@ -36,11 +35,10 @@ function App() {
         <Routes>
           <Route exact path="/" element={<MainPage />}></Route>
           <Route path="/terminal" element={<Broker
-            broker={broker}
-            socket={socket}
+            socket={socket.current}
           />}></Route>
           <Route path="/terminal/connection/*" element={<Connection
-            socket={socket}
+            socket={socket.current}
           />}></Route>
           <Route path="/about" element={<About />}></Route>
         </Routes>

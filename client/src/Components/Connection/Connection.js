@@ -9,44 +9,39 @@ const Connection = ({ socket }) => {
     const pathname = url.pathname;
     const dir = pathname.split("/")[3];
 
-    const [connectionStatus, setConnectionStatus] = useState("undefined");
-    const [brokerName, setBrokerName] = useState(dir);
+    const [allBrokerCommands, setAllBrokerCommands] = useState([]);
+    const [status, setStatus] = useState("undefined");
 
     useEffect(() => {
-        socket.on("connectionStatusUpdate", (status) => {
-            setConnectionStatus(status);
+        socket.on("checkBrokerStatus", (response) => {
+            const res = JSON.parse(response);
+            setStatus(res);
         })
 
-        socket.on("brokerNameUpdate", (name) => {
-            setBrokerName(name);
+        socket.on("getBrokerCommands", (response) => {
+            const res = JSON.parse(response);
+            setAllBrokerCommands(res);
         })
-
-        socket.emit("getInitialData"); // Название брокера и его статус
-
-        return () => {
-            socket.off("connectionStatusUpdate");
-            socket.off("brokerNameUpdate");
-        }
     }, [socket])
-
-    const handleUpdate = () => {
-        console.log("Update");
-        socket.emit("updateData");
-    }
 
     return (
         <div className="connectionPage">
             <div className="connectionpgContent">
                 <div className="connectionHeader">
-                    <p>Вы подключены к <span>{brokerName}</span></p>
+                    <p>Вы подключены к <span>{dir}</span></p>
                     <div className="connectionStatus">
-                        <button onClick={handleUpdate}>Обновить</button>
-                        <p>Status: <span>{connectionStatus}</span></p>
+                        <button onClick={() => { console.log("Update") }}>Обновить</button>
+                        <p>Status: <span>{status}</span></p>
                     </div>
                 </div>
                 <div className="connectionBody">
-                    <ConnectionBody />
-                    <ResponseBody />
+                    <ConnectionBody
+                        commands={allBrokerCommands}
+                        socket={socket}
+                        />
+                    <ResponseBody
+                        socket={socket}
+                    />
                 </div>
             </div>
         </div>
