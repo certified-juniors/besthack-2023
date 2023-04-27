@@ -22,7 +22,7 @@ const About = () => {
             <div className="teamPage">
                 <div className="ourTeamFirst">
                     <div>
-                        <img src="../../images/Ayushiev.png" />
+                        <img src="../Ayushiev.png" />
                     </div>
                     <div>
                         <h2>Тимур Аюшиев</h2>
@@ -42,12 +42,12 @@ const About = () => {
                         <p> Когда он начинал программировать, он надевал на себя костюм кошки, ползал на стуле и мурлыкал, когда его код работал правильно.</p>
                     </div>
                     <div>
-                        <img src="../../images/Krainikov.jpg" />
+                        <img src="../Krainikov.png" />
                     </div>
                 </div>
                 <div className="ourTeamFirst">
                     <div>
-                        <img src="../../IMG/Bilalov.jpg" />
+                        <img src="../Bilalov.png" />
                     </div>
                     <div>
                         <h2>Азат Билалов</h2>
@@ -62,7 +62,7 @@ const About = () => {
                         <p>Этот человек может одновременно написать код настолько масштабный, что его лицо покажется маленьким в сравнении с количеством строк кода!  </p>
                     </div>
                     <div>
-                        <img src="../../IMG/Vikulin.jpg" />
+                        <img src="../Vikulin.png" />
                     </div>
                 </div>
             </div>
