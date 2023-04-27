@@ -2,6 +2,8 @@
     height: 100vh;
     background-size: 100%;
     background: #797979 url(../../images/japaneseCandles.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .mainpgContent {
