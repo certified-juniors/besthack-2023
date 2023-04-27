@@ -1,24 +1,29 @@
 const protos = require('./protos/bundle');
-
+const createHeader = require('./utils/header_creator');
+const net = require('net');
 let commands = [];
 let is_ready = false;
 
 function initServer(server) {
     console.log("Init server");
     server.on('connection', handle);
-    let handshake_data = collectFinhubApi();
+    collectFinhubApi(server);
 }
 
-function handle() {
+function handle(conn) {
     var remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
     console.log('new client connection from %s', remoteAddress);
     conn.on('data', onConnData);
     conn.once('close', onConnClose);
     conn.on('error', onConnError);
     function onConnData(d) {
-        console.log('connection data from %s: %j', remoteAddress, d);
-        const proto = protos.ExchangeInfoMessage.decode(d);
-        mainlogic(proto);
+        console.log('connection data from ', remoteAddress);
+        try {
+            const proto = protos.ExchangeInfoMessage.decode(d);
+            mainlogic(conn, proto);
+        } catch (e) {
+            sendError(e);
+        }
     }
     function onConnClose() {
         console.log('connection from %s closed', remoteAddress);
@@ -28,7 +33,7 @@ function handle() {
     }
 }
 
-function collectFinhubApi() {
+function collectFinhubApi(server) {
     const swagger = require('swagger-client');
 
     const finhubApi = swagger({
@@ -63,48 +68,28 @@ function collectFinhubApi() {
             commands.push(proto);
         }
         is_ready = true;
+
+        // net.createConnection({ port: 1234 }, () => {
+        //     console.log('connected to back!');
+        //     const request = protos.ExchangeInfoMessage.create({
+        //         header: createHeader("backend"),
+        //         request: protos.ExchangeInfoMessage.create({
+        //             command: protos.CommandType.ctHandShake,
+        //             supportedCommands: commands,
+        //         }),
+        //     });
+        //     const requestBuffer = protos.ExchangeInfoMessage.encode(request).finish();
+        //     conn.write(requestBuffer);
+        // });
     });
 }
 
-function mainlogic(proto) {
+function mainlogic(conn, proto) {
     const messageNum = proto.header.messageNum;
+    const sender = proto.header.sender;
     if (proto.request) {
         const request = proto.request;
         const command = request.command; // proto enum
-        if (command == protos.CommandType.ctHandShake) {
-            if (is_ready) {
-                const response = protos.ExchangeInfoMessage.create({
-                    header: protos.Header.create({
-                        messageNum,
-                        timestamp: Date.now(),
-                        sender: "vanya",
-                        receiver: "client",
-                    }),
-                    response: protos.Response.create({
-                        command,
-                        result: protos.Result.create({
-                            code: protos.ResultCode.rcOk,
-                            message: "OK",
-                        }),
-                        data: protos.Data.create({
-                            command: protos.OwnCommand.create({
-                                alias: "finhub",
-                                parameters: (() => {
-                                    let params = [];
-                                    for (let command in commands) {
-                                        params.push(commands[command]);
-                                    }
-                                    return params;
-                                })(),
-                                description: "Finhub API",
-                            }),
-                        }),
-                    }),
-                });
-                const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
-                conn.write(responseBuffer);
-            }
-        }
     }
 }
 

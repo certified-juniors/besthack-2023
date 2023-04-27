@@ -1,8 +1,102 @@
-var net = require('net');
-const initServer = require('./services');
+const protos = require('./protos/bundle');
+const createHeader = require('./utils/header_creator');
+const net = require('net');
+let commands = [];
+let is_ready = false;
 
-var server = net.createServer();
-initServer(server)
-server.listen(9000, function () {
-    console.log('server listening to %j', server.address());
-});
+function initServer(server) {
+    console.log("Init server");
+    collectFinhubApi(server);
+}
+
+function collectFinhubApi(server) {
+    const swagger = require('swagger-client');
+
+    const finhubApi = swagger({
+        url: 'https://finnhub.io/static/swagger.json',
+    });
+    
+    finhubApi.then((api) => {
+        for (let key in api.spec.paths) {
+            let command = api.spec.paths[key];
+            const method = Object.keys(command)[0];
+            command = command[method];
+            let proto = protos.OwnCommand.create({
+                alias: key,
+                parameters: (() => {
+                    let params = [];
+                    let raw_params = command.parameters;
+                    for (let param in raw_params) {
+                        const actual_param = raw_params[param];
+                        params.push(protos.Parameter.create({
+                            alias: actual_param.name,
+                            caption: actual_param.description,
+                            hint: actual_param.description,
+                            value: protos.ValueRef.create({
+                                dataType: protos.DataType.dtString,
+                            }),
+                        }));
+                    }
+                    return params;
+                })(),
+                description: method.toUpperCase() + " " + command.title,
+            })
+            commands.push(proto);
+        }
+        is_ready = true;
+
+        socket = net.createConnection({ port: 1234 }, () => {
+            console.log('connected to back!');
+            const request = protos.ExchangeInfoMessage.create({
+                header: createHeader("backend"),
+                request: protos.ExchangeInfoMessage.create({
+                    command: protos.CommandType.ctHandShake,
+                    supportedCommands: commands,
+                }),
+            });
+            const requestBuffer = protos.ExchangeInfoMessage.encode(request).finish();
+            conn.write(requestBuffer);
+            console.log("Sent handshake");
+        });
+        attachLogic(api, socket);
+    });
+}
+
+function attachLogic(api, conn) {
+    conn.on('data', (data) => {
+        try {
+            const proto = protos.ExchangeInfoMessage.decode(data);
+            mainlogic(api, conn, proto);
+        } catch (err) {
+            sendError(conn, err);
+        }
+    });
+}
+
+function mainlogic(api, conn, proto) {
+    const messageNum = proto.header.messageNum;
+    const sender = proto.header.sender;
+    if (proto.request) {
+        const request = proto.request;
+        const command = request.command; // proto enum
+        if (command === protos.CommandType.ctStatus) {
+            console.log("Status command");
+            const response = protos.ExchangeInfoMessage.create({
+                header: createHeader(sender, messageNum),
+            });
+            const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
+            conn.write(responseBuffer);
+        } else if (command === ctExecCommand) {
+            console.log("Exec command");
+            const commandForExec = request.commandForExec;
+            const commandAlias = commandForExec.alias;
+            const commandParameters = commandForExec.parameters;
+            // swagger-client api call
+            const method = commandAlias.split(" ")[0].toLowerCase();
+            const path = commandAlias.split(" ")[1];
+            const params = {};
+        }
+    }
+}
+
+initServer();
