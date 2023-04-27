@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import "./broker.css";
 
 const Broker = ({ socket }) => {
-    // const [addedBrokers, setAddedBrokers] = useState(() => {
-    //     const storedBrokers = sessionStorage.getItem("addedBrokers");
-    //     return storedBrokers ? JSON.parse(storedBrokers) : [];
-    // });
     const [allBrokers, setAllBrokers] = useState([]);
 
     useEffect(() => {
@@ -15,12 +11,6 @@ const Broker = ({ socket }) => {
             setAllBrokers(response);
         });
     }, [socket]);
-
-    // const addBroker = (index, name) => {
-    //     const newAddedBrokers = [...addedBrokers, { index, name }];
-    //     setAddedBrokers(newAddedBrokers);
-    //     sessionStorage.setItem("addedBrokers", JSON.stringify(newAddedBrokers));
-    // };
 
     return (
         <div className="terminalPage">
@@ -43,28 +33,6 @@ const Broker = ({ socket }) => {
                         ))}
                     </div>
                 </div>
-                {/* <div className="chooseBroker">
-                    <h1>Подключение к брокеру</h1>
-                    <div className="brokerList">
-                        {allBrokers.map((info, index) => {
-                            const isAdded = addedBrokers.some(
-                                (broker) => broker.index === index
-                            );
-                            if (!isAdded) {
-                                return (
-                                    <div key={index} className="connectInfo">
-                                        <p>{info}</p>
-                                        <button onClick={() => addBroker(index, info.name)}>
-                                            Добавить
-                                        </button>
-                                    </div>
-                                );
-                            } else {
-                                return null;
-                            }
-                        })}
-                    </div>
-                </div> */}
             </div>
         </div>
     );

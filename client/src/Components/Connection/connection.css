@@ -166,3 +166,22 @@ table tr td:last-child {
 table tr:nth-child(even) {
     background-color: #4f4f4f;
 }
+
+.responsePage {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.resTimeContainer {
+    display: flex;
+    height: 10%;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-left: 50px;
+}
+
+.responseTime {
+    color: whitesmoke;
+}
