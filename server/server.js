@@ -14,9 +14,12 @@ const server = net.createServer((socket) => {
     clients[socket.remoteAddress] = {
         socket: socket,
         state: 'connected',
+        name: '',
         handshake: false,
         lastMessageNum: 0,
         createAt: Date.now(),
+        supportedCommands: [],
+        subsribes: [],
     };
 
     // Обработка входящих сообщений
@@ -53,6 +56,7 @@ const server = net.createServer((socket) => {
 
 // ЗАПРОСЫ
 function handleRequest(socket, message) {
+    console.log('Header:', message.header);
     const request = message.request;
     console.log('Received request:', request);
 
@@ -65,7 +69,7 @@ function handleRequest(socket, message) {
     };
 
     // рукопожатие
-    if (request.command === proto.CommandType.ctHandshake 
+    if (request.command === proto.CommandType.ctHandshake
         && !clients[socket.remoteAddress].handshake
         && clients[socket.remoteAddress].createAt + 5000 > Date.now()) {
         const response = {
@@ -73,20 +77,19 @@ function handleRequest(socket, message) {
             answerType: proto.AnswerType.atAnswerOK,
         };
         const responseMessage = exchangeInfoMessageProto.create({ header, response });
-        console.log(responseMessage);
         const responseBuffer = exchangeInfoMessageProto.encode(responseMessage).finish();
-        console.log(responseBuffer);
         socket.write(responseBuffer);
+
         clients[socket.remoteAddress].handshake = true;
+        clients[socket.remoteAddress].name = message.header.sender;
 
         console.log('Handshake OK.');
-        return;
     }
 
     // проверка рукопожатия
     if (!clients[socket.remoteAddress].handshake) {
         console.log('Handshake required.');
-        
+
         const response = {
             command: request.command,
             answerType: proto.AnswerType.atAnswerError,
@@ -96,12 +99,16 @@ function handleRequest(socket, message) {
             header,
             response: response,
         }).finish();
-        
+
         socket.write(responseMessage);
         socket.end();
         return;
     }
 
+    // записываем команды, которые предоставляет клиент
+    if (request.supportedCommands) {
+        clients[socket.remoteAddress].supportedCommands = request.supportedCommands;
+    }
 
 }
 
@@ -109,6 +116,11 @@ function handleRequest(socket, message) {
 function handleEvent(socket, message) {
     const event = message.event;
     console.log('Received event:', event);
+
+    // отправляем событие всем подписчикам
+    clients[socket.remoteAddress].subsribes.forEach(sub => {
+        sub.emit("sentBrokerTable", event.status)
+    });
 }
 
 
@@ -116,4 +128,55 @@ function handleEvent(socket, message) {
 const tcpPort = 1234;
 server.listen(tcpPort, () => {
     console.log(`TCP server listening on port ${tcpPort}.`);
+
+    const io = require("socket.io")(8080, {
+        cors: {
+            origin: ["http://localhost:3000"]
+        }
+    })
+
+    io.on("connection", socket => {
+        console.log(socket.id);
+
+        //Отправка списка брокеров
+        socket.emit("brokerListUpdate", brokerList())
+
+        // //Отправка статуса брокера
+        // socket.emit("brokerStatusUpdate", status);
+
+        // //Отправка комманд брокера
+        socket.on("getBrokerCommands", broker => {
+            //Получение команд конкретного брокера
+
+            socket.emit("brokerCommandsUpdate", getCommands(broker))
+
+            // подписываемся БИ сервис
+            Object.values(clients).forEach(client => {
+                if (client.name === broker) {
+                    client.subsribes.push(socket);
+                }
+            });
+        })
+
+        //Отправка данных по команде
+        // socket.on("sentBrokerCommand", command => {
+        //     //Получение данных
+
+            
+        // })
+
+    })
 });
+
+function brokerList() {
+    return Object.values(clients).map(client => client.name);
+}
+
+function getCommands(broker) {
+    const client = Object.values(clients).find(client => client.name === broker);
+    console.log(client, broker);
+    if (!client) {
+        return [];
+    }
+    return client.supportedCommands;
+}

@@ -3,24 +3,24 @@ import { Link } from "react-router-dom";
 import "./broker.css";
 
 const Broker = ({ socket }) => {
-    const [addedBrokers, setAddedBrokers] = useState(() => {
-        const storedBrokers = sessionStorage.getItem("addedBrokers");
-        return storedBrokers ? JSON.parse(storedBrokers) : [];
-    });
+    // const [addedBrokers, setAddedBrokers] = useState(() => {
+    //     const storedBrokers = sessionStorage.getItem("addedBrokers");
+    //     return storedBrokers ? JSON.parse(storedBrokers) : [];
+    // });
     const [allBrokers, setAllBrokers] = useState([]);
 
     useEffect(() => {
-        socket.on("getBrokerList", (response) => {
-            const res = JSON.parse(response);
-            setAllBrokers(res.name);
+        socket.on("brokerListUpdate", (response) => {
+            console.log(response);
+            setAllBrokers(response);
         });
     }, [socket]);
 
-    const addBroker = (index, name) => {
-        const newAddedBrokers = [...addedBrokers, { index, name }];
-        setAddedBrokers(newAddedBrokers);
-        sessionStorage.setItem("addedBrokers", JSON.stringify(newAddedBrokers));
-    };
+    // const addBroker = (index, name) => {
+    //     const newAddedBrokers = [...addedBrokers, { index, name }];
+    //     setAddedBrokers(newAddedBrokers);
+    //     sessionStorage.setItem("addedBrokers", JSON.stringify(newAddedBrokers));
+    // };
 
     return (
         <div className="terminalPage">
@@ -28,14 +28,14 @@ const Broker = ({ socket }) => {
                 <div className="activeBrokers">
                     <h1>Брокеры</h1>
                     <div className="brokerName">
-                        {addedBrokers.map((broker, index) => (
+                        {allBrokers.map((broker, index) => (
                             <div key={index} className="brokerInfo">
-                                <p>{broker.name}</p>
+                                <p>{broker}</p>
                                 <Link
-                                    to={`/terminal/connection/${broker.name}`}
+                                    to={`/terminal/connection/${broker}`}
                                     className="linkTo"
                                 >
-                                    <button onClick={() => console.log(`Connection to ${broker.name}`)}>
+                                    <button onClick={() => console.log(`Connection to ${broker}`)}>
                                         Подключиться
                                     </button>
                                 </Link>
@@ -43,7 +43,7 @@ const Broker = ({ socket }) => {
                         ))}
                     </div>
                 </div>
-                <div className="chooseBroker">
+                {/* <div className="chooseBroker">
                     <h1>Подключение к брокеру</h1>
                     <div className="brokerList">
                         {allBrokers.map((info, index) => {
@@ -53,7 +53,7 @@ const Broker = ({ socket }) => {
                             if (!isAdded) {
                                 return (
                                     <div key={index} className="connectInfo">
-                                        <p>{info.name}</p>
+                                        <p>{info}</p>
                                         <button onClick={() => addBroker(index, info.name)}>
                                             Добавить
                                         </button>
@@ -64,7 +64,7 @@ const Broker = ({ socket }) => {
                             }
                         })}
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

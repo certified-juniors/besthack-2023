@@ -13,14 +13,15 @@ const Connection = ({ socket }) => {
     const [status, setStatus] = useState("undefined");
 
     useEffect(() => {
-        socket.on("checkBrokerStatus", (response) => {
-            const res = JSON.parse(response);
-            setStatus(res);
+        socket.on("brokerStatusUpdate", (response) => {
+            setStatus(response);
         })
 
-        socket.on("getBrokerCommands", (response) => {
-            const res = JSON.parse(response);
-            setAllBrokerCommands(res);
+        socket.emit("getBrokerCommands", dir)
+         
+        socket.on("brokerCommandsUpdate", (response) => {
+            console.log(response);
+            setAllBrokerCommands(response);
         })
     }, [socket])
 
@@ -28,7 +29,7 @@ const Connection = ({ socket }) => {
         <div className="connectionPage">
             <div className="connectionpgContent">
                 <div className="connectionHeader">
-                    <p>Вы подключены к <span>{dir}</span></p>
+                    <p>Вы подключены к <span>{status}</span></p>
                     <div className="connectionStatus">
                         <button onClick={() => { console.log("Update") }}>Обновить</button>
                         <p>Status: <span>{status}</span></p>

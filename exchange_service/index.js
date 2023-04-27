@@ -3,10 +3,20 @@ const createHeader = require('./utils/header_creator');
 const net = require('net');
 let commands = [];
 let is_ready = false;
-
+let lastdatarows = [];
 function initServer(server) {
     console.log("Init server");
     collectFinhubApi(server);
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
 }
 
 function collectFinhubApi(server) {
@@ -55,8 +65,106 @@ function collectFinhubApi(server) {
                 }),
             });
             const requestBuffer = protos.ExchangeInfoMessage.encode(request).finish();
-            conn.write(requestBuffer);
+            socket.write(requestBuffer);
             console.log("Sent handshake");
+
+            console.log("Running Event Runner!!!!");
+            setInterval(() => {
+                const event = protos.ExchangeInfoMessage.create({
+                    header: createHeader("backend"),
+                    event: protos.Event.create({
+                        status: protos.Status.create({
+                            type: protos.StatusType.stPerformed,
+                            details: "randomString" + Math.random(),
+                            nextTime: Date.now() + 5000,
+                            advStatus: protos.AdvInfo.create({
+                                caption: Math.random().toString(),
+                                fields: [
+                                    protos.AdvInfoFieldRef.create({
+                                        alias: "id",
+                                        caption: "Идентификатор",
+                                        dataType: protos.DataType.dtInteger
+                                    }),
+                                    protos.AdvInfoFieldRef.create({
+                                        alias: "name",
+                                        caption: "Имя",
+                                        dataType: protos.DataType.dtString
+                                    }),
+                                    protos.AdvInfoFieldRef.create({
+                                        alias: "money",
+                                        caption: "Баланс",
+                                        dataType: protos.DataType.dtFloat
+                                    }),
+                                ],
+                                data: (() => {
+                                    if (lastdatarows.length == 0) {
+                                        let count = getRandomInt(10, 20)
+                                        for (let i = 0; i < count; i++) {
+                                            lastdatarows.push(
+                                                protos.DataRow.create({
+                                                    rowIdent: i.toString(),
+                                                    incrementDelete: false,
+                                                    values: [
+                                                        protos.ValueRef.create({
+                                                            dataType: protos.DataType.dtInteger,
+                                                            value: i.toString(),
+                                                        }),
+                                                        protos.ValueRef.create({
+                                                            dataType: protos.DataType.dtString,
+                                                            value: getRandomInt(10000, 99999).toString(),
+                                                        }),
+                                                        protos.ValueRef.create({
+                                                            dataType: protos.DataType.dtFloat,
+                                                            value: getRandomArbitrary(0, 20000).toString()
+                                                        }),
+                                                    ]
+                                                })
+                                            )
+                                        }
+                                        return protos.AdvInfoData.create({
+                                            fullOrIncrement: true,
+                                            rows: lastdatarows
+                                        });
+                                    }
+                                    let fullOrIncrement = Boolean(getRandomInt(0, 1));
+                                    let deleteFalseCreateTrue = Boolean(getRandomInt(0, 1));
+                                    if (deleteFalseCreateTrue) {
+                                        lastdatarows.push(
+                                            protos.DataRow.create({
+                                                rowIdent: lastdatarows.length.toString(),
+                                                incrementDelete: false,
+                                                values: [
+                                                    protos.ValueRef.create({
+                                                        dataType: protos.DataType.dtInteger,
+                                                        value: lastdatarows.length.toString()
+                                                    }),
+                                                    protos.ValueRef.create({
+                                                        dataType: protos.DataType.dtString,
+                                                        value: getRandomInt(10000, 99999).toString(),
+                                                    }),
+                                                    protos.ValueRef.create({
+                                                        dataType: protos.DataType.dtFloat,
+                                                        value: getRandomArbitrary(0, 20000).toString()
+                                                    }),
+                                                ]
+                                            })
+                                        )
+                                    } else {
+                                        lastdatarows.pop()
+                                    }
+                                    return protos.AdvInfoData.create({
+                                        fullOrIncrement,
+                                        rows: lastdatarows,
+                                    });
+                                })(),
+                            })
+                        })
+                    })
+                });
+                const eventBuffer = protos.ExchangeInfoMessage.encode(event).finish();
+                socket.write(eventBuffer);
+            }, 5000)
+
         });
         attachLogic(api, socket);
     });
