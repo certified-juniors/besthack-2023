@@ -1,34 +1,26 @@
-import axios from 'axios';
-import { serverURL } from './Config';
+import { io } from "socket.io-client";
 
-class API {
-  constructor(serverURL) {
-    this.baseURL = serverURL;
-  }
+const socket = io("http://localhost:8080");
 
-  registerUser(params) {
-    return axios.post(`${this.baseURL}/register`, params);
-  }
+// Событие подключения
+socket.on("connect", () => {
+  console.log("Подключено к серверу");
 
-  loginUser(params) {
-    return axios.post(`${this.baseURL}/login`, params);
-  }
+  // Отправка сообщения на сервер
+  socket.emit("message", "Привет серверу!");
+});
 
-  balanceUser(params) {
-    return axios.post(`${this.baseURL}/balance`, params);
-  }
+// Событие получения сообщения
+socket.on("message", (data) => {
+  console.log("Получено сообщение от сервера:", data);
+});
 
-  getExhcangeServiceAPI(authToken, params) {
-    return axios.get(`${this.baseURL}/`, params);
-  }
+// Событие отключения
+socket.on("disconnect", () => {
+  console.log("Отключено от сервера");
+});
 
-  callRestAPI(exchangeService, commandID, authToken, params) {
-    return axios.get();
-  }
-
-  setSocketConn(exchangeService, commandID, authToken, params) {
-    return axios.post();
-  }
-}
-
-export default API;
+// Обработка ошибок
+socket.on("error", (error) => {
+  console.error("Ошибка соединения:", error);
+});

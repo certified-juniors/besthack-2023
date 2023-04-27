@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./broker.css";
 
-const Broker = ({ broker }) => {
+const Broker = ({ broker, socket }) => {
     const [addedBrokers, setAddedBrokers] = useState(() => {
         const storedBrokers = sessionStorage.getItem("addedBrokers");
         return storedBrokers ? JSON.parse(storedBrokers) : [];
@@ -14,6 +14,11 @@ const Broker = ({ broker }) => {
         sessionStorage.setItem("addedBrokers", JSON.stringify(newAddedBrokers));
     };
 
+    const connectToBroker = (name) => {
+        socket.emit("connectToBroker", name);
+        console.log(`Connection to ${name}`);
+    }
+
     return (
         <div className="terminalPage">
             <div className="terminalpgContent">
@@ -24,7 +29,7 @@ const Broker = ({ broker }) => {
                             <div key={index} className="brokerInfo">
                                 <p>{broker.name}</p>
                                 <Link to={`/terminal/connection/${broker.name}`} className="linkTo">
-                                    <button onClick={() => console.log(`Connection to ${broker.name}`)}>
+                                    <button onClick={connectToBroker(info.name)}>
                                         Подключиться
                                     </button>
                                 </Link>
