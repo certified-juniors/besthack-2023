@@ -1,4 +1,7 @@
+/* ExchangeInfoMessage.proto */
+
 syntax = "proto3";
+
 import "Header.proto";
 import "Request.proto";
 import "Response.proto";
@@ -10,27 +13,16 @@ option java_outer_classname = "ExchangeInfoMessageProto";
 option optimize_for = SPEED;
 
 /**
-    Собственно само сообщение протокола.
-    Поле header должно присутствовать ва всех сообщениях.
-    Поля request, response, event присутствуют в зависимости от типа cообщения.
+  Собственно само сообщение протокола.
+  Поле header должно присутствовать во всех сообщениях.
+  Поля request, response, event присутствуют в зависимости от типа сообщения.
 */
 
 message ExchangeInfoMessage {
-    Header header = 1; // Тело заполовка документа
-    oneof body {
-        Request request = 2; // Тело запроса документа
-        Response response = 3; // Тело ответа документа
-        Event event = 4; // Тело события документа
-    }
-}
-
-service ExchangeService {
-    // Метод для обработки запроса
-    rpc ExchangeRequest(ExchangeInfoMessage) returns (ExchangeInfoMessage) {}
-
-    // Метод для обработки ответа
-    rpc ExchangeResponse(ExchangeInfoMessage) returns (ExchangeInfoMessage) {}
-
-    // Метод для обработки события
-    rpc ExchangeEvent(ExchangeInfoMessage) returns (ExchangeInfoMessage) {}
-}
+  Header      header    = 1;  // Тело заголовка документа
+  oneof body {
+    Request   request   = 2;  // Тело запроса документа
+    Response  response  = 3;  // Тело ответа документа
+    Event     event     = 4;  // Тело события документа
+  }
+};
