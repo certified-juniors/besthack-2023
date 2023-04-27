@@ -1,14 +1,8 @@
 const grpc = require('@grpc/grpc-js');
-const protos = require('../protos/exchangeinfomessage')
-const services = require('../protos/exchangeinfomessage_grpc_pb')
+const protos = require('./proto_api');
 
 function initServer(server) {
-    server.addService(services.ExchangeServiceService, {
-        exchangeRequest: exchangeRequest,
-        exchangeResponse: exchangeResponse,
-        exchangeEvent: exchangeEvent
-    });
-
+    server
     let handshake_data = collectFinhubApi();
 }
 
@@ -19,11 +13,11 @@ function collectFinhubApi() {
         url: 'https://finnhub.io/static/swagger.json',
     });
 
+    
     finhubApi.then((client) => {
         for (let key in client.spec.paths) {
-            console.log(key);
-            // serialize to protobuf
-            let serialized = hackathon_proto.ownCommand            
+            console.log(protos.OwnCommand);
+            
         }
     });
 }
