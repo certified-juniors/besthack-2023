@@ -1,0 +1,131 @@
+.terminalPage {
+    height: 80vh;
+    background-size: 100%;
+    background: #797979 url(../../images/japaneseCandles.jpg) no-repeat;
+    padding-top: 15vh;
+    padding-bottom: 5vh;
+}
+
+.terminalpgContent {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    height: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.activeBrokers {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 0;
+    border-radius: 20px;
+    margin-right: 25px;
+    background-color: #000000bd;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.activeBrokers h1 {
+    color: whitesmoke;
+}
+
+.brokerName {
+    display: flex;
+    height: 70vh;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.brokerInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brokerInfo p {
+    color: whitesmoke;
+}
+
+.brokerInfo a {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 100%;
+    width: 80%;
+}
+
+.brokerInfo button {
+    height: 60%;
+    width: 50%;
+    border: 0;
+    border-radius: 2px;
+    background-color: #004138;
+    color: whitesmoke;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+}
+
+.brokerInfo button:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+    background-color: #006457;
+    box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
+}
+
+.chooseBroker {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 0;
+    border-radius: 20px;
+    margin-right: 25px;
+    background-color: #000000bd;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.connectInfo {
+    display: flex;
+    flex-direction: row;
+}
+
+.chooseBroker h1 {
+    color: whitesmoke;
+}
+
+.brokerList {
+    display: flex;
+    height: 70vh;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.connectInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.connectInfo p {
+    color: whitesmoke;
+}
+
+.connectInfo button {
+    height: 60%;
+    width: 20%;
+    border: 0;
+    border-radius: 2px;
+    background-color: #004138;
+    color: whitesmoke;
+    margin-right: 20px;
+}
+
+.connectInfo button:hover {
+    transition: 0.3s;
+    transform: scale(1.05);
+    background-color: #006457;
+}

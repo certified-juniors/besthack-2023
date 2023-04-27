@@ -7,7 +7,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 10%;
+    height: 70px;
     background-color: #195A3E;
 }
 
@@ -22,8 +22,8 @@ a {
 }
 
 .unauthLinks {
-    display: grid;
-    grid-template-columns: 150px 150px;
+    display: flex;
+    flex-direction: row;
     margin-top: auto;
     margin-bottom: auto;
     padding-right: 20px;
@@ -47,37 +47,7 @@ a {
     margin-bottom: auto;
     text-decoration: none;
     color: #195A3E;
-    justify-items: center;
-    background-color: whitesmoke;
-    border-radius: 5px;
-}
-
-.authLinks {
-    display: grid;
-    grid-template-columns: 100px 100px 100px 100px 100px;
-    margin-top: auto;
-    margin-bottom: auto;
-    padding-right: 20px;
-}
-
-.authLinks button {
-    width: 100%;
-    height: 30px;
-    margin-top:auto;
-    margin-bottom: auto;
-    color: whitesmoke;
-    justify-items: center;
-    background-color: transparent;
-    font-size: 15px;
-    border: 0px;
-}
-
-.authLinks button:hover {
-    transition: 0.3s;
-    margin-top:auto;
-    margin-bottom: auto;
-    text-decoration: none;
-    color: #195A3E;
+    box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
     justify-items: center;
     background-color: whitesmoke;
     border-radius: 5px;
