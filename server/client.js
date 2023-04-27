@@ -1,21 +1,22 @@
 const net = require('net');
 const proto = require('./protos/bundle');
 
+const exchangeInfoMessageProto = proto.ExchangeInfoMessage;
+
 const client = net.createConnection({ port: 1234 }, () => {
     // 'connect' listener.
     console.log('connected to server!');
-    
-    const exchangeInfoMessageProto = proto.ExchangeInfoMessage;
 
     const payload = {
         header: {
             messageNum: "1",
-            timestamp: 1234567890,
+            timestamp: Date.now(),
             sender: "sender",
-            receiver: "receiver",
+            receiver: "server",
         },
         request: {
-            command: proto.CommandType.ctHandshake,
+            // command: proto.CommandType.ctHandshake,
+            command: proto.CommandType.ctExecCommand,
         },
     };
     
@@ -25,7 +26,7 @@ const client = net.createConnection({ port: 1234 }, () => {
     client.write(buffer);
 
     client.on('data', (data) => {
-        console.log(data.toString());
-        client.end();
+        const message = exchangeInfoMessageProto.decode(data);
+        console.log(message.response.answerType === proto.AnswerType.atAnswerOK ? 'OK' : 'ERROR');
     });
 });
