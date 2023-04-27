@@ -1,36 +1,54 @@
-// Загрузка proto-файла
-const protoLoader = require('@grpc/proto-loader');
-const PROTO_PATH = '../protos/ExchangeInfoMessage.proto'
-const options = {
-    keepCase: true,
-    longs: String,
-    enums: String,
-    defaults: true,
-    oneofs: true
+const proto = require('./protos/bundle.js');
+
+/* const exchangeInfoMessageProto = proto.ExchangeInfoMessage;
+
+const payload = {
+    header: {
+        messageNum: "1",
+        timestamp: 1234567890,
+        sender: "sender",
+        receiver: "receiver",
+    },
+    request: {
+        command: proto.CommandType.ctHandshake,
+    },
 };
-const packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
-const exchangeProto = grpc.loadPackageDefinition(packageDefinition).ru.sovcombank.hackaton.proto;
+
+const message = exchangeInfoMessageProto.create(payload);
+const buffer = exchangeInfoMessageProto.encode(message).finish();
+console.log(buffer);
+
+const decodedMessage = exchangeInfoMessageProto.decode(buffer);
+const decodedPayload = exchangeInfoMessageProto.toObject(decodedMessage);
+console.log(decodedPayload);
+console.log(decodedPayload.request.command === proto.CommandType.ctHandshake);*/
+
+const clients = {};
+
+const exchangeInfoMessageProto = proto.ExchangeInfoMessage;
 
 // Создание сервера TCP
 const net = require('net');
 const server = net.createServer((socket) => {
     console.log('Client connected.');
 
+    clients[socket.remoteAddress] = {};
+
     // Обработка входящих сообщений
     socket.on('data', (data) => {
-        // Разбор сообщения с помощью proto-файла
-        const message = exchangeProto.Message.decode(data);
+        const message = exchangeInfoMessageProto.decode(data);
 
         // Обработка сообщения
-        switch (message.type) {
-            case exchangeProto.MessageType.QUOTE_REQUEST:
-                handleQuoteRequest(socket, message.quoteRequest);
+        switch (message.body) {
+            case 'request':
+                handleRequest(socket, message.request);
                 break;
-            case exchangeProto.MessageType.TRADE_REQUEST:
-                handleTradeRequest(socket, message.tradeRequest);
+            case 'event':
+                handleEvent(socket, message.event);
                 break;
+            case 'response':
             default:
-                console.error(`Unknown message type: ${message.type}`);
+                console.error(`Unknown message type: ${message.body}`);
                 break;
         }
     });
@@ -53,35 +71,54 @@ server.listen(tcpPort, () => {
 });
 
 // Обработка запроса котировки
-function handleQuoteRequest(socket, quoteRequest) {
-    console.log('Received quote request:', quoteRequest);
+function handleRequest(socket, request) {
+    console.log('Received request:', request);
 
     // Отправка ответа
-    const quoteResponse = {
-        symbol: quoteRequest.symbol,
-        bidPrice: Math.random() * 100,
-        askPrice: Math.random() * 100
-    };
-    const responseMessage = exchangeProto.Message.encode({
-        type: exchangeProto.MessageType.QUOTE_RESPONSE,
-        quoteResponse: quoteResponse
-    });
-    socket.write(responseMessage);
+    if (request.command === proto.CommandType.ctHandshake) {
+        const response = {
+            command: proto.CommandType.ctHandshake,
+            answerType: proto.AnswerType.atAnswerOK,
+        };
+        const responseMessage = exchangeInfoMessageProto.encode({
+            header: {
+                messageNum: "1",
+                timestamp: Date.now(),
+                sender: "server",
+                receiver: "client",
+            },
+            response: response,
+        });
+        // const responseBuffer = exchangeInfoMessageProto.encode(responseMessage).finish();
+        // socket.write(responseMessage.finish());
+        socket.write(Buffer.from('responseMessage'));
+    }
+
+    // const quoteResponse = {
+    //     symbol: quoteRequest.symbol,
+    //     bidPrice: Math.random() * 100,
+    //     askPrice: Math.random() * 100
+    // };
+    // const responseMessage = exchangeProto.Message.encode({
+    //     type: exchangeProto.MessageType.QUOTE_RESPONSE,
+    //     quoteResponse: quoteResponse
+    // });
+    // socket.write(responseMessage);
 }
 
 // Обработка запроса на сделку
-function handleTradeRequest(socket, tradeRequest) {
-    console.log('Received trade request:', tradeRequest);
+function handleEvent(socket, event) {
+    console.log('Received event:', event);
 
     // Отправка ответа
-    const tradeResponse = {
-        orderId: Math.floor(Math.random() * 1000000)
-    };
-    const responseMessage = exchangeProto.Message.encode({
-        type: exchangeProto.MessageType.TRADE_RESPONSE,
-        tradeResponse: tradeResponse
-    });
-    socket.write(responseMessage);
+    // const tradeResponse = {
+    //     orderId: Math.floor(Math.random() * 1000000)
+    // };
+    // const responseMessage = exchangeProto.Message.encode({
+    //     type: exchangeProto.MessageType.TRADE_RESPONSE,
+    //     tradeResponse: tradeResponse
+    // });
+    // socket.write(responseMessage);
 }
 
 // Создание HTTP сервера
@@ -91,7 +128,7 @@ const httpServer = http.createServer((req, res) => {
     console.log('Received HTTP request.');
 
     // Отправка HTML страницы
-    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end('<html><body><h1>Welcome to the Exchange!</h1></body></html>');
 });
 
