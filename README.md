@@ -31,8 +31,8 @@ $ npm run dev
 
 ## Участники команды
 1. [Крайников Иван](https://github.com/cry1s)
-2. [Азат Билалов](https:github.com/Azat-Bilalov)
-3. Тимур Аюшиев
+2. [Азат Билалов](https://github.com/Azat-Bilalov)
+3. [Тимур Аюшиев](https://github.com/SicParv1sMagna)
 4. Иван Викулин
 
 > The best hackaton project - Вова Краснов
