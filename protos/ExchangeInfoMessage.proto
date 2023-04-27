@@ -23,14 +23,3 @@ message ExchangeInfoMessage {
         Event event = 4; // Тело события документа
     }
 }
-
-service ExchangeService {
-    // Метод для обработки запроса
-    rpc ExchangeRequest(ExchangeInfoMessage) returns (ExchangeInfoMessage) {}
-
-    // Метод для обработки ответа
-    rpc ExchangeResponse(ExchangeInfoMessage) returns (ExchangeInfoMessage) {}
-
-    // Метод для обработки события
-    rpc ExchangeEvent(ExchangeInfoMessage) returns (ExchangeInfoMessage) {}
-}
