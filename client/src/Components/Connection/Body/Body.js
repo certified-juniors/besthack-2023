@@ -39,7 +39,7 @@ const ConnectionBody = ({ commands, socket }) => {
     if (selectedCommand) {
       const command = commands.find((cmd) => cmd.alias === selectedCommand);
       if (command) {
-        return command.parameters.map((parameter, index) => (
+        return command.parameters?.map((parameter, index) => (
           <div key={index}>
             <p>{parameter.alias}</p>
             <input

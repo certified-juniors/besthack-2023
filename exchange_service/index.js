@@ -194,17 +194,34 @@ function mainlogic(api, conn, proto) {
             });
             const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
             conn.write(responseBuffer);
-        } else if (command === ctExecCommand) {
+        } else if (command === protos.CommandType.ctExecCommand) {
             console.log("Exec command");
-            const commandForExec = request.commandForExec;
-            const commandAlias = commandForExec.alias;
-            const commandParameters = commandForExec.parameters;
-            // swagger-client api call
-            const method = commandAlias.split(" ")[0].toLowerCase();
-            const path = commandAlias.split(" ")[1];
-            const params = {};
+            const response = protos.ExchangeInfoMessage.create({
+                header: createHeader(sender, messageNum),
+                response: protos.Response.create({
+                    command: protos.CommandType.ctExecCommand,
+                    answerType: protos.AnswerType.atAnswerOK,
+                })
+            });
+            const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
+            conn.write(responseBuffer);
         }
     }
 }
+
+function sendError(conn, err) {
+    const response = protos.ExchangeInfoMessage.create({
+        header: createHeader("backend"),
+        response: protos.Response.create({
+            status: protos.Status.create({
+                type: protos.StatusType.stError,
+                details: err.message,
+            })
+        })
+    });
+    const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
+    conn.write(responseBuffer);
+}
+
 
 initServer();

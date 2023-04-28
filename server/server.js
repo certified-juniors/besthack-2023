@@ -36,6 +36,8 @@ const server = net.createServer((socket) => {
                 handleEvent(socket, message);
                 break;
             case 'response':
+                handleResponse(socket, message);
+                break;
             default:
                 console.error(`Unknown message type: ${message.body}`);
                 break;
@@ -53,6 +55,7 @@ const server = net.createServer((socket) => {
     });
 });
 
+let waitings = {};
 
 // ЗАПРОСЫ
 function handleRequest(socket, message) {
@@ -159,14 +162,56 @@ server.listen(tcpPort, () => {
         })
 
         //Отправка данных по команде
-        // socket.on("sentBrokerCommand", command => {
-        //     //Получение данных
-
+        socket.on("sentBrokerCommand", commandjson => {
+            commandjson = JSON.parse(commandjson);
+            // find receiver in clients by command alias
+            const receiver = Object.values(clients).find(client => client.supportedCommands.map(c => c.alias).includes(commandjson.alias));
             
-        // })
+            if (!receiver) {
+                console.log("Receiver not found");
+                return;
+            }
+
+            const header = {
+                messageNum: (receiver.lastMessageNum++).toString(),
+                timestamp: (Date.now()).toString(),
+                sender: "server",
+                receiver: receiver.name,
+            };
+
+            waitings[header.messageNum] = {
+                socket,
+                command: commandjson
+            };
+
+            const exchangeInfoMessage = exchangeInfoMessageProto.create({
+                header,
+                request: {
+                    command: proto.CommandType.ctExecCommand,
+                    commandForExec: commandjson
+                }
+            });
+
+            const exchangeInfoMessageBuffer = exchangeInfoMessageProto.encode(exchangeInfoMessage).finish();
+
+            receiver.socket.write(exchangeInfoMessageBuffer);
+
+
+        })
 
     })
 });
+
+
+
+function handleResponse(socket, message) {
+    console.log('Header:', message.header);
+    const response = message.response;
+    if (Object.keys(waitings).includes(message.header.messageNumAnswer)) {
+        const waiting = waitings[message.header.messageNumAnswer];
+        waiting.socket.emit("brokerCommandResponse", message);
+    }
+}
 
 function brokerList() {
     return Object.values(clients).map(client => client.name);
