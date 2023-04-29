@@ -21,6 +21,33 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+const FIELDS = [
+    protos.AdvInfoFieldRef.create({
+        alias: "id",
+        caption: "Идентификатор",
+        dataType: protos.DataType.dtInteger
+    }),
+    protos.AdvInfoFieldRef.create({
+        alias: "name",
+        caption: "Имя",
+        dataType: protos.DataType.dtString
+    }),
+    protos.AdvInfoFieldRef.create({
+        alias: "money",
+        caption: "Баланс",
+        dataType: protos.DataType.dtFloat
+    }),
+    protos.AdvInfoFieldRef.create({
+        alias: "date",
+        caption: "Дата",
+        dataType: protos.DataType.dtDateTime
+    }),
+    protos.AdvInfoFieldRef.create({
+        alias: "is_active",
+        caption: "Активен",
+        dataType: protos.DataType.dtBoolean
+    }),
+];
 function collectFinhubApi(server) {
     const swagger = require('swagger-client');
 
@@ -73,69 +100,22 @@ function collectFinhubApi(server) {
             console.log("Running Event Runner!!!!");
             setInterval(() => {
                 const event = protos.ExchangeInfoMessage.create({
-                    header: createHeader("backend"),
                     event: protos.Event.create({
                         status: protos.Status.create({
-                            type: protos.StatusType.stPerformed,
-                            details: "randomString" + Math.random(),
-                            nextTime: Date.now() + 5000,
-                            advStatus: protos.AdvInfo.create({
-                                caption: Math.random().toString(),
-                                fields: [
-                                    protos.AdvInfoFieldRef.create({
-                                        alias: "id",
-                                        caption: "Идентификатор",
-                                        dataType: protos.DataType.dtInteger
-                                    }),
-                                    protos.AdvInfoFieldRef.create({
-                                        alias: "name",
-                                        caption: "Имя",
-                                        dataType: protos.DataType.dtString
-                                    }),
-                                    protos.AdvInfoFieldRef.create({
-                                        alias: "money",
-                                        caption: "Баланс",
-                                        dataType: protos.DataType.dtFloat
-                                    }),
-                                ],
-                                data: (() => {
-                                    if (lastdatarows.length == 0) {
-                                        let count = getRandomInt(10, 20)
-                                        for (let i = 0; i < count; i++) {
-                                            lastdatarows.push(
-                                                protos.DataRow.create({
-                                                    rowIdent: i.toString(),
-                                                    incrementDelete: false,
-                                                    values: randomValues(i)
-                                                })
-                                            )
-                                        }
-                                        return protos.AdvInfoData.create({
-                                            fullOrIncrement: true,
-                                            rows: lastdatarows
-                                        });
-                                    }
-                                    let fullOrIncrement = Boolean(getRandomInt(0, 1));
-                                    let deleteFalseCreateTrue = Boolean(getRandomInt(0, 1));
-                                    if (deleteFalseCreateTrue) {
-                                        lastdatarows.push(
-                                            protos.DataRow.create({
-                                                rowIdent: lastdatarows.length.toString(),
-                                                incrementDelete: false,
-                                                values: randomValues(lastdatarows.length)
-                                            })
-                                        )
-                                    } else {
-                                        lastdatarows.pop()
-                                    }
-                                    return protos.AdvInfoData.create({
-                                        fullOrIncrement,
-                                        rows: lastdatarows,
-                                    });
-                                })(),
-                            })
+                            type: (() => {
+                                let types = [
+                                    protos.StatusType.stNotReady,
+                                    protos.StatusType.stReady,
+                                    protos.StatusType.stPerformed,
+                                ];
+                                return types[getRandomInt(0, 2)];
+                            })(),
+                            details: randomString(getRandomInt(10, 20)),
+                            nextTime: Date.now() + DELAY,
+                            advStatus: generateAdvStatus()
                         })
-                    })
+                    }),
+                    header: createHeader("backend"),
                 });
                 const eventBuffer = protos.ExchangeInfoMessage.encode(event).finish();
                 socket.write(eventBuffer);
@@ -147,52 +127,114 @@ function collectFinhubApi(server) {
     });
 }
 
+function generateAdvStatus() {
+    return protos.AdvInfo.create({
+        caption: Math.random().toString(),
+        fields: FIELDS,
+        data: (() => {
+            if (lastdatarows.length == 0) {
+                let count = getRandomInt(10, 20);
+                for (let i = 0; i < count; i++) {
+                    lastdatarows.push(
+                        protos.DataRow.create({
+                            rowIdent: i.toString(),
+                            incrementDelete: false,
+                            values: randomValues(i)
+                        })
+                    );
+                }
+                return protos.AdvInfoData.create({
+                    fullOrIncrement: true,
+                    rows: shuffle(lastdatarows)
+                });
+            }
+            // check for increment delete and delete those
+            lastdatarows = lastdatarows.filter((row) => {
+                return !row.incrementDelete;
+            });
+            let fullOrIncrement = Boolean(getRandomInt(0, 1));
+            let deleteFalseCreateTrue = Boolean(getRandomInt(0, 1));
+            if (deleteFalseCreateTrue) {
+                lastdatarows.push(
+                    protos.DataRow.create({
+                        rowIdent: lastdatarows.length.toString(),
+                        incrementDelete: false,
+                        values: randomValues(lastdatarows.length)
+                    })
+                );
+            } else {
+                // choose random row and mark incrementDelete = true
+                let index = getRandomInt(0, lastdatarows.length - 1);
+                lastdatarows[index].incrementDelete = true;
+            }
+            return protos.AdvInfoData.create({
+                fullOrIncrement,
+                rows: lastdatarows,
+            });
+        })(),
+    });
+}
+
 function randomValues(i) {
     return shuffle([
         protos.DataFieldValue.create({
             alias: "id",
-            value: protos.ValueRef.create({
-                dataType: protos.DataType.dtInteger,
-                value: i.toString(),
-            }),
+            value: createValueInDataField(protos.DataType.dtInteger, i),
         }),
         protos.DataFieldValue.create({
             alias: "name",
-            value: protos.ValueRef.create({
-                dataType: protos.DataType.dtString,
-                value: getRandomInt(10000, 99999).toString(),
-            }),
+            value: createValueInDataField(protos.DataType.dtString, getRandomInt(10000, 99999)),
         }),
         protos.DataFieldValue.create({
             alias: "money",
-            value: protos.ValueRef.create({
-                dataType: protos.DataType.dtFloat,
-                value: getRandomArbitrary(0, 20000).toString()
-            }),
+            value: createValueInDataField(protos.DataType.dtFloat, getRandomArbitrary(0, 20000)),
         }),
-    ]);
+    ].map((item) => {
+        return returnWithChance(item, 0.99);
+    }).filter((item) => {
+        return item != null;
+    }));
+}
 
+function createValueInDataField(type, value) {
+    return protos.ValueRef.create({
+        dataType: type,
+        value: value.toString(),
+    });
+}
 
+function randomString(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < charactersLength; i++)        
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    return result;
 }
 
 function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-  
+    let currentIndex = array.length, randomIndex;
+
     // While there remain elements to shuffle.
     while (currentIndex != 0) {
-  
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-  
-    return array;
-  }
 
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
+
+// chance is 0..1
+function returnWithChance(value, chance) {
+    return Math.random() < chance ? value : null;
+}
 
 function attachLogic(api, conn) {
     conn.on('data', (data) => {
