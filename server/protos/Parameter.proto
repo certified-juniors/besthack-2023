@@ -1,5 +1,3 @@
-/* Parameter.proto */
-
 syntax = "proto3";
 
 import "ValueRef.proto";

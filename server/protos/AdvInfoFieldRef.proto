@@ -1,4 +1,3 @@
-/* AdvInfoFieldRef.proto */
 syntax = "proto3";
 import "MessageEnums.proto";
 

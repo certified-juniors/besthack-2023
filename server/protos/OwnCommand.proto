@@ -1,5 +1,3 @@
-/* OwnCommand.proto */
-
 syntax = "proto3";
 import "Parameter.proto";
 

@@ -1,5 +1,3 @@
-/* ExchangeInfoMessage.proto */
-
 syntax = "proto3";
 
 import "Header.proto";

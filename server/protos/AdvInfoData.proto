@@ -1,5 +1,3 @@
-/* AdvInfoData.proto */
-
 syntax = "proto3";
 import "DataRow.proto";
 

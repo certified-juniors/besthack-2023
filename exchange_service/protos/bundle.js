@@ -45,2088 +45,6 @@ $root.ru = (function() {
                  */
                 var proto = {};
 
-                proto.AdvInfo = (function() {
-
-                    /**
-                     * Properties of an AdvInfo.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @interface IAdvInfo
-                     * @property {string|null} [caption] AdvInfo caption
-                     * @property {Array.<ru.sovcombank.hackaton.proto.IAdvInfoFieldRef>|null} [fields] AdvInfo fields
-                     * @property {ru.sovcombank.hackaton.proto.IAdvInfoData|null} [data] AdvInfo data
-                     */
-
-                    /**
-                     * Constructs a new AdvInfo.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @classdesc Represents an AdvInfo.
-                     * @implements IAdvInfo
-                     * @constructor
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo=} [properties] Properties to set
-                     */
-                    function AdvInfo(properties) {
-                        this.fields = [];
-                        if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                                if (properties[keys[i]] != null)
-                                    this[keys[i]] = properties[keys[i]];
-                    }
-
-                    /**
-                     * AdvInfo caption.
-                     * @member {string} caption
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @instance
-                     */
-                    AdvInfo.prototype.caption = "";
-
-                    /**
-                     * AdvInfo fields.
-                     * @member {Array.<ru.sovcombank.hackaton.proto.IAdvInfoFieldRef>} fields
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @instance
-                     */
-                    AdvInfo.prototype.fields = $util.emptyArray;
-
-                    /**
-                     * AdvInfo data.
-                     * @member {ru.sovcombank.hackaton.proto.IAdvInfoData|null|undefined} data
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @instance
-                     */
-                    AdvInfo.prototype.data = null;
-
-                    // OneOf field names bound to virtual getters and setters
-                    var $oneOfFields;
-
-                    /**
-                     * AdvInfo _data.
-                     * @member {"data"|undefined} _data
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @instance
-                     */
-                    Object.defineProperty(AdvInfo.prototype, "_data", {
-                        get: $util.oneOfGetter($oneOfFields = ["data"]),
-                        set: $util.oneOfSetter($oneOfFields)
-                    });
-
-                    /**
-                     * Creates a new AdvInfo instance using the specified properties.
-                     * @function create
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo=} [properties] Properties to set
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo instance
-                     */
-                    AdvInfo.create = function create(properties) {
-                        return new AdvInfo(properties);
-                    };
-
-                    /**
-                     * Encodes the specified AdvInfo message. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfo.verify|verify} messages.
-                     * @function encode
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo} message AdvInfo message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    AdvInfo.encode = function encode(message, writer) {
-                        if (!writer)
-                            writer = $Writer.create();
-                        if (message.caption != null && Object.hasOwnProperty.call(message, "caption"))
-                            writer.uint32(/* id 1, wireType 2 =*/10).string(message.caption);
-                        if (message.fields != null && message.fields.length)
-                            for (var i = 0; i < message.fields.length; ++i)
-                                $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.encode(message.fields[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-                        if (message.data != null && Object.hasOwnProperty.call(message, "data"))
-                            $root.ru.sovcombank.hackaton.proto.AdvInfoData.encode(message.data, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-                        return writer;
-                    };
-
-                    /**
-                     * Encodes the specified AdvInfo message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfo.verify|verify} messages.
-                     * @function encodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo} message AdvInfo message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    AdvInfo.encodeDelimited = function encodeDelimited(message, writer) {
-                        return this.encode(message, writer).ldelim();
-                    };
-
-                    /**
-                     * Decodes an AdvInfo message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @param {number} [length] Message length if known beforehand
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    AdvInfo.decode = function decode(reader, length) {
-                        if (!(reader instanceof $Reader))
-                            reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.AdvInfo();
-                        while (reader.pos < end) {
-                            var tag = reader.uint32();
-                            switch (tag >>> 3) {
-                            case 1: {
-                                    message.caption = reader.string();
-                                    break;
-                                }
-                            case 2: {
-                                    if (!(message.fields && message.fields.length))
-                                        message.fields = [];
-                                    message.fields.push($root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.decode(reader, reader.uint32()));
-                                    break;
-                                }
-                            case 3: {
-                                    message.data = $root.ru.sovcombank.hackaton.proto.AdvInfoData.decode(reader, reader.uint32());
-                                    break;
-                                }
-                            default:
-                                reader.skipType(tag & 7);
-                                break;
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Decodes an AdvInfo message from the specified reader or buffer, length delimited.
-                     * @function decodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    AdvInfo.decodeDelimited = function decodeDelimited(reader) {
-                        if (!(reader instanceof $Reader))
-                            reader = new $Reader(reader);
-                        return this.decode(reader, reader.uint32());
-                    };
-
-                    /**
-                     * Verifies an AdvInfo message.
-                     * @function verify
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {Object.<string,*>} message Plain object to verify
-                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-                     */
-                    AdvInfo.verify = function verify(message) {
-                        if (typeof message !== "object" || message === null)
-                            return "object expected";
-                        var properties = {};
-                        if (message.caption != null && message.hasOwnProperty("caption"))
-                            if (!$util.isString(message.caption))
-                                return "caption: string expected";
-                        if (message.fields != null && message.hasOwnProperty("fields")) {
-                            if (!Array.isArray(message.fields))
-                                return "fields: array expected";
-                            for (var i = 0; i < message.fields.length; ++i) {
-                                var error = $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.verify(message.fields[i]);
-                                if (error)
-                                    return "fields." + error;
-                            }
-                        }
-                        if (message.data != null && message.hasOwnProperty("data")) {
-                            properties._data = 1;
-                            {
-                                var error = $root.ru.sovcombank.hackaton.proto.AdvInfoData.verify(message.data);
-                                if (error)
-                                    return "data." + error;
-                            }
-                        }
-                        return null;
-                    };
-
-                    /**
-                     * Creates an AdvInfo message from a plain object. Also converts values to their respective internal types.
-                     * @function fromObject
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {Object.<string,*>} object Plain object
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo
-                     */
-                    AdvInfo.fromObject = function fromObject(object) {
-                        if (object instanceof $root.ru.sovcombank.hackaton.proto.AdvInfo)
-                            return object;
-                        var message = new $root.ru.sovcombank.hackaton.proto.AdvInfo();
-                        if (object.caption != null)
-                            message.caption = String(object.caption);
-                        if (object.fields) {
-                            if (!Array.isArray(object.fields))
-                                throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfo.fields: array expected");
-                            message.fields = [];
-                            for (var i = 0; i < object.fields.length; ++i) {
-                                if (typeof object.fields[i] !== "object")
-                                    throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfo.fields: object expected");
-                                message.fields[i] = $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.fromObject(object.fields[i]);
-                            }
-                        }
-                        if (object.data != null) {
-                            if (typeof object.data !== "object")
-                                throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfo.data: object expected");
-                            message.data = $root.ru.sovcombank.hackaton.proto.AdvInfoData.fromObject(object.data);
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Creates a plain object from an AdvInfo message. Also converts values to other types if specified.
-                     * @function toObject
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.AdvInfo} message AdvInfo
-                     * @param {$protobuf.IConversionOptions} [options] Conversion options
-                     * @returns {Object.<string,*>} Plain object
-                     */
-                    AdvInfo.toObject = function toObject(message, options) {
-                        if (!options)
-                            options = {};
-                        var object = {};
-                        if (options.arrays || options.defaults)
-                            object.fields = [];
-                        if (options.defaults)
-                            object.caption = "";
-                        if (message.caption != null && message.hasOwnProperty("caption"))
-                            object.caption = message.caption;
-                        if (message.fields && message.fields.length) {
-                            object.fields = [];
-                            for (var j = 0; j < message.fields.length; ++j)
-                                object.fields[j] = $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.toObject(message.fields[j], options);
-                        }
-                        if (message.data != null && message.hasOwnProperty("data")) {
-                            object.data = $root.ru.sovcombank.hackaton.proto.AdvInfoData.toObject(message.data, options);
-                            if (options.oneofs)
-                                object._data = "data";
-                        }
-                        return object;
-                    };
-
-                    /**
-                     * Converts this AdvInfo to JSON.
-                     * @function toJSON
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @instance
-                     * @returns {Object.<string,*>} JSON object
-                     */
-                    AdvInfo.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-                    };
-
-                    /**
-                     * Gets the default type url for AdvInfo
-                     * @function getTypeUrl
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
-                     * @static
-                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                     * @returns {string} The default type url
-                     */
-                    AdvInfo.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-                        if (typeUrlPrefix === undefined) {
-                            typeUrlPrefix = "type.googleapis.com";
-                        }
-                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.AdvInfo";
-                    };
-
-                    return AdvInfo;
-                })();
-
-                proto.AdvInfoData = (function() {
-
-                    /**
-                     * Properties of an AdvInfoData.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @interface IAdvInfoData
-                     * @property {boolean|null} [fullOrIncrement] AdvInfoData fullOrIncrement
-                     * @property {Array.<ru.sovcombank.hackaton.proto.IDataRow>|null} [rows] AdvInfoData rows
-                     */
-
-                    /**
-                     * Constructs a new AdvInfoData.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @classdesc Тип данных для типа расширенного отображения статуса.
-                     * Поле fullOrIncrement - обязательно для заполнения.
-                     * 
-                     * Если поле fullOrIncrement = false, а поле rows не содержит данных, то со стороны GUI данные в статусе необходимо стирать полностью.
-                     * 
-                     * Поле fullOrIncrement регламентирует правила изменения данных в строках расширенного статуса.
-                     * При значении false данные в GUI полностью заменяются данными из коллекции rows, в обратном случае действует следующее правило:
-                     * 1. Если строки с данными из поля rows нет в GUI значит ее нужно добавить
-                     * 2. Если строка с данными из поля rows есть в GUI значит значения полей в GUI нужно заменить значениями полей из пришедшей строки
-                     * 3. Если строка с данными из поля rows помечена флагом incrementDelete = true значит эта строка должна быть удалена из GUI
-                     * @implements IAdvInfoData
-                     * @constructor
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData=} [properties] Properties to set
-                     */
-                    function AdvInfoData(properties) {
-                        this.rows = [];
-                        if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                                if (properties[keys[i]] != null)
-                                    this[keys[i]] = properties[keys[i]];
-                    }
-
-                    /**
-                     * AdvInfoData fullOrIncrement.
-                     * @member {boolean} fullOrIncrement
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @instance
-                     */
-                    AdvInfoData.prototype.fullOrIncrement = false;
-
-                    /**
-                     * AdvInfoData rows.
-                     * @member {Array.<ru.sovcombank.hackaton.proto.IDataRow>} rows
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @instance
-                     */
-                    AdvInfoData.prototype.rows = $util.emptyArray;
-
-                    /**
-                     * Creates a new AdvInfoData instance using the specified properties.
-                     * @function create
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData=} [properties] Properties to set
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData instance
-                     */
-                    AdvInfoData.create = function create(properties) {
-                        return new AdvInfoData(properties);
-                    };
-
-                    /**
-                     * Encodes the specified AdvInfoData message. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoData.verify|verify} messages.
-                     * @function encode
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData} message AdvInfoData message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    AdvInfoData.encode = function encode(message, writer) {
-                        if (!writer)
-                            writer = $Writer.create();
-                        if (message.fullOrIncrement != null && Object.hasOwnProperty.call(message, "fullOrIncrement"))
-                            writer.uint32(/* id 1, wireType 0 =*/8).bool(message.fullOrIncrement);
-                        if (message.rows != null && message.rows.length)
-                            for (var i = 0; i < message.rows.length; ++i)
-                                $root.ru.sovcombank.hackaton.proto.DataRow.encode(message.rows[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-                        return writer;
-                    };
-
-                    /**
-                     * Encodes the specified AdvInfoData message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoData.verify|verify} messages.
-                     * @function encodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData} message AdvInfoData message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    AdvInfoData.encodeDelimited = function encodeDelimited(message, writer) {
-                        return this.encode(message, writer).ldelim();
-                    };
-
-                    /**
-                     * Decodes an AdvInfoData message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @param {number} [length] Message length if known beforehand
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    AdvInfoData.decode = function decode(reader, length) {
-                        if (!(reader instanceof $Reader))
-                            reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.AdvInfoData();
-                        while (reader.pos < end) {
-                            var tag = reader.uint32();
-                            switch (tag >>> 3) {
-                            case 1: {
-                                    message.fullOrIncrement = reader.bool();
-                                    break;
-                                }
-                            case 2: {
-                                    if (!(message.rows && message.rows.length))
-                                        message.rows = [];
-                                    message.rows.push($root.ru.sovcombank.hackaton.proto.DataRow.decode(reader, reader.uint32()));
-                                    break;
-                                }
-                            default:
-                                reader.skipType(tag & 7);
-                                break;
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Decodes an AdvInfoData message from the specified reader or buffer, length delimited.
-                     * @function decodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    AdvInfoData.decodeDelimited = function decodeDelimited(reader) {
-                        if (!(reader instanceof $Reader))
-                            reader = new $Reader(reader);
-                        return this.decode(reader, reader.uint32());
-                    };
-
-                    /**
-                     * Verifies an AdvInfoData message.
-                     * @function verify
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {Object.<string,*>} message Plain object to verify
-                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-                     */
-                    AdvInfoData.verify = function verify(message) {
-                        if (typeof message !== "object" || message === null)
-                            return "object expected";
-                        if (message.fullOrIncrement != null && message.hasOwnProperty("fullOrIncrement"))
-                            if (typeof message.fullOrIncrement !== "boolean")
-                                return "fullOrIncrement: boolean expected";
-                        if (message.rows != null && message.hasOwnProperty("rows")) {
-                            if (!Array.isArray(message.rows))
-                                return "rows: array expected";
-                            for (var i = 0; i < message.rows.length; ++i) {
-                                var error = $root.ru.sovcombank.hackaton.proto.DataRow.verify(message.rows[i]);
-                                if (error)
-                                    return "rows." + error;
-                            }
-                        }
-                        return null;
-                    };
-
-                    /**
-                     * Creates an AdvInfoData message from a plain object. Also converts values to their respective internal types.
-                     * @function fromObject
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {Object.<string,*>} object Plain object
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData
-                     */
-                    AdvInfoData.fromObject = function fromObject(object) {
-                        if (object instanceof $root.ru.sovcombank.hackaton.proto.AdvInfoData)
-                            return object;
-                        var message = new $root.ru.sovcombank.hackaton.proto.AdvInfoData();
-                        if (object.fullOrIncrement != null)
-                            message.fullOrIncrement = Boolean(object.fullOrIncrement);
-                        if (object.rows) {
-                            if (!Array.isArray(object.rows))
-                                throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfoData.rows: array expected");
-                            message.rows = [];
-                            for (var i = 0; i < object.rows.length; ++i) {
-                                if (typeof object.rows[i] !== "object")
-                                    throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfoData.rows: object expected");
-                                message.rows[i] = $root.ru.sovcombank.hackaton.proto.DataRow.fromObject(object.rows[i]);
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Creates a plain object from an AdvInfoData message. Also converts values to other types if specified.
-                     * @function toObject
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.AdvInfoData} message AdvInfoData
-                     * @param {$protobuf.IConversionOptions} [options] Conversion options
-                     * @returns {Object.<string,*>} Plain object
-                     */
-                    AdvInfoData.toObject = function toObject(message, options) {
-                        if (!options)
-                            options = {};
-                        var object = {};
-                        if (options.arrays || options.defaults)
-                            object.rows = [];
-                        if (options.defaults)
-                            object.fullOrIncrement = false;
-                        if (message.fullOrIncrement != null && message.hasOwnProperty("fullOrIncrement"))
-                            object.fullOrIncrement = message.fullOrIncrement;
-                        if (message.rows && message.rows.length) {
-                            object.rows = [];
-                            for (var j = 0; j < message.rows.length; ++j)
-                                object.rows[j] = $root.ru.sovcombank.hackaton.proto.DataRow.toObject(message.rows[j], options);
-                        }
-                        return object;
-                    };
-
-                    /**
-                     * Converts this AdvInfoData to JSON.
-                     * @function toJSON
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @instance
-                     * @returns {Object.<string,*>} JSON object
-                     */
-                    AdvInfoData.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-                    };
-
-                    /**
-                     * Gets the default type url for AdvInfoData
-                     * @function getTypeUrl
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
-                     * @static
-                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                     * @returns {string} The default type url
-                     */
-                    AdvInfoData.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-                        if (typeUrlPrefix === undefined) {
-                            typeUrlPrefix = "type.googleapis.com";
-                        }
-                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.AdvInfoData";
-                    };
-
-                    return AdvInfoData;
-                })();
-
-                proto.DataRow = (function() {
-
-                    /**
-                     * Properties of a DataRow.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @interface IDataRow
-                     * @property {string|null} [rowIdent] DataRow rowIdent
-                     * @property {boolean|null} [incrementDelete] DataRow incrementDelete
-                     * @property {Array.<ru.sovcombank.hackaton.proto.IValueRef>|null} [values] DataRow values
-                     */
-
-                    /**
-                     * Constructs a new DataRow.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @classdesc Represents a DataRow.
-                     * @implements IDataRow
-                     * @constructor
-                     * @param {ru.sovcombank.hackaton.proto.IDataRow=} [properties] Properties to set
-                     */
-                    function DataRow(properties) {
-                        this.values = [];
-                        if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                                if (properties[keys[i]] != null)
-                                    this[keys[i]] = properties[keys[i]];
-                    }
-
-                    /**
-                     * DataRow rowIdent.
-                     * @member {string} rowIdent
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @instance
-                     */
-                    DataRow.prototype.rowIdent = "";
-
-                    /**
-                     * DataRow incrementDelete.
-                     * @member {boolean} incrementDelete
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @instance
-                     */
-                    DataRow.prototype.incrementDelete = false;
-
-                    /**
-                     * DataRow values.
-                     * @member {Array.<ru.sovcombank.hackaton.proto.IValueRef>} values
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @instance
-                     */
-                    DataRow.prototype.values = $util.emptyArray;
-
-                    /**
-                     * Creates a new DataRow instance using the specified properties.
-                     * @function create
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IDataRow=} [properties] Properties to set
-                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow instance
-                     */
-                    DataRow.create = function create(properties) {
-                        return new DataRow(properties);
-                    };
-
-                    /**
-                     * Encodes the specified DataRow message. Does not implicitly {@link ru.sovcombank.hackaton.proto.DataRow.verify|verify} messages.
-                     * @function encode
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IDataRow} message DataRow message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    DataRow.encode = function encode(message, writer) {
-                        if (!writer)
-                            writer = $Writer.create();
-                        if (message.rowIdent != null && Object.hasOwnProperty.call(message, "rowIdent"))
-                            writer.uint32(/* id 1, wireType 2 =*/10).string(message.rowIdent);
-                        if (message.incrementDelete != null && Object.hasOwnProperty.call(message, "incrementDelete"))
-                            writer.uint32(/* id 2, wireType 0 =*/16).bool(message.incrementDelete);
-                        if (message.values != null && message.values.length)
-                            for (var i = 0; i < message.values.length; ++i)
-                                $root.ru.sovcombank.hackaton.proto.ValueRef.encode(message.values[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-                        return writer;
-                    };
-
-                    /**
-                     * Encodes the specified DataRow message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.DataRow.verify|verify} messages.
-                     * @function encodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IDataRow} message DataRow message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    DataRow.encodeDelimited = function encodeDelimited(message, writer) {
-                        return this.encode(message, writer).ldelim();
-                    };
-
-                    /**
-                     * Decodes a DataRow message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @param {number} [length] Message length if known beforehand
-                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    DataRow.decode = function decode(reader, length) {
-                        if (!(reader instanceof $Reader))
-                            reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.DataRow();
-                        while (reader.pos < end) {
-                            var tag = reader.uint32();
-                            switch (tag >>> 3) {
-                            case 1: {
-                                    message.rowIdent = reader.string();
-                                    break;
-                                }
-                            case 2: {
-                                    message.incrementDelete = reader.bool();
-                                    break;
-                                }
-                            case 3: {
-                                    if (!(message.values && message.values.length))
-                                        message.values = [];
-                                    message.values.push($root.ru.sovcombank.hackaton.proto.ValueRef.decode(reader, reader.uint32()));
-                                    break;
-                                }
-                            default:
-                                reader.skipType(tag & 7);
-                                break;
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Decodes a DataRow message from the specified reader or buffer, length delimited.
-                     * @function decodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    DataRow.decodeDelimited = function decodeDelimited(reader) {
-                        if (!(reader instanceof $Reader))
-                            reader = new $Reader(reader);
-                        return this.decode(reader, reader.uint32());
-                    };
-
-                    /**
-                     * Verifies a DataRow message.
-                     * @function verify
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {Object.<string,*>} message Plain object to verify
-                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-                     */
-                    DataRow.verify = function verify(message) {
-                        if (typeof message !== "object" || message === null)
-                            return "object expected";
-                        if (message.rowIdent != null && message.hasOwnProperty("rowIdent"))
-                            if (!$util.isString(message.rowIdent))
-                                return "rowIdent: string expected";
-                        if (message.incrementDelete != null && message.hasOwnProperty("incrementDelete"))
-                            if (typeof message.incrementDelete !== "boolean")
-                                return "incrementDelete: boolean expected";
-                        if (message.values != null && message.hasOwnProperty("values")) {
-                            if (!Array.isArray(message.values))
-                                return "values: array expected";
-                            for (var i = 0; i < message.values.length; ++i) {
-                                var error = $root.ru.sovcombank.hackaton.proto.ValueRef.verify(message.values[i]);
-                                if (error)
-                                    return "values." + error;
-                            }
-                        }
-                        return null;
-                    };
-
-                    /**
-                     * Creates a DataRow message from a plain object. Also converts values to their respective internal types.
-                     * @function fromObject
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {Object.<string,*>} object Plain object
-                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow
-                     */
-                    DataRow.fromObject = function fromObject(object) {
-                        if (object instanceof $root.ru.sovcombank.hackaton.proto.DataRow)
-                            return object;
-                        var message = new $root.ru.sovcombank.hackaton.proto.DataRow();
-                        if (object.rowIdent != null)
-                            message.rowIdent = String(object.rowIdent);
-                        if (object.incrementDelete != null)
-                            message.incrementDelete = Boolean(object.incrementDelete);
-                        if (object.values) {
-                            if (!Array.isArray(object.values))
-                                throw TypeError(".ru.sovcombank.hackaton.proto.DataRow.values: array expected");
-                            message.values = [];
-                            for (var i = 0; i < object.values.length; ++i) {
-                                if (typeof object.values[i] !== "object")
-                                    throw TypeError(".ru.sovcombank.hackaton.proto.DataRow.values: object expected");
-                                message.values[i] = $root.ru.sovcombank.hackaton.proto.ValueRef.fromObject(object.values[i]);
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Creates a plain object from a DataRow message. Also converts values to other types if specified.
-                     * @function toObject
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.DataRow} message DataRow
-                     * @param {$protobuf.IConversionOptions} [options] Conversion options
-                     * @returns {Object.<string,*>} Plain object
-                     */
-                    DataRow.toObject = function toObject(message, options) {
-                        if (!options)
-                            options = {};
-                        var object = {};
-                        if (options.arrays || options.defaults)
-                            object.values = [];
-                        if (options.defaults) {
-                            object.rowIdent = "";
-                            object.incrementDelete = false;
-                        }
-                        if (message.rowIdent != null && message.hasOwnProperty("rowIdent"))
-                            object.rowIdent = message.rowIdent;
-                        if (message.incrementDelete != null && message.hasOwnProperty("incrementDelete"))
-                            object.incrementDelete = message.incrementDelete;
-                        if (message.values && message.values.length) {
-                            object.values = [];
-                            for (var j = 0; j < message.values.length; ++j)
-                                object.values[j] = $root.ru.sovcombank.hackaton.proto.ValueRef.toObject(message.values[j], options);
-                        }
-                        return object;
-                    };
-
-                    /**
-                     * Converts this DataRow to JSON.
-                     * @function toJSON
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @instance
-                     * @returns {Object.<string,*>} JSON object
-                     */
-                    DataRow.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-                    };
-
-                    /**
-                     * Gets the default type url for DataRow
-                     * @function getTypeUrl
-                     * @memberof ru.sovcombank.hackaton.proto.DataRow
-                     * @static
-                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                     * @returns {string} The default type url
-                     */
-                    DataRow.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-                        if (typeUrlPrefix === undefined) {
-                            typeUrlPrefix = "type.googleapis.com";
-                        }
-                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.DataRow";
-                    };
-
-                    return DataRow;
-                })();
-
-                proto.ValueRef = (function() {
-
-                    /**
-                     * Properties of a ValueRef.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @interface IValueRef
-                     * @property {ru.sovcombank.hackaton.proto.DataType|null} [dataType] ValueRef dataType
-                     * @property {string|null} [format] ValueRef format
-                     * @property {string|null} [value] ValueRef value
-                     */
-
-                    /**
-                     * Constructs a new ValueRef.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @classdesc Represents a ValueRef.
-                     * @implements IValueRef
-                     * @constructor
-                     * @param {ru.sovcombank.hackaton.proto.IValueRef=} [properties] Properties to set
-                     */
-                    function ValueRef(properties) {
-                        if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                                if (properties[keys[i]] != null)
-                                    this[keys[i]] = properties[keys[i]];
-                    }
-
-                    /**
-                     * ValueRef dataType.
-                     * @member {ru.sovcombank.hackaton.proto.DataType} dataType
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @instance
-                     */
-                    ValueRef.prototype.dataType = 0;
-
-                    /**
-                     * ValueRef format.
-                     * @member {string|null|undefined} format
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @instance
-                     */
-                    ValueRef.prototype.format = null;
-
-                    /**
-                     * ValueRef value.
-                     * @member {string|null|undefined} value
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @instance
-                     */
-                    ValueRef.prototype.value = null;
-
-                    // OneOf field names bound to virtual getters and setters
-                    var $oneOfFields;
-
-                    /**
-                     * ValueRef _format.
-                     * @member {"format"|undefined} _format
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @instance
-                     */
-                    Object.defineProperty(ValueRef.prototype, "_format", {
-                        get: $util.oneOfGetter($oneOfFields = ["format"]),
-                        set: $util.oneOfSetter($oneOfFields)
-                    });
-
-                    /**
-                     * ValueRef _value.
-                     * @member {"value"|undefined} _value
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @instance
-                     */
-                    Object.defineProperty(ValueRef.prototype, "_value", {
-                        get: $util.oneOfGetter($oneOfFields = ["value"]),
-                        set: $util.oneOfSetter($oneOfFields)
-                    });
-
-                    /**
-                     * Creates a new ValueRef instance using the specified properties.
-                     * @function create
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IValueRef=} [properties] Properties to set
-                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef instance
-                     */
-                    ValueRef.create = function create(properties) {
-                        return new ValueRef(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValueRef message. Does not implicitly {@link ru.sovcombank.hackaton.proto.ValueRef.verify|verify} messages.
-                     * @function encode
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IValueRef} message ValueRef message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValueRef.encode = function encode(message, writer) {
-                        if (!writer)
-                            writer = $Writer.create();
-                        if (message.dataType != null && Object.hasOwnProperty.call(message, "dataType"))
-                            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.dataType);
-                        if (message.format != null && Object.hasOwnProperty.call(message, "format"))
-                            writer.uint32(/* id 2, wireType 2 =*/18).string(message.format);
-                        if (message.value != null && Object.hasOwnProperty.call(message, "value"))
-                            writer.uint32(/* id 3, wireType 2 =*/26).string(message.value);
-                        return writer;
-                    };
-
-                    /**
-                     * Encodes the specified ValueRef message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.ValueRef.verify|verify} messages.
-                     * @function encodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IValueRef} message ValueRef message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValueRef.encodeDelimited = function encodeDelimited(message, writer) {
-                        return this.encode(message, writer).ldelim();
-                    };
-
-                    /**
-                     * Decodes a ValueRef message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @param {number} [length] Message length if known beforehand
-                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValueRef.decode = function decode(reader, length) {
-                        if (!(reader instanceof $Reader))
-                            reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.ValueRef();
-                        while (reader.pos < end) {
-                            var tag = reader.uint32();
-                            switch (tag >>> 3) {
-                            case 1: {
-                                    message.dataType = reader.int32();
-                                    break;
-                                }
-                            case 2: {
-                                    message.format = reader.string();
-                                    break;
-                                }
-                            case 3: {
-                                    message.value = reader.string();
-                                    break;
-                                }
-                            default:
-                                reader.skipType(tag & 7);
-                                break;
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Decodes a ValueRef message from the specified reader or buffer, length delimited.
-                     * @function decodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValueRef.decodeDelimited = function decodeDelimited(reader) {
-                        if (!(reader instanceof $Reader))
-                            reader = new $Reader(reader);
-                        return this.decode(reader, reader.uint32());
-                    };
-
-                    /**
-                     * Verifies a ValueRef message.
-                     * @function verify
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {Object.<string,*>} message Plain object to verify
-                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-                     */
-                    ValueRef.verify = function verify(message) {
-                        if (typeof message !== "object" || message === null)
-                            return "object expected";
-                        var properties = {};
-                        if (message.dataType != null && message.hasOwnProperty("dataType"))
-                            switch (message.dataType) {
-                            default:
-                                return "dataType: enum value expected";
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                break;
-                            }
-                        if (message.format != null && message.hasOwnProperty("format")) {
-                            properties._format = 1;
-                            if (!$util.isString(message.format))
-                                return "format: string expected";
-                        }
-                        if (message.value != null && message.hasOwnProperty("value")) {
-                            properties._value = 1;
-                            if (!$util.isString(message.value))
-                                return "value: string expected";
-                        }
-                        return null;
-                    };
-
-                    /**
-                     * Creates a ValueRef message from a plain object. Also converts values to their respective internal types.
-                     * @function fromObject
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {Object.<string,*>} object Plain object
-                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef
-                     */
-                    ValueRef.fromObject = function fromObject(object) {
-                        if (object instanceof $root.ru.sovcombank.hackaton.proto.ValueRef)
-                            return object;
-                        var message = new $root.ru.sovcombank.hackaton.proto.ValueRef();
-                        switch (object.dataType) {
-                        default:
-                            if (typeof object.dataType === "number") {
-                                message.dataType = object.dataType;
-                                break;
-                            }
-                            break;
-                        case "dtString":
-                        case 0:
-                            message.dataType = 0;
-                            break;
-                        case "dtInteger":
-                        case 1:
-                            message.dataType = 1;
-                            break;
-                        case "dtFloat":
-                        case 2:
-                            message.dataType = 2;
-                            break;
-                        case "dtBoolean":
-                        case 3:
-                            message.dataType = 3;
-                            break;
-                        case "dtDateTime":
-                        case 4:
-                            message.dataType = 4;
-                            break;
-                        }
-                        if (object.format != null)
-                            message.format = String(object.format);
-                        if (object.value != null)
-                            message.value = String(object.value);
-                        return message;
-                    };
-
-                    /**
-                     * Creates a plain object from a ValueRef message. Also converts values to other types if specified.
-                     * @function toObject
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.ValueRef} message ValueRef
-                     * @param {$protobuf.IConversionOptions} [options] Conversion options
-                     * @returns {Object.<string,*>} Plain object
-                     */
-                    ValueRef.toObject = function toObject(message, options) {
-                        if (!options)
-                            options = {};
-                        var object = {};
-                        if (options.defaults)
-                            object.dataType = options.enums === String ? "dtString" : 0;
-                        if (message.dataType != null && message.hasOwnProperty("dataType"))
-                            object.dataType = options.enums === String ? $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] === undefined ? message.dataType : $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] : message.dataType;
-                        if (message.format != null && message.hasOwnProperty("format")) {
-                            object.format = message.format;
-                            if (options.oneofs)
-                                object._format = "format";
-                        }
-                        if (message.value != null && message.hasOwnProperty("value")) {
-                            object.value = message.value;
-                            if (options.oneofs)
-                                object._value = "value";
-                        }
-                        return object;
-                    };
-
-                    /**
-                     * Converts this ValueRef to JSON.
-                     * @function toJSON
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @instance
-                     * @returns {Object.<string,*>} JSON object
-                     */
-                    ValueRef.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-                    };
-
-                    /**
-                     * Gets the default type url for ValueRef
-                     * @function getTypeUrl
-                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
-                     * @static
-                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                     * @returns {string} The default type url
-                     */
-                    ValueRef.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-                        if (typeUrlPrefix === undefined) {
-                            typeUrlPrefix = "type.googleapis.com";
-                        }
-                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.ValueRef";
-                    };
-
-                    return ValueRef;
-                })();
-
-                /**
-                 * CommandType enum.
-                 * @name ru.sovcombank.hackaton.proto.CommandType
-                 * @enum {number}
-                 * @property {number} ctHandshake=0 ctHandshake value
-                 * @property {number} ctStatus=1 ctStatus value
-                 * @property {number} ctExecCommand=2 ctExecCommand value
-                 */
-                proto.CommandType = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "ctHandshake"] = 0;
-                    values[valuesById[1] = "ctStatus"] = 1;
-                    values[valuesById[2] = "ctExecCommand"] = 2;
-                    return values;
-                })();
-
-                /**
-                 * AnswerType enum.
-                 * @name ru.sovcombank.hackaton.proto.AnswerType
-                 * @enum {number}
-                 * @property {number} atNotSupported=0 atNotSupported value
-                 * @property {number} atAnswerOK=1 atAnswerOK value
-                 * @property {number} atAnswerError=2 atAnswerError value
-                 */
-                proto.AnswerType = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "atNotSupported"] = 0;
-                    values[valuesById[1] = "atAnswerOK"] = 1;
-                    values[valuesById[2] = "atAnswerError"] = 2;
-                    return values;
-                })();
-
-                /**
-                 * DataType enum.
-                 * @name ru.sovcombank.hackaton.proto.DataType
-                 * @enum {number}
-                 * @property {number} dtString=0 dtString value
-                 * @property {number} dtInteger=1 dtInteger value
-                 * @property {number} dtFloat=2 dtFloat value
-                 * @property {number} dtBoolean=3 dtBoolean value
-                 * @property {number} dtDateTime=4 dtDateTime value
-                 */
-                proto.DataType = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "dtString"] = 0;
-                    values[valuesById[1] = "dtInteger"] = 1;
-                    values[valuesById[2] = "dtFloat"] = 2;
-                    values[valuesById[3] = "dtBoolean"] = 3;
-                    values[valuesById[4] = "dtDateTime"] = 4;
-                    return values;
-                })();
-
-                /**
-                 * StatusType enum.
-                 * @name ru.sovcombank.hackaton.proto.StatusType
-                 * @enum {number}
-                 * @property {number} stNotReady=0 stNotReady value
-                 * @property {number} stReady=1 stReady value
-                 * @property {number} stPerformed=2 stPerformed value
-                 */
-                proto.StatusType = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "stNotReady"] = 0;
-                    values[valuesById[1] = "stReady"] = 1;
-                    values[valuesById[2] = "stPerformed"] = 2;
-                    return values;
-                })();
-
-                proto.AdvInfoFieldRef = (function() {
-
-                    /**
-                     * Properties of an AdvInfoFieldRef.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @interface IAdvInfoFieldRef
-                     * @property {string|null} [alias] AdvInfoFieldRef alias
-                     * @property {string|null} [caption] AdvInfoFieldRef caption
-                     * @property {ru.sovcombank.hackaton.proto.DataType|null} [dataType] AdvInfoFieldRef dataType
-                     */
-
-                    /**
-                     * Constructs a new AdvInfoFieldRef.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @classdesc Represents an AdvInfoFieldRef.
-                     * @implements IAdvInfoFieldRef
-                     * @constructor
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef=} [properties] Properties to set
-                     */
-                    function AdvInfoFieldRef(properties) {
-                        if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                                if (properties[keys[i]] != null)
-                                    this[keys[i]] = properties[keys[i]];
-                    }
-
-                    /**
-                     * AdvInfoFieldRef alias.
-                     * @member {string} alias
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @instance
-                     */
-                    AdvInfoFieldRef.prototype.alias = "";
-
-                    /**
-                     * AdvInfoFieldRef caption.
-                     * @member {string|null|undefined} caption
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @instance
-                     */
-                    AdvInfoFieldRef.prototype.caption = null;
-
-                    /**
-                     * AdvInfoFieldRef dataType.
-                     * @member {ru.sovcombank.hackaton.proto.DataType} dataType
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @instance
-                     */
-                    AdvInfoFieldRef.prototype.dataType = 0;
-
-                    // OneOf field names bound to virtual getters and setters
-                    var $oneOfFields;
-
-                    /**
-                     * AdvInfoFieldRef _caption.
-                     * @member {"caption"|undefined} _caption
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @instance
-                     */
-                    Object.defineProperty(AdvInfoFieldRef.prototype, "_caption", {
-                        get: $util.oneOfGetter($oneOfFields = ["caption"]),
-                        set: $util.oneOfSetter($oneOfFields)
-                    });
-
-                    /**
-                     * Creates a new AdvInfoFieldRef instance using the specified properties.
-                     * @function create
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef=} [properties] Properties to set
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef instance
-                     */
-                    AdvInfoFieldRef.create = function create(properties) {
-                        return new AdvInfoFieldRef(properties);
-                    };
-
-                    /**
-                     * Encodes the specified AdvInfoFieldRef message. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoFieldRef.verify|verify} messages.
-                     * @function encode
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef} message AdvInfoFieldRef message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    AdvInfoFieldRef.encode = function encode(message, writer) {
-                        if (!writer)
-                            writer = $Writer.create();
-                        if (message.alias != null && Object.hasOwnProperty.call(message, "alias"))
-                            writer.uint32(/* id 1, wireType 2 =*/10).string(message.alias);
-                        if (message.caption != null && Object.hasOwnProperty.call(message, "caption"))
-                            writer.uint32(/* id 2, wireType 2 =*/18).string(message.caption);
-                        if (message.dataType != null && Object.hasOwnProperty.call(message, "dataType"))
-                            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.dataType);
-                        return writer;
-                    };
-
-                    /**
-                     * Encodes the specified AdvInfoFieldRef message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoFieldRef.verify|verify} messages.
-                     * @function encodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef} message AdvInfoFieldRef message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    AdvInfoFieldRef.encodeDelimited = function encodeDelimited(message, writer) {
-                        return this.encode(message, writer).ldelim();
-                    };
-
-                    /**
-                     * Decodes an AdvInfoFieldRef message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @param {number} [length] Message length if known beforehand
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    AdvInfoFieldRef.decode = function decode(reader, length) {
-                        if (!(reader instanceof $Reader))
-                            reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef();
-                        while (reader.pos < end) {
-                            var tag = reader.uint32();
-                            switch (tag >>> 3) {
-                            case 1: {
-                                    message.alias = reader.string();
-                                    break;
-                                }
-                            case 2: {
-                                    message.caption = reader.string();
-                                    break;
-                                }
-                            case 3: {
-                                    message.dataType = reader.int32();
-                                    break;
-                                }
-                            default:
-                                reader.skipType(tag & 7);
-                                break;
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Decodes an AdvInfoFieldRef message from the specified reader or buffer, length delimited.
-                     * @function decodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    AdvInfoFieldRef.decodeDelimited = function decodeDelimited(reader) {
-                        if (!(reader instanceof $Reader))
-                            reader = new $Reader(reader);
-                        return this.decode(reader, reader.uint32());
-                    };
-
-                    /**
-                     * Verifies an AdvInfoFieldRef message.
-                     * @function verify
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {Object.<string,*>} message Plain object to verify
-                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-                     */
-                    AdvInfoFieldRef.verify = function verify(message) {
-                        if (typeof message !== "object" || message === null)
-                            return "object expected";
-                        var properties = {};
-                        if (message.alias != null && message.hasOwnProperty("alias"))
-                            if (!$util.isString(message.alias))
-                                return "alias: string expected";
-                        if (message.caption != null && message.hasOwnProperty("caption")) {
-                            properties._caption = 1;
-                            if (!$util.isString(message.caption))
-                                return "caption: string expected";
-                        }
-                        if (message.dataType != null && message.hasOwnProperty("dataType"))
-                            switch (message.dataType) {
-                            default:
-                                return "dataType: enum value expected";
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                                break;
-                            }
-                        return null;
-                    };
-
-                    /**
-                     * Creates an AdvInfoFieldRef message from a plain object. Also converts values to their respective internal types.
-                     * @function fromObject
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {Object.<string,*>} object Plain object
-                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef
-                     */
-                    AdvInfoFieldRef.fromObject = function fromObject(object) {
-                        if (object instanceof $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef)
-                            return object;
-                        var message = new $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef();
-                        if (object.alias != null)
-                            message.alias = String(object.alias);
-                        if (object.caption != null)
-                            message.caption = String(object.caption);
-                        switch (object.dataType) {
-                        default:
-                            if (typeof object.dataType === "number") {
-                                message.dataType = object.dataType;
-                                break;
-                            }
-                            break;
-                        case "dtString":
-                        case 0:
-                            message.dataType = 0;
-                            break;
-                        case "dtInteger":
-                        case 1:
-                            message.dataType = 1;
-                            break;
-                        case "dtFloat":
-                        case 2:
-                            message.dataType = 2;
-                            break;
-                        case "dtBoolean":
-                        case 3:
-                            message.dataType = 3;
-                            break;
-                        case "dtDateTime":
-                        case 4:
-                            message.dataType = 4;
-                            break;
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Creates a plain object from an AdvInfoFieldRef message. Also converts values to other types if specified.
-                     * @function toObject
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} message AdvInfoFieldRef
-                     * @param {$protobuf.IConversionOptions} [options] Conversion options
-                     * @returns {Object.<string,*>} Plain object
-                     */
-                    AdvInfoFieldRef.toObject = function toObject(message, options) {
-                        if (!options)
-                            options = {};
-                        var object = {};
-                        if (options.defaults) {
-                            object.alias = "";
-                            object.dataType = options.enums === String ? "dtString" : 0;
-                        }
-                        if (message.alias != null && message.hasOwnProperty("alias"))
-                            object.alias = message.alias;
-                        if (message.caption != null && message.hasOwnProperty("caption")) {
-                            object.caption = message.caption;
-                            if (options.oneofs)
-                                object._caption = "caption";
-                        }
-                        if (message.dataType != null && message.hasOwnProperty("dataType"))
-                            object.dataType = options.enums === String ? $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] === undefined ? message.dataType : $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] : message.dataType;
-                        return object;
-                    };
-
-                    /**
-                     * Converts this AdvInfoFieldRef to JSON.
-                     * @function toJSON
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @instance
-                     * @returns {Object.<string,*>} JSON object
-                     */
-                    AdvInfoFieldRef.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-                    };
-
-                    /**
-                     * Gets the default type url for AdvInfoFieldRef
-                     * @function getTypeUrl
-                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
-                     * @static
-                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                     * @returns {string} The default type url
-                     */
-                    AdvInfoFieldRef.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-                        if (typeUrlPrefix === undefined) {
-                            typeUrlPrefix = "type.googleapis.com";
-                        }
-                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.AdvInfoFieldRef";
-                    };
-
-                    return AdvInfoFieldRef;
-                })();
-
-                proto.Event = (function() {
-
-                    /**
-                     * Properties of an Event.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @interface IEvent
-                     * @property {ru.sovcombank.hackaton.proto.IStatus|null} [status] Event status
-                     */
-
-                    /**
-                     * Constructs a new Event.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @classdesc Represents an Event.
-                     * @implements IEvent
-                     * @constructor
-                     * @param {ru.sovcombank.hackaton.proto.IEvent=} [properties] Properties to set
-                     */
-                    function Event(properties) {
-                        if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                                if (properties[keys[i]] != null)
-                                    this[keys[i]] = properties[keys[i]];
-                    }
-
-                    /**
-                     * Event status.
-                     * @member {ru.sovcombank.hackaton.proto.IStatus|null|undefined} status
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @instance
-                     */
-                    Event.prototype.status = null;
-
-                    /**
-                     * Creates a new Event instance using the specified properties.
-                     * @function create
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IEvent=} [properties] Properties to set
-                     * @returns {ru.sovcombank.hackaton.proto.Event} Event instance
-                     */
-                    Event.create = function create(properties) {
-                        return new Event(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Event message. Does not implicitly {@link ru.sovcombank.hackaton.proto.Event.verify|verify} messages.
-                     * @function encode
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IEvent} message Event message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Event.encode = function encode(message, writer) {
-                        if (!writer)
-                            writer = $Writer.create();
-                        if (message.status != null && Object.hasOwnProperty.call(message, "status"))
-                            $root.ru.sovcombank.hackaton.proto.Status.encode(message.status, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-                        return writer;
-                    };
-
-                    /**
-                     * Encodes the specified Event message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.Event.verify|verify} messages.
-                     * @function encodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IEvent} message Event message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Event.encodeDelimited = function encodeDelimited(message, writer) {
-                        return this.encode(message, writer).ldelim();
-                    };
-
-                    /**
-                     * Decodes an Event message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @param {number} [length] Message length if known beforehand
-                     * @returns {ru.sovcombank.hackaton.proto.Event} Event
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Event.decode = function decode(reader, length) {
-                        if (!(reader instanceof $Reader))
-                            reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.Event();
-                        while (reader.pos < end) {
-                            var tag = reader.uint32();
-                            switch (tag >>> 3) {
-                            case 1: {
-                                    message.status = $root.ru.sovcombank.hackaton.proto.Status.decode(reader, reader.uint32());
-                                    break;
-                                }
-                            default:
-                                reader.skipType(tag & 7);
-                                break;
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Decodes an Event message from the specified reader or buffer, length delimited.
-                     * @function decodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @returns {ru.sovcombank.hackaton.proto.Event} Event
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Event.decodeDelimited = function decodeDelimited(reader) {
-                        if (!(reader instanceof $Reader))
-                            reader = new $Reader(reader);
-                        return this.decode(reader, reader.uint32());
-                    };
-
-                    /**
-                     * Verifies an Event message.
-                     * @function verify
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {Object.<string,*>} message Plain object to verify
-                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-                     */
-                    Event.verify = function verify(message) {
-                        if (typeof message !== "object" || message === null)
-                            return "object expected";
-                        if (message.status != null && message.hasOwnProperty("status")) {
-                            var error = $root.ru.sovcombank.hackaton.proto.Status.verify(message.status);
-                            if (error)
-                                return "status." + error;
-                        }
-                        return null;
-                    };
-
-                    /**
-                     * Creates an Event message from a plain object. Also converts values to their respective internal types.
-                     * @function fromObject
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {Object.<string,*>} object Plain object
-                     * @returns {ru.sovcombank.hackaton.proto.Event} Event
-                     */
-                    Event.fromObject = function fromObject(object) {
-                        if (object instanceof $root.ru.sovcombank.hackaton.proto.Event)
-                            return object;
-                        var message = new $root.ru.sovcombank.hackaton.proto.Event();
-                        if (object.status != null) {
-                            if (typeof object.status !== "object")
-                                throw TypeError(".ru.sovcombank.hackaton.proto.Event.status: object expected");
-                            message.status = $root.ru.sovcombank.hackaton.proto.Status.fromObject(object.status);
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Creates a plain object from an Event message. Also converts values to other types if specified.
-                     * @function toObject
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.Event} message Event
-                     * @param {$protobuf.IConversionOptions} [options] Conversion options
-                     * @returns {Object.<string,*>} Plain object
-                     */
-                    Event.toObject = function toObject(message, options) {
-                        if (!options)
-                            options = {};
-                        var object = {};
-                        if (options.defaults)
-                            object.status = null;
-                        if (message.status != null && message.hasOwnProperty("status"))
-                            object.status = $root.ru.sovcombank.hackaton.proto.Status.toObject(message.status, options);
-                        return object;
-                    };
-
-                    /**
-                     * Converts this Event to JSON.
-                     * @function toJSON
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @instance
-                     * @returns {Object.<string,*>} JSON object
-                     */
-                    Event.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-                    };
-
-                    /**
-                     * Gets the default type url for Event
-                     * @function getTypeUrl
-                     * @memberof ru.sovcombank.hackaton.proto.Event
-                     * @static
-                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                     * @returns {string} The default type url
-                     */
-                    Event.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-                        if (typeUrlPrefix === undefined) {
-                            typeUrlPrefix = "type.googleapis.com";
-                        }
-                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.Event";
-                    };
-
-                    return Event;
-                })();
-
-                proto.Status = (function() {
-
-                    /**
-                     * Properties of a Status.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @interface IStatus
-                     * @property {ru.sovcombank.hackaton.proto.StatusType|null} [type] Status type
-                     * @property {string|null} [details] Status details
-                     * @property {number|Long|null} [nextTime] Status nextTime
-                     * @property {ru.sovcombank.hackaton.proto.IAdvInfo|null} [advStatus] Status advStatus
-                     */
-
-                    /**
-                     * Constructs a new Status.
-                     * @memberof ru.sovcombank.hackaton.proto
-                     * @classdesc Represents a Status.
-                     * @implements IStatus
-                     * @constructor
-                     * @param {ru.sovcombank.hackaton.proto.IStatus=} [properties] Properties to set
-                     */
-                    function Status(properties) {
-                        if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                                if (properties[keys[i]] != null)
-                                    this[keys[i]] = properties[keys[i]];
-                    }
-
-                    /**
-                     * Status type.
-                     * @member {ru.sovcombank.hackaton.proto.StatusType} type
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     */
-                    Status.prototype.type = 0;
-
-                    /**
-                     * Status details.
-                     * @member {string|null|undefined} details
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     */
-                    Status.prototype.details = null;
-
-                    /**
-                     * Status nextTime.
-                     * @member {number|Long|null|undefined} nextTime
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     */
-                    Status.prototype.nextTime = null;
-
-                    /**
-                     * Status advStatus.
-                     * @member {ru.sovcombank.hackaton.proto.IAdvInfo|null|undefined} advStatus
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     */
-                    Status.prototype.advStatus = null;
-
-                    // OneOf field names bound to virtual getters and setters
-                    var $oneOfFields;
-
-                    /**
-                     * Status _details.
-                     * @member {"details"|undefined} _details
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     */
-                    Object.defineProperty(Status.prototype, "_details", {
-                        get: $util.oneOfGetter($oneOfFields = ["details"]),
-                        set: $util.oneOfSetter($oneOfFields)
-                    });
-
-                    /**
-                     * Status _nextTime.
-                     * @member {"nextTime"|undefined} _nextTime
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     */
-                    Object.defineProperty(Status.prototype, "_nextTime", {
-                        get: $util.oneOfGetter($oneOfFields = ["nextTime"]),
-                        set: $util.oneOfSetter($oneOfFields)
-                    });
-
-                    /**
-                     * Status _advStatus.
-                     * @member {"advStatus"|undefined} _advStatus
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     */
-                    Object.defineProperty(Status.prototype, "_advStatus", {
-                        get: $util.oneOfGetter($oneOfFields = ["advStatus"]),
-                        set: $util.oneOfSetter($oneOfFields)
-                    });
-
-                    /**
-                     * Creates a new Status instance using the specified properties.
-                     * @function create
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IStatus=} [properties] Properties to set
-                     * @returns {ru.sovcombank.hackaton.proto.Status} Status instance
-                     */
-                    Status.create = function create(properties) {
-                        return new Status(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Status message. Does not implicitly {@link ru.sovcombank.hackaton.proto.Status.verify|verify} messages.
-                     * @function encode
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IStatus} message Status message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Status.encode = function encode(message, writer) {
-                        if (!writer)
-                            writer = $Writer.create();
-                        if (message.type != null && Object.hasOwnProperty.call(message, "type"))
-                            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.type);
-                        if (message.details != null && Object.hasOwnProperty.call(message, "details"))
-                            writer.uint32(/* id 2, wireType 2 =*/18).string(message.details);
-                        if (message.nextTime != null && Object.hasOwnProperty.call(message, "nextTime"))
-                            writer.uint32(/* id 3, wireType 0 =*/24).int64(message.nextTime);
-                        if (message.advStatus != null && Object.hasOwnProperty.call(message, "advStatus"))
-                            $root.ru.sovcombank.hackaton.proto.AdvInfo.encode(message.advStatus, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
-                        return writer;
-                    };
-
-                    /**
-                     * Encodes the specified Status message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.Status.verify|verify} messages.
-                     * @function encodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.IStatus} message Status message or plain object to encode
-                     * @param {$protobuf.Writer} [writer] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Status.encodeDelimited = function encodeDelimited(message, writer) {
-                        return this.encode(message, writer).ldelim();
-                    };
-
-                    /**
-                     * Decodes a Status message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @param {number} [length] Message length if known beforehand
-                     * @returns {ru.sovcombank.hackaton.proto.Status} Status
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Status.decode = function decode(reader, length) {
-                        if (!(reader instanceof $Reader))
-                            reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.Status();
-                        while (reader.pos < end) {
-                            var tag = reader.uint32();
-                            switch (tag >>> 3) {
-                            case 1: {
-                                    message.type = reader.int32();
-                                    break;
-                                }
-                            case 2: {
-                                    message.details = reader.string();
-                                    break;
-                                }
-                            case 3: {
-                                    message.nextTime = reader.int64();
-                                    break;
-                                }
-                            case 4: {
-                                    message.advStatus = $root.ru.sovcombank.hackaton.proto.AdvInfo.decode(reader, reader.uint32());
-                                    break;
-                                }
-                            default:
-                                reader.skipType(tag & 7);
-                                break;
-                            }
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Decodes a Status message from the specified reader or buffer, length delimited.
-                     * @function decodeDelimited
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-                     * @returns {ru.sovcombank.hackaton.proto.Status} Status
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Status.decodeDelimited = function decodeDelimited(reader) {
-                        if (!(reader instanceof $Reader))
-                            reader = new $Reader(reader);
-                        return this.decode(reader, reader.uint32());
-                    };
-
-                    /**
-                     * Verifies a Status message.
-                     * @function verify
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {Object.<string,*>} message Plain object to verify
-                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-                     */
-                    Status.verify = function verify(message) {
-                        if (typeof message !== "object" || message === null)
-                            return "object expected";
-                        var properties = {};
-                        if (message.type != null && message.hasOwnProperty("type"))
-                            switch (message.type) {
-                            default:
-                                return "type: enum value expected";
-                            case 0:
-                            case 1:
-                            case 2:
-                                break;
-                            }
-                        if (message.details != null && message.hasOwnProperty("details")) {
-                            properties._details = 1;
-                            if (!$util.isString(message.details))
-                                return "details: string expected";
-                        }
-                        if (message.nextTime != null && message.hasOwnProperty("nextTime")) {
-                            properties._nextTime = 1;
-                            if (!$util.isInteger(message.nextTime) && !(message.nextTime && $util.isInteger(message.nextTime.low) && $util.isInteger(message.nextTime.high)))
-                                return "nextTime: integer|Long expected";
-                        }
-                        if (message.advStatus != null && message.hasOwnProperty("advStatus")) {
-                            properties._advStatus = 1;
-                            {
-                                var error = $root.ru.sovcombank.hackaton.proto.AdvInfo.verify(message.advStatus);
-                                if (error)
-                                    return "advStatus." + error;
-                            }
-                        }
-                        return null;
-                    };
-
-                    /**
-                     * Creates a Status message from a plain object. Also converts values to their respective internal types.
-                     * @function fromObject
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {Object.<string,*>} object Plain object
-                     * @returns {ru.sovcombank.hackaton.proto.Status} Status
-                     */
-                    Status.fromObject = function fromObject(object) {
-                        if (object instanceof $root.ru.sovcombank.hackaton.proto.Status)
-                            return object;
-                        var message = new $root.ru.sovcombank.hackaton.proto.Status();
-                        switch (object.type) {
-                        default:
-                            if (typeof object.type === "number") {
-                                message.type = object.type;
-                                break;
-                            }
-                            break;
-                        case "stNotReady":
-                        case 0:
-                            message.type = 0;
-                            break;
-                        case "stReady":
-                        case 1:
-                            message.type = 1;
-                            break;
-                        case "stPerformed":
-                        case 2:
-                            message.type = 2;
-                            break;
-                        }
-                        if (object.details != null)
-                            message.details = String(object.details);
-                        if (object.nextTime != null)
-                            if ($util.Long)
-                                (message.nextTime = $util.Long.fromValue(object.nextTime)).unsigned = false;
-                            else if (typeof object.nextTime === "string")
-                                message.nextTime = parseInt(object.nextTime, 10);
-                            else if (typeof object.nextTime === "number")
-                                message.nextTime = object.nextTime;
-                            else if (typeof object.nextTime === "object")
-                                message.nextTime = new $util.LongBits(object.nextTime.low >>> 0, object.nextTime.high >>> 0).toNumber();
-                        if (object.advStatus != null) {
-                            if (typeof object.advStatus !== "object")
-                                throw TypeError(".ru.sovcombank.hackaton.proto.Status.advStatus: object expected");
-                            message.advStatus = $root.ru.sovcombank.hackaton.proto.AdvInfo.fromObject(object.advStatus);
-                        }
-                        return message;
-                    };
-
-                    /**
-                     * Creates a plain object from a Status message. Also converts values to other types if specified.
-                     * @function toObject
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {ru.sovcombank.hackaton.proto.Status} message Status
-                     * @param {$protobuf.IConversionOptions} [options] Conversion options
-                     * @returns {Object.<string,*>} Plain object
-                     */
-                    Status.toObject = function toObject(message, options) {
-                        if (!options)
-                            options = {};
-                        var object = {};
-                        if (options.defaults)
-                            object.type = options.enums === String ? "stNotReady" : 0;
-                        if (message.type != null && message.hasOwnProperty("type"))
-                            object.type = options.enums === String ? $root.ru.sovcombank.hackaton.proto.StatusType[message.type] === undefined ? message.type : $root.ru.sovcombank.hackaton.proto.StatusType[message.type] : message.type;
-                        if (message.details != null && message.hasOwnProperty("details")) {
-                            object.details = message.details;
-                            if (options.oneofs)
-                                object._details = "details";
-                        }
-                        if (message.nextTime != null && message.hasOwnProperty("nextTime")) {
-                            if (typeof message.nextTime === "number")
-                                object.nextTime = options.longs === String ? String(message.nextTime) : message.nextTime;
-                            else
-                                object.nextTime = options.longs === String ? $util.Long.prototype.toString.call(message.nextTime) : options.longs === Number ? new $util.LongBits(message.nextTime.low >>> 0, message.nextTime.high >>> 0).toNumber() : message.nextTime;
-                            if (options.oneofs)
-                                object._nextTime = "nextTime";
-                        }
-                        if (message.advStatus != null && message.hasOwnProperty("advStatus")) {
-                            object.advStatus = $root.ru.sovcombank.hackaton.proto.AdvInfo.toObject(message.advStatus, options);
-                            if (options.oneofs)
-                                object._advStatus = "advStatus";
-                        }
-                        return object;
-                    };
-
-                    /**
-                     * Converts this Status to JSON.
-                     * @function toJSON
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @instance
-                     * @returns {Object.<string,*>} JSON object
-                     */
-                    Status.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-                    };
-
-                    /**
-                     * Gets the default type url for Status
-                     * @function getTypeUrl
-                     * @memberof ru.sovcombank.hackaton.proto.Status
-                     * @static
-                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                     * @returns {string} The default type url
-                     */
-                    Status.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-                        if (typeUrlPrefix === undefined) {
-                            typeUrlPrefix = "type.googleapis.com";
-                        }
-                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.Status";
-                    };
-
-                    return Status;
-                })();
-
                 proto.ExchangeInfoMessage = (function() {
 
                     /**
@@ -3105,6 +1023,74 @@ $root.ru = (function() {
                     return Request;
                 })();
 
+                /**
+                 * CommandType enum.
+                 * @name ru.sovcombank.hackaton.proto.CommandType
+                 * @enum {number}
+                 * @property {number} ctHandshake=0 ctHandshake value
+                 * @property {number} ctStatus=1 ctStatus value
+                 * @property {number} ctExecCommand=2 ctExecCommand value
+                 */
+                proto.CommandType = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "ctHandshake"] = 0;
+                    values[valuesById[1] = "ctStatus"] = 1;
+                    values[valuesById[2] = "ctExecCommand"] = 2;
+                    return values;
+                })();
+
+                /**
+                 * AnswerType enum.
+                 * @name ru.sovcombank.hackaton.proto.AnswerType
+                 * @enum {number}
+                 * @property {number} atNotSupported=0 atNotSupported value
+                 * @property {number} atAnswerOK=1 atAnswerOK value
+                 * @property {number} atAnswerError=2 atAnswerError value
+                 */
+                proto.AnswerType = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "atNotSupported"] = 0;
+                    values[valuesById[1] = "atAnswerOK"] = 1;
+                    values[valuesById[2] = "atAnswerError"] = 2;
+                    return values;
+                })();
+
+                /**
+                 * DataType enum.
+                 * @name ru.sovcombank.hackaton.proto.DataType
+                 * @enum {number}
+                 * @property {number} dtString=0 dtString value
+                 * @property {number} dtInteger=1 dtInteger value
+                 * @property {number} dtFloat=2 dtFloat value
+                 * @property {number} dtBoolean=3 dtBoolean value
+                 * @property {number} dtDateTime=4 dtDateTime value
+                 */
+                proto.DataType = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "dtString"] = 0;
+                    values[valuesById[1] = "dtInteger"] = 1;
+                    values[valuesById[2] = "dtFloat"] = 2;
+                    values[valuesById[3] = "dtBoolean"] = 3;
+                    values[valuesById[4] = "dtDateTime"] = 4;
+                    return values;
+                })();
+
+                /**
+                 * StatusType enum.
+                 * @name ru.sovcombank.hackaton.proto.StatusType
+                 * @enum {number}
+                 * @property {number} stNotReady=0 stNotReady value
+                 * @property {number} stReady=1 stReady value
+                 * @property {number} stPerformed=2 stPerformed value
+                 */
+                proto.StatusType = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "stNotReady"] = 0;
+                    values[valuesById[1] = "stReady"] = 1;
+                    values[valuesById[2] = "stPerformed"] = 2;
+                    return values;
+                })();
+
                 proto.OwnCommand = (function() {
 
                     /**
@@ -3765,6 +1751,323 @@ $root.ru = (function() {
                     return Parameter;
                 })();
 
+                proto.ValueRef = (function() {
+
+                    /**
+                     * Properties of a ValueRef.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IValueRef
+                     * @property {ru.sovcombank.hackaton.proto.DataType|null} [dataType] ValueRef dataType
+                     * @property {string|null} [format] ValueRef format
+                     * @property {string|null} [value] ValueRef value
+                     */
+
+                    /**
+                     * Constructs a new ValueRef.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Represents a ValueRef.
+                     * @implements IValueRef
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IValueRef=} [properties] Properties to set
+                     */
+                    function ValueRef(properties) {
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * ValueRef dataType.
+                     * @member {ru.sovcombank.hackaton.proto.DataType} dataType
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @instance
+                     */
+                    ValueRef.prototype.dataType = 0;
+
+                    /**
+                     * ValueRef format.
+                     * @member {string|null|undefined} format
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @instance
+                     */
+                    ValueRef.prototype.format = null;
+
+                    /**
+                     * ValueRef value.
+                     * @member {string|null|undefined} value
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @instance
+                     */
+                    ValueRef.prototype.value = null;
+
+                    // OneOf field names bound to virtual getters and setters
+                    var $oneOfFields;
+
+                    /**
+                     * ValueRef _format.
+                     * @member {"format"|undefined} _format
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @instance
+                     */
+                    Object.defineProperty(ValueRef.prototype, "_format", {
+                        get: $util.oneOfGetter($oneOfFields = ["format"]),
+                        set: $util.oneOfSetter($oneOfFields)
+                    });
+
+                    /**
+                     * ValueRef _value.
+                     * @member {"value"|undefined} _value
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @instance
+                     */
+                    Object.defineProperty(ValueRef.prototype, "_value", {
+                        get: $util.oneOfGetter($oneOfFields = ["value"]),
+                        set: $util.oneOfSetter($oneOfFields)
+                    });
+
+                    /**
+                     * Creates a new ValueRef instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IValueRef=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef instance
+                     */
+                    ValueRef.create = function create(properties) {
+                        return new ValueRef(properties);
+                    };
+
+                    /**
+                     * Encodes the specified ValueRef message. Does not implicitly {@link ru.sovcombank.hackaton.proto.ValueRef.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IValueRef} message ValueRef message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    ValueRef.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.dataType != null && Object.hasOwnProperty.call(message, "dataType"))
+                            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.dataType);
+                        if (message.format != null && Object.hasOwnProperty.call(message, "format"))
+                            writer.uint32(/* id 2, wireType 2 =*/18).string(message.format);
+                        if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                            writer.uint32(/* id 3, wireType 2 =*/26).string(message.value);
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified ValueRef message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.ValueRef.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IValueRef} message ValueRef message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    ValueRef.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes a ValueRef message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    ValueRef.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.ValueRef();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.dataType = reader.int32();
+                                    break;
+                                }
+                            case 2: {
+                                    message.format = reader.string();
+                                    break;
+                                }
+                            case 3: {
+                                    message.value = reader.string();
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes a ValueRef message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    ValueRef.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies a ValueRef message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    ValueRef.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        var properties = {};
+                        if (message.dataType != null && message.hasOwnProperty("dataType"))
+                            switch (message.dataType) {
+                            default:
+                                return "dataType: enum value expected";
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                                break;
+                            }
+                        if (message.format != null && message.hasOwnProperty("format")) {
+                            properties._format = 1;
+                            if (!$util.isString(message.format))
+                                return "format: string expected";
+                        }
+                        if (message.value != null && message.hasOwnProperty("value")) {
+                            properties._value = 1;
+                            if (!$util.isString(message.value))
+                                return "value: string expected";
+                        }
+                        return null;
+                    };
+
+                    /**
+                     * Creates a ValueRef message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.ValueRef} ValueRef
+                     */
+                    ValueRef.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.ValueRef)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.ValueRef();
+                        switch (object.dataType) {
+                        default:
+                            if (typeof object.dataType === "number") {
+                                message.dataType = object.dataType;
+                                break;
+                            }
+                            break;
+                        case "dtString":
+                        case 0:
+                            message.dataType = 0;
+                            break;
+                        case "dtInteger":
+                        case 1:
+                            message.dataType = 1;
+                            break;
+                        case "dtFloat":
+                        case 2:
+                            message.dataType = 2;
+                            break;
+                        case "dtBoolean":
+                        case 3:
+                            message.dataType = 3;
+                            break;
+                        case "dtDateTime":
+                        case 4:
+                            message.dataType = 4;
+                            break;
+                        }
+                        if (object.format != null)
+                            message.format = String(object.format);
+                        if (object.value != null)
+                            message.value = String(object.value);
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from a ValueRef message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.ValueRef} message ValueRef
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    ValueRef.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.defaults)
+                            object.dataType = options.enums === String ? "dtString" : 0;
+                        if (message.dataType != null && message.hasOwnProperty("dataType"))
+                            object.dataType = options.enums === String ? $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] === undefined ? message.dataType : $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] : message.dataType;
+                        if (message.format != null && message.hasOwnProperty("format")) {
+                            object.format = message.format;
+                            if (options.oneofs)
+                                object._format = "format";
+                        }
+                        if (message.value != null && message.hasOwnProperty("value")) {
+                            object.value = message.value;
+                            if (options.oneofs)
+                                object._value = "value";
+                        }
+                        return object;
+                    };
+
+                    /**
+                     * Converts this ValueRef to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    ValueRef.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for ValueRef
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.ValueRef
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    ValueRef.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.ValueRef";
+                    };
+
+                    return ValueRef;
+                })();
+
                 proto.Response = (function() {
 
                     /**
@@ -4124,6 +2427,1935 @@ $root.ru = (function() {
                     };
 
                     return Response;
+                })();
+
+                proto.Status = (function() {
+
+                    /**
+                     * Properties of a Status.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IStatus
+                     * @property {ru.sovcombank.hackaton.proto.StatusType|null} [type] Status type
+                     * @property {string|null} [details] Status details
+                     * @property {number|Long|null} [nextTime] Status nextTime
+                     * @property {ru.sovcombank.hackaton.proto.IAdvInfo|null} [advStatus] Status advStatus
+                     */
+
+                    /**
+                     * Constructs a new Status.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Represents a Status.
+                     * @implements IStatus
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IStatus=} [properties] Properties to set
+                     */
+                    function Status(properties) {
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * Status type.
+                     * @member {ru.sovcombank.hackaton.proto.StatusType} type
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     */
+                    Status.prototype.type = 0;
+
+                    /**
+                     * Status details.
+                     * @member {string|null|undefined} details
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     */
+                    Status.prototype.details = null;
+
+                    /**
+                     * Status nextTime.
+                     * @member {number|Long|null|undefined} nextTime
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     */
+                    Status.prototype.nextTime = null;
+
+                    /**
+                     * Status advStatus.
+                     * @member {ru.sovcombank.hackaton.proto.IAdvInfo|null|undefined} advStatus
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     */
+                    Status.prototype.advStatus = null;
+
+                    // OneOf field names bound to virtual getters and setters
+                    var $oneOfFields;
+
+                    /**
+                     * Status _details.
+                     * @member {"details"|undefined} _details
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     */
+                    Object.defineProperty(Status.prototype, "_details", {
+                        get: $util.oneOfGetter($oneOfFields = ["details"]),
+                        set: $util.oneOfSetter($oneOfFields)
+                    });
+
+                    /**
+                     * Status _nextTime.
+                     * @member {"nextTime"|undefined} _nextTime
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     */
+                    Object.defineProperty(Status.prototype, "_nextTime", {
+                        get: $util.oneOfGetter($oneOfFields = ["nextTime"]),
+                        set: $util.oneOfSetter($oneOfFields)
+                    });
+
+                    /**
+                     * Status _advStatus.
+                     * @member {"advStatus"|undefined} _advStatus
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     */
+                    Object.defineProperty(Status.prototype, "_advStatus", {
+                        get: $util.oneOfGetter($oneOfFields = ["advStatus"]),
+                        set: $util.oneOfSetter($oneOfFields)
+                    });
+
+                    /**
+                     * Creates a new Status instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IStatus=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.Status} Status instance
+                     */
+                    Status.create = function create(properties) {
+                        return new Status(properties);
+                    };
+
+                    /**
+                     * Encodes the specified Status message. Does not implicitly {@link ru.sovcombank.hackaton.proto.Status.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IStatus} message Status message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    Status.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.type != null && Object.hasOwnProperty.call(message, "type"))
+                            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.type);
+                        if (message.details != null && Object.hasOwnProperty.call(message, "details"))
+                            writer.uint32(/* id 2, wireType 2 =*/18).string(message.details);
+                        if (message.nextTime != null && Object.hasOwnProperty.call(message, "nextTime"))
+                            writer.uint32(/* id 3, wireType 0 =*/24).int64(message.nextTime);
+                        if (message.advStatus != null && Object.hasOwnProperty.call(message, "advStatus"))
+                            $root.ru.sovcombank.hackaton.proto.AdvInfo.encode(message.advStatus, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified Status message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.Status.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IStatus} message Status message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    Status.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes a Status message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.Status} Status
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    Status.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.Status();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.type = reader.int32();
+                                    break;
+                                }
+                            case 2: {
+                                    message.details = reader.string();
+                                    break;
+                                }
+                            case 3: {
+                                    message.nextTime = reader.int64();
+                                    break;
+                                }
+                            case 4: {
+                                    message.advStatus = $root.ru.sovcombank.hackaton.proto.AdvInfo.decode(reader, reader.uint32());
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes a Status message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.Status} Status
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    Status.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies a Status message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    Status.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        var properties = {};
+                        if (message.type != null && message.hasOwnProperty("type"))
+                            switch (message.type) {
+                            default:
+                                return "type: enum value expected";
+                            case 0:
+                            case 1:
+                            case 2:
+                                break;
+                            }
+                        if (message.details != null && message.hasOwnProperty("details")) {
+                            properties._details = 1;
+                            if (!$util.isString(message.details))
+                                return "details: string expected";
+                        }
+                        if (message.nextTime != null && message.hasOwnProperty("nextTime")) {
+                            properties._nextTime = 1;
+                            if (!$util.isInteger(message.nextTime) && !(message.nextTime && $util.isInteger(message.nextTime.low) && $util.isInteger(message.nextTime.high)))
+                                return "nextTime: integer|Long expected";
+                        }
+                        if (message.advStatus != null && message.hasOwnProperty("advStatus")) {
+                            properties._advStatus = 1;
+                            {
+                                var error = $root.ru.sovcombank.hackaton.proto.AdvInfo.verify(message.advStatus);
+                                if (error)
+                                    return "advStatus." + error;
+                            }
+                        }
+                        return null;
+                    };
+
+                    /**
+                     * Creates a Status message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.Status} Status
+                     */
+                    Status.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.Status)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.Status();
+                        switch (object.type) {
+                        default:
+                            if (typeof object.type === "number") {
+                                message.type = object.type;
+                                break;
+                            }
+                            break;
+                        case "stNotReady":
+                        case 0:
+                            message.type = 0;
+                            break;
+                        case "stReady":
+                        case 1:
+                            message.type = 1;
+                            break;
+                        case "stPerformed":
+                        case 2:
+                            message.type = 2;
+                            break;
+                        }
+                        if (object.details != null)
+                            message.details = String(object.details);
+                        if (object.nextTime != null)
+                            if ($util.Long)
+                                (message.nextTime = $util.Long.fromValue(object.nextTime)).unsigned = false;
+                            else if (typeof object.nextTime === "string")
+                                message.nextTime = parseInt(object.nextTime, 10);
+                            else if (typeof object.nextTime === "number")
+                                message.nextTime = object.nextTime;
+                            else if (typeof object.nextTime === "object")
+                                message.nextTime = new $util.LongBits(object.nextTime.low >>> 0, object.nextTime.high >>> 0).toNumber();
+                        if (object.advStatus != null) {
+                            if (typeof object.advStatus !== "object")
+                                throw TypeError(".ru.sovcombank.hackaton.proto.Status.advStatus: object expected");
+                            message.advStatus = $root.ru.sovcombank.hackaton.proto.AdvInfo.fromObject(object.advStatus);
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from a Status message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.Status} message Status
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    Status.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.defaults)
+                            object.type = options.enums === String ? "stNotReady" : 0;
+                        if (message.type != null && message.hasOwnProperty("type"))
+                            object.type = options.enums === String ? $root.ru.sovcombank.hackaton.proto.StatusType[message.type] === undefined ? message.type : $root.ru.sovcombank.hackaton.proto.StatusType[message.type] : message.type;
+                        if (message.details != null && message.hasOwnProperty("details")) {
+                            object.details = message.details;
+                            if (options.oneofs)
+                                object._details = "details";
+                        }
+                        if (message.nextTime != null && message.hasOwnProperty("nextTime")) {
+                            if (typeof message.nextTime === "number")
+                                object.nextTime = options.longs === String ? String(message.nextTime) : message.nextTime;
+                            else
+                                object.nextTime = options.longs === String ? $util.Long.prototype.toString.call(message.nextTime) : options.longs === Number ? new $util.LongBits(message.nextTime.low >>> 0, message.nextTime.high >>> 0).toNumber() : message.nextTime;
+                            if (options.oneofs)
+                                object._nextTime = "nextTime";
+                        }
+                        if (message.advStatus != null && message.hasOwnProperty("advStatus")) {
+                            object.advStatus = $root.ru.sovcombank.hackaton.proto.AdvInfo.toObject(message.advStatus, options);
+                            if (options.oneofs)
+                                object._advStatus = "advStatus";
+                        }
+                        return object;
+                    };
+
+                    /**
+                     * Converts this Status to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    Status.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for Status
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.Status
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    Status.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.Status";
+                    };
+
+                    return Status;
+                })();
+
+                proto.AdvInfo = (function() {
+
+                    /**
+                     * Properties of an AdvInfo.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IAdvInfo
+                     * @property {string|null} [caption] AdvInfo caption
+                     * @property {Array.<ru.sovcombank.hackaton.proto.IAdvInfoFieldRef>|null} [fields] AdvInfo fields
+                     * @property {ru.sovcombank.hackaton.proto.IAdvInfoData|null} [data] AdvInfo data
+                     */
+
+                    /**
+                     * Constructs a new AdvInfo.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Represents an AdvInfo.
+                     * @implements IAdvInfo
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo=} [properties] Properties to set
+                     */
+                    function AdvInfo(properties) {
+                        this.fields = [];
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * AdvInfo caption.
+                     * @member {string} caption
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @instance
+                     */
+                    AdvInfo.prototype.caption = "";
+
+                    /**
+                     * AdvInfo fields.
+                     * @member {Array.<ru.sovcombank.hackaton.proto.IAdvInfoFieldRef>} fields
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @instance
+                     */
+                    AdvInfo.prototype.fields = $util.emptyArray;
+
+                    /**
+                     * AdvInfo data.
+                     * @member {ru.sovcombank.hackaton.proto.IAdvInfoData|null|undefined} data
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @instance
+                     */
+                    AdvInfo.prototype.data = null;
+
+                    // OneOf field names bound to virtual getters and setters
+                    var $oneOfFields;
+
+                    /**
+                     * AdvInfo _data.
+                     * @member {"data"|undefined} _data
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @instance
+                     */
+                    Object.defineProperty(AdvInfo.prototype, "_data", {
+                        get: $util.oneOfGetter($oneOfFields = ["data"]),
+                        set: $util.oneOfSetter($oneOfFields)
+                    });
+
+                    /**
+                     * Creates a new AdvInfo instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo instance
+                     */
+                    AdvInfo.create = function create(properties) {
+                        return new AdvInfo(properties);
+                    };
+
+                    /**
+                     * Encodes the specified AdvInfo message. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfo.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo} message AdvInfo message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    AdvInfo.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.caption != null && Object.hasOwnProperty.call(message, "caption"))
+                            writer.uint32(/* id 1, wireType 2 =*/10).string(message.caption);
+                        if (message.fields != null && message.fields.length)
+                            for (var i = 0; i < message.fields.length; ++i)
+                                $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.encode(message.fields[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                        if (message.data != null && Object.hasOwnProperty.call(message, "data"))
+                            $root.ru.sovcombank.hackaton.proto.AdvInfoData.encode(message.data, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified AdvInfo message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfo.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfo} message AdvInfo message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    AdvInfo.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes an AdvInfo message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    AdvInfo.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.AdvInfo();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.caption = reader.string();
+                                    break;
+                                }
+                            case 2: {
+                                    if (!(message.fields && message.fields.length))
+                                        message.fields = [];
+                                    message.fields.push($root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.decode(reader, reader.uint32()));
+                                    break;
+                                }
+                            case 3: {
+                                    message.data = $root.ru.sovcombank.hackaton.proto.AdvInfoData.decode(reader, reader.uint32());
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes an AdvInfo message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    AdvInfo.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies an AdvInfo message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    AdvInfo.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        var properties = {};
+                        if (message.caption != null && message.hasOwnProperty("caption"))
+                            if (!$util.isString(message.caption))
+                                return "caption: string expected";
+                        if (message.fields != null && message.hasOwnProperty("fields")) {
+                            if (!Array.isArray(message.fields))
+                                return "fields: array expected";
+                            for (var i = 0; i < message.fields.length; ++i) {
+                                var error = $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.verify(message.fields[i]);
+                                if (error)
+                                    return "fields." + error;
+                            }
+                        }
+                        if (message.data != null && message.hasOwnProperty("data")) {
+                            properties._data = 1;
+                            {
+                                var error = $root.ru.sovcombank.hackaton.proto.AdvInfoData.verify(message.data);
+                                if (error)
+                                    return "data." + error;
+                            }
+                        }
+                        return null;
+                    };
+
+                    /**
+                     * Creates an AdvInfo message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfo} AdvInfo
+                     */
+                    AdvInfo.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.AdvInfo)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.AdvInfo();
+                        if (object.caption != null)
+                            message.caption = String(object.caption);
+                        if (object.fields) {
+                            if (!Array.isArray(object.fields))
+                                throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfo.fields: array expected");
+                            message.fields = [];
+                            for (var i = 0; i < object.fields.length; ++i) {
+                                if (typeof object.fields[i] !== "object")
+                                    throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfo.fields: object expected");
+                                message.fields[i] = $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.fromObject(object.fields[i]);
+                            }
+                        }
+                        if (object.data != null) {
+                            if (typeof object.data !== "object")
+                                throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfo.data: object expected");
+                            message.data = $root.ru.sovcombank.hackaton.proto.AdvInfoData.fromObject(object.data);
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from an AdvInfo message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.AdvInfo} message AdvInfo
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    AdvInfo.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.arrays || options.defaults)
+                            object.fields = [];
+                        if (options.defaults)
+                            object.caption = "";
+                        if (message.caption != null && message.hasOwnProperty("caption"))
+                            object.caption = message.caption;
+                        if (message.fields && message.fields.length) {
+                            object.fields = [];
+                            for (var j = 0; j < message.fields.length; ++j)
+                                object.fields[j] = $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef.toObject(message.fields[j], options);
+                        }
+                        if (message.data != null && message.hasOwnProperty("data")) {
+                            object.data = $root.ru.sovcombank.hackaton.proto.AdvInfoData.toObject(message.data, options);
+                            if (options.oneofs)
+                                object._data = "data";
+                        }
+                        return object;
+                    };
+
+                    /**
+                     * Converts this AdvInfo to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    AdvInfo.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for AdvInfo
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfo
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    AdvInfo.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.AdvInfo";
+                    };
+
+                    return AdvInfo;
+                })();
+
+                proto.AdvInfoData = (function() {
+
+                    /**
+                     * Properties of an AdvInfoData.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IAdvInfoData
+                     * @property {boolean|null} [fullOrIncrement] AdvInfoData fullOrIncrement
+                     * @property {Array.<ru.sovcombank.hackaton.proto.IDataRow>|null} [rows] AdvInfoData rows
+                     */
+
+                    /**
+                     * Constructs a new AdvInfoData.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Тип данных для типа расширенного отображения статуса.
+                     * Поле fullOrIncrement - обязательно для заполнения.
+                     * 
+                     * Если поле fullOrIncrement = false, а поле rows не содержит данных, то со стороны GUI данные в статусе необходимо стирать полностью.
+                     * 
+                     * Поле fullOrIncrement регламентирует правила изменения данных в строках расширенного статуса.
+                     * При значении false данные в GUI полностью заменяются данными из коллекции rows, в обратном случае действует следующее правило:
+                     * 1. Если строки с данными из поля rows нет в GUI значит ее нужно добавить
+                     * 2. Если строка с данными из поля rows есть в GUI значит значения полей в GUI нужно заменить значениями полей из пришедшей строки
+                     * 3. Если строка с данными из поля rows помечена флагом incrementDelete = true значит эта строка должна быть удалена из GUI
+                     * @implements IAdvInfoData
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData=} [properties] Properties to set
+                     */
+                    function AdvInfoData(properties) {
+                        this.rows = [];
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * AdvInfoData fullOrIncrement.
+                     * @member {boolean} fullOrIncrement
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @instance
+                     */
+                    AdvInfoData.prototype.fullOrIncrement = false;
+
+                    /**
+                     * AdvInfoData rows.
+                     * @member {Array.<ru.sovcombank.hackaton.proto.IDataRow>} rows
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @instance
+                     */
+                    AdvInfoData.prototype.rows = $util.emptyArray;
+
+                    /**
+                     * Creates a new AdvInfoData instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData instance
+                     */
+                    AdvInfoData.create = function create(properties) {
+                        return new AdvInfoData(properties);
+                    };
+
+                    /**
+                     * Encodes the specified AdvInfoData message. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoData.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData} message AdvInfoData message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    AdvInfoData.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.fullOrIncrement != null && Object.hasOwnProperty.call(message, "fullOrIncrement"))
+                            writer.uint32(/* id 1, wireType 0 =*/8).bool(message.fullOrIncrement);
+                        if (message.rows != null && message.rows.length)
+                            for (var i = 0; i < message.rows.length; ++i)
+                                $root.ru.sovcombank.hackaton.proto.DataRow.encode(message.rows[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified AdvInfoData message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoData.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoData} message AdvInfoData message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    AdvInfoData.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes an AdvInfoData message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    AdvInfoData.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.AdvInfoData();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.fullOrIncrement = reader.bool();
+                                    break;
+                                }
+                            case 2: {
+                                    if (!(message.rows && message.rows.length))
+                                        message.rows = [];
+                                    message.rows.push($root.ru.sovcombank.hackaton.proto.DataRow.decode(reader, reader.uint32()));
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes an AdvInfoData message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    AdvInfoData.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies an AdvInfoData message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    AdvInfoData.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        if (message.fullOrIncrement != null && message.hasOwnProperty("fullOrIncrement"))
+                            if (typeof message.fullOrIncrement !== "boolean")
+                                return "fullOrIncrement: boolean expected";
+                        if (message.rows != null && message.hasOwnProperty("rows")) {
+                            if (!Array.isArray(message.rows))
+                                return "rows: array expected";
+                            for (var i = 0; i < message.rows.length; ++i) {
+                                var error = $root.ru.sovcombank.hackaton.proto.DataRow.verify(message.rows[i]);
+                                if (error)
+                                    return "rows." + error;
+                            }
+                        }
+                        return null;
+                    };
+
+                    /**
+                     * Creates an AdvInfoData message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoData} AdvInfoData
+                     */
+                    AdvInfoData.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.AdvInfoData)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.AdvInfoData();
+                        if (object.fullOrIncrement != null)
+                            message.fullOrIncrement = Boolean(object.fullOrIncrement);
+                        if (object.rows) {
+                            if (!Array.isArray(object.rows))
+                                throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfoData.rows: array expected");
+                            message.rows = [];
+                            for (var i = 0; i < object.rows.length; ++i) {
+                                if (typeof object.rows[i] !== "object")
+                                    throw TypeError(".ru.sovcombank.hackaton.proto.AdvInfoData.rows: object expected");
+                                message.rows[i] = $root.ru.sovcombank.hackaton.proto.DataRow.fromObject(object.rows[i]);
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from an AdvInfoData message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.AdvInfoData} message AdvInfoData
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    AdvInfoData.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.arrays || options.defaults)
+                            object.rows = [];
+                        if (options.defaults)
+                            object.fullOrIncrement = false;
+                        if (message.fullOrIncrement != null && message.hasOwnProperty("fullOrIncrement"))
+                            object.fullOrIncrement = message.fullOrIncrement;
+                        if (message.rows && message.rows.length) {
+                            object.rows = [];
+                            for (var j = 0; j < message.rows.length; ++j)
+                                object.rows[j] = $root.ru.sovcombank.hackaton.proto.DataRow.toObject(message.rows[j], options);
+                        }
+                        return object;
+                    };
+
+                    /**
+                     * Converts this AdvInfoData to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    AdvInfoData.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for AdvInfoData
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoData
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    AdvInfoData.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.AdvInfoData";
+                    };
+
+                    return AdvInfoData;
+                })();
+
+                proto.DataRow = (function() {
+
+                    /**
+                     * Properties of a DataRow.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IDataRow
+                     * @property {string|null} [rowIdent] DataRow rowIdent
+                     * @property {boolean|null} [incrementDelete] DataRow incrementDelete
+                     * @property {Array.<ru.sovcombank.hackaton.proto.IDataFieldValue>|null} [values] DataRow values
+                     */
+
+                    /**
+                     * Constructs a new DataRow.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Represents a DataRow.
+                     * @implements IDataRow
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IDataRow=} [properties] Properties to set
+                     */
+                    function DataRow(properties) {
+                        this.values = [];
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * DataRow rowIdent.
+                     * @member {string} rowIdent
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @instance
+                     */
+                    DataRow.prototype.rowIdent = "";
+
+                    /**
+                     * DataRow incrementDelete.
+                     * @member {boolean} incrementDelete
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @instance
+                     */
+                    DataRow.prototype.incrementDelete = false;
+
+                    /**
+                     * DataRow values.
+                     * @member {Array.<ru.sovcombank.hackaton.proto.IDataFieldValue>} values
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @instance
+                     */
+                    DataRow.prototype.values = $util.emptyArray;
+
+                    /**
+                     * Creates a new DataRow instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IDataRow=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow instance
+                     */
+                    DataRow.create = function create(properties) {
+                        return new DataRow(properties);
+                    };
+
+                    /**
+                     * Encodes the specified DataRow message. Does not implicitly {@link ru.sovcombank.hackaton.proto.DataRow.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IDataRow} message DataRow message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    DataRow.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.rowIdent != null && Object.hasOwnProperty.call(message, "rowIdent"))
+                            writer.uint32(/* id 1, wireType 2 =*/10).string(message.rowIdent);
+                        if (message.incrementDelete != null && Object.hasOwnProperty.call(message, "incrementDelete"))
+                            writer.uint32(/* id 2, wireType 0 =*/16).bool(message.incrementDelete);
+                        if (message.values != null && message.values.length)
+                            for (var i = 0; i < message.values.length; ++i)
+                                $root.ru.sovcombank.hackaton.proto.DataFieldValue.encode(message.values[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified DataRow message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.DataRow.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IDataRow} message DataRow message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    DataRow.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes a DataRow message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    DataRow.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.DataRow();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.rowIdent = reader.string();
+                                    break;
+                                }
+                            case 2: {
+                                    message.incrementDelete = reader.bool();
+                                    break;
+                                }
+                            case 3: {
+                                    if (!(message.values && message.values.length))
+                                        message.values = [];
+                                    message.values.push($root.ru.sovcombank.hackaton.proto.DataFieldValue.decode(reader, reader.uint32()));
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes a DataRow message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    DataRow.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies a DataRow message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    DataRow.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        if (message.rowIdent != null && message.hasOwnProperty("rowIdent"))
+                            if (!$util.isString(message.rowIdent))
+                                return "rowIdent: string expected";
+                        if (message.incrementDelete != null && message.hasOwnProperty("incrementDelete"))
+                            if (typeof message.incrementDelete !== "boolean")
+                                return "incrementDelete: boolean expected";
+                        if (message.values != null && message.hasOwnProperty("values")) {
+                            if (!Array.isArray(message.values))
+                                return "values: array expected";
+                            for (var i = 0; i < message.values.length; ++i) {
+                                var error = $root.ru.sovcombank.hackaton.proto.DataFieldValue.verify(message.values[i]);
+                                if (error)
+                                    return "values." + error;
+                            }
+                        }
+                        return null;
+                    };
+
+                    /**
+                     * Creates a DataRow message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.DataRow} DataRow
+                     */
+                    DataRow.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.DataRow)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.DataRow();
+                        if (object.rowIdent != null)
+                            message.rowIdent = String(object.rowIdent);
+                        if (object.incrementDelete != null)
+                            message.incrementDelete = Boolean(object.incrementDelete);
+                        if (object.values) {
+                            if (!Array.isArray(object.values))
+                                throw TypeError(".ru.sovcombank.hackaton.proto.DataRow.values: array expected");
+                            message.values = [];
+                            for (var i = 0; i < object.values.length; ++i) {
+                                if (typeof object.values[i] !== "object")
+                                    throw TypeError(".ru.sovcombank.hackaton.proto.DataRow.values: object expected");
+                                message.values[i] = $root.ru.sovcombank.hackaton.proto.DataFieldValue.fromObject(object.values[i]);
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from a DataRow message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.DataRow} message DataRow
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    DataRow.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.arrays || options.defaults)
+                            object.values = [];
+                        if (options.defaults) {
+                            object.rowIdent = "";
+                            object.incrementDelete = false;
+                        }
+                        if (message.rowIdent != null && message.hasOwnProperty("rowIdent"))
+                            object.rowIdent = message.rowIdent;
+                        if (message.incrementDelete != null && message.hasOwnProperty("incrementDelete"))
+                            object.incrementDelete = message.incrementDelete;
+                        if (message.values && message.values.length) {
+                            object.values = [];
+                            for (var j = 0; j < message.values.length; ++j)
+                                object.values[j] = $root.ru.sovcombank.hackaton.proto.DataFieldValue.toObject(message.values[j], options);
+                        }
+                        return object;
+                    };
+
+                    /**
+                     * Converts this DataRow to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    DataRow.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for DataRow
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.DataRow
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    DataRow.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.DataRow";
+                    };
+
+                    return DataRow;
+                })();
+
+                proto.DataFieldValue = (function() {
+
+                    /**
+                     * Properties of a DataFieldValue.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IDataFieldValue
+                     * @property {string|null} [alias] DataFieldValue alias
+                     * @property {ru.sovcombank.hackaton.proto.IValueRef|null} [value] DataFieldValue value
+                     */
+
+                    /**
+                     * Constructs a new DataFieldValue.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Represents a DataFieldValue.
+                     * @implements IDataFieldValue
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IDataFieldValue=} [properties] Properties to set
+                     */
+                    function DataFieldValue(properties) {
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * DataFieldValue alias.
+                     * @member {string} alias
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @instance
+                     */
+                    DataFieldValue.prototype.alias = "";
+
+                    /**
+                     * DataFieldValue value.
+                     * @member {ru.sovcombank.hackaton.proto.IValueRef|null|undefined} value
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @instance
+                     */
+                    DataFieldValue.prototype.value = null;
+
+                    /**
+                     * Creates a new DataFieldValue instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IDataFieldValue=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.DataFieldValue} DataFieldValue instance
+                     */
+                    DataFieldValue.create = function create(properties) {
+                        return new DataFieldValue(properties);
+                    };
+
+                    /**
+                     * Encodes the specified DataFieldValue message. Does not implicitly {@link ru.sovcombank.hackaton.proto.DataFieldValue.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IDataFieldValue} message DataFieldValue message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    DataFieldValue.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.alias != null && Object.hasOwnProperty.call(message, "alias"))
+                            writer.uint32(/* id 1, wireType 2 =*/10).string(message.alias);
+                        if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                            $root.ru.sovcombank.hackaton.proto.ValueRef.encode(message.value, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified DataFieldValue message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.DataFieldValue.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IDataFieldValue} message DataFieldValue message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    DataFieldValue.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes a DataFieldValue message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.DataFieldValue} DataFieldValue
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    DataFieldValue.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.DataFieldValue();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.alias = reader.string();
+                                    break;
+                                }
+                            case 2: {
+                                    message.value = $root.ru.sovcombank.hackaton.proto.ValueRef.decode(reader, reader.uint32());
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes a DataFieldValue message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.DataFieldValue} DataFieldValue
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    DataFieldValue.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies a DataFieldValue message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    DataFieldValue.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        if (message.alias != null && message.hasOwnProperty("alias"))
+                            if (!$util.isString(message.alias))
+                                return "alias: string expected";
+                        if (message.value != null && message.hasOwnProperty("value")) {
+                            var error = $root.ru.sovcombank.hackaton.proto.ValueRef.verify(message.value);
+                            if (error)
+                                return "value." + error;
+                        }
+                        return null;
+                    };
+
+                    /**
+                     * Creates a DataFieldValue message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.DataFieldValue} DataFieldValue
+                     */
+                    DataFieldValue.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.DataFieldValue)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.DataFieldValue();
+                        if (object.alias != null)
+                            message.alias = String(object.alias);
+                        if (object.value != null) {
+                            if (typeof object.value !== "object")
+                                throw TypeError(".ru.sovcombank.hackaton.proto.DataFieldValue.value: object expected");
+                            message.value = $root.ru.sovcombank.hackaton.proto.ValueRef.fromObject(object.value);
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from a DataFieldValue message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.DataFieldValue} message DataFieldValue
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    DataFieldValue.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.defaults) {
+                            object.alias = "";
+                            object.value = null;
+                        }
+                        if (message.alias != null && message.hasOwnProperty("alias"))
+                            object.alias = message.alias;
+                        if (message.value != null && message.hasOwnProperty("value"))
+                            object.value = $root.ru.sovcombank.hackaton.proto.ValueRef.toObject(message.value, options);
+                        return object;
+                    };
+
+                    /**
+                     * Converts this DataFieldValue to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    DataFieldValue.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for DataFieldValue
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.DataFieldValue
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    DataFieldValue.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.DataFieldValue";
+                    };
+
+                    return DataFieldValue;
+                })();
+
+                proto.AdvInfoFieldRef = (function() {
+
+                    /**
+                     * Properties of an AdvInfoFieldRef.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IAdvInfoFieldRef
+                     * @property {string|null} [alias] AdvInfoFieldRef alias
+                     * @property {string|null} [caption] AdvInfoFieldRef caption
+                     * @property {ru.sovcombank.hackaton.proto.DataType|null} [dataType] AdvInfoFieldRef dataType
+                     */
+
+                    /**
+                     * Constructs a new AdvInfoFieldRef.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Represents an AdvInfoFieldRef.
+                     * @implements IAdvInfoFieldRef
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef=} [properties] Properties to set
+                     */
+                    function AdvInfoFieldRef(properties) {
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * AdvInfoFieldRef alias.
+                     * @member {string} alias
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @instance
+                     */
+                    AdvInfoFieldRef.prototype.alias = "";
+
+                    /**
+                     * AdvInfoFieldRef caption.
+                     * @member {string|null|undefined} caption
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @instance
+                     */
+                    AdvInfoFieldRef.prototype.caption = null;
+
+                    /**
+                     * AdvInfoFieldRef dataType.
+                     * @member {ru.sovcombank.hackaton.proto.DataType} dataType
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @instance
+                     */
+                    AdvInfoFieldRef.prototype.dataType = 0;
+
+                    // OneOf field names bound to virtual getters and setters
+                    var $oneOfFields;
+
+                    /**
+                     * AdvInfoFieldRef _caption.
+                     * @member {"caption"|undefined} _caption
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @instance
+                     */
+                    Object.defineProperty(AdvInfoFieldRef.prototype, "_caption", {
+                        get: $util.oneOfGetter($oneOfFields = ["caption"]),
+                        set: $util.oneOfSetter($oneOfFields)
+                    });
+
+                    /**
+                     * Creates a new AdvInfoFieldRef instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef instance
+                     */
+                    AdvInfoFieldRef.create = function create(properties) {
+                        return new AdvInfoFieldRef(properties);
+                    };
+
+                    /**
+                     * Encodes the specified AdvInfoFieldRef message. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoFieldRef.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef} message AdvInfoFieldRef message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    AdvInfoFieldRef.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.alias != null && Object.hasOwnProperty.call(message, "alias"))
+                            writer.uint32(/* id 1, wireType 2 =*/10).string(message.alias);
+                        if (message.caption != null && Object.hasOwnProperty.call(message, "caption"))
+                            writer.uint32(/* id 2, wireType 2 =*/18).string(message.caption);
+                        if (message.dataType != null && Object.hasOwnProperty.call(message, "dataType"))
+                            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.dataType);
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified AdvInfoFieldRef message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.AdvInfoFieldRef.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IAdvInfoFieldRef} message AdvInfoFieldRef message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    AdvInfoFieldRef.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes an AdvInfoFieldRef message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    AdvInfoFieldRef.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.alias = reader.string();
+                                    break;
+                                }
+                            case 2: {
+                                    message.caption = reader.string();
+                                    break;
+                                }
+                            case 3: {
+                                    message.dataType = reader.int32();
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes an AdvInfoFieldRef message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    AdvInfoFieldRef.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies an AdvInfoFieldRef message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    AdvInfoFieldRef.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        var properties = {};
+                        if (message.alias != null && message.hasOwnProperty("alias"))
+                            if (!$util.isString(message.alias))
+                                return "alias: string expected";
+                        if (message.caption != null && message.hasOwnProperty("caption")) {
+                            properties._caption = 1;
+                            if (!$util.isString(message.caption))
+                                return "caption: string expected";
+                        }
+                        if (message.dataType != null && message.hasOwnProperty("dataType"))
+                            switch (message.dataType) {
+                            default:
+                                return "dataType: enum value expected";
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                                break;
+                            }
+                        return null;
+                    };
+
+                    /**
+                     * Creates an AdvInfoFieldRef message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} AdvInfoFieldRef
+                     */
+                    AdvInfoFieldRef.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.AdvInfoFieldRef();
+                        if (object.alias != null)
+                            message.alias = String(object.alias);
+                        if (object.caption != null)
+                            message.caption = String(object.caption);
+                        switch (object.dataType) {
+                        default:
+                            if (typeof object.dataType === "number") {
+                                message.dataType = object.dataType;
+                                break;
+                            }
+                            break;
+                        case "dtString":
+                        case 0:
+                            message.dataType = 0;
+                            break;
+                        case "dtInteger":
+                        case 1:
+                            message.dataType = 1;
+                            break;
+                        case "dtFloat":
+                        case 2:
+                            message.dataType = 2;
+                            break;
+                        case "dtBoolean":
+                        case 3:
+                            message.dataType = 3;
+                            break;
+                        case "dtDateTime":
+                        case 4:
+                            message.dataType = 4;
+                            break;
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from an AdvInfoFieldRef message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.AdvInfoFieldRef} message AdvInfoFieldRef
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    AdvInfoFieldRef.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.defaults) {
+                            object.alias = "";
+                            object.dataType = options.enums === String ? "dtString" : 0;
+                        }
+                        if (message.alias != null && message.hasOwnProperty("alias"))
+                            object.alias = message.alias;
+                        if (message.caption != null && message.hasOwnProperty("caption")) {
+                            object.caption = message.caption;
+                            if (options.oneofs)
+                                object._caption = "caption";
+                        }
+                        if (message.dataType != null && message.hasOwnProperty("dataType"))
+                            object.dataType = options.enums === String ? $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] === undefined ? message.dataType : $root.ru.sovcombank.hackaton.proto.DataType[message.dataType] : message.dataType;
+                        return object;
+                    };
+
+                    /**
+                     * Converts this AdvInfoFieldRef to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    AdvInfoFieldRef.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for AdvInfoFieldRef
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.AdvInfoFieldRef
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    AdvInfoFieldRef.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.AdvInfoFieldRef";
+                    };
+
+                    return AdvInfoFieldRef;
+                })();
+
+                proto.Event = (function() {
+
+                    /**
+                     * Properties of an Event.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @interface IEvent
+                     * @property {ru.sovcombank.hackaton.proto.IStatus|null} [status] Event status
+                     */
+
+                    /**
+                     * Constructs a new Event.
+                     * @memberof ru.sovcombank.hackaton.proto
+                     * @classdesc Represents an Event.
+                     * @implements IEvent
+                     * @constructor
+                     * @param {ru.sovcombank.hackaton.proto.IEvent=} [properties] Properties to set
+                     */
+                    function Event(properties) {
+                        if (properties)
+                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                if (properties[keys[i]] != null)
+                                    this[keys[i]] = properties[keys[i]];
+                    }
+
+                    /**
+                     * Event status.
+                     * @member {ru.sovcombank.hackaton.proto.IStatus|null|undefined} status
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @instance
+                     */
+                    Event.prototype.status = null;
+
+                    /**
+                     * Creates a new Event instance using the specified properties.
+                     * @function create
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IEvent=} [properties] Properties to set
+                     * @returns {ru.sovcombank.hackaton.proto.Event} Event instance
+                     */
+                    Event.create = function create(properties) {
+                        return new Event(properties);
+                    };
+
+                    /**
+                     * Encodes the specified Event message. Does not implicitly {@link ru.sovcombank.hackaton.proto.Event.verify|verify} messages.
+                     * @function encode
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IEvent} message Event message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    Event.encode = function encode(message, writer) {
+                        if (!writer)
+                            writer = $Writer.create();
+                        if (message.status != null && Object.hasOwnProperty.call(message, "status"))
+                            $root.ru.sovcombank.hackaton.proto.Status.encode(message.status, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                        return writer;
+                    };
+
+                    /**
+                     * Encodes the specified Event message, length delimited. Does not implicitly {@link ru.sovcombank.hackaton.proto.Event.verify|verify} messages.
+                     * @function encodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.IEvent} message Event message or plain object to encode
+                     * @param {$protobuf.Writer} [writer] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    Event.encodeDelimited = function encodeDelimited(message, writer) {
+                        return this.encode(message, writer).ldelim();
+                    };
+
+                    /**
+                     * Decodes an Event message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @param {number} [length] Message length if known beforehand
+                     * @returns {ru.sovcombank.hackaton.proto.Event} Event
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    Event.decode = function decode(reader, length) {
+                        if (!(reader instanceof $Reader))
+                            reader = $Reader.create(reader);
+                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ru.sovcombank.hackaton.proto.Event();
+                        while (reader.pos < end) {
+                            var tag = reader.uint32();
+                            switch (tag >>> 3) {
+                            case 1: {
+                                    message.status = $root.ru.sovcombank.hackaton.proto.Status.decode(reader, reader.uint32());
+                                    break;
+                                }
+                            default:
+                                reader.skipType(tag & 7);
+                                break;
+                            }
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Decodes an Event message from the specified reader or buffer, length delimited.
+                     * @function decodeDelimited
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                     * @returns {ru.sovcombank.hackaton.proto.Event} Event
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    Event.decodeDelimited = function decodeDelimited(reader) {
+                        if (!(reader instanceof $Reader))
+                            reader = new $Reader(reader);
+                        return this.decode(reader, reader.uint32());
+                    };
+
+                    /**
+                     * Verifies an Event message.
+                     * @function verify
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {Object.<string,*>} message Plain object to verify
+                     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                     */
+                    Event.verify = function verify(message) {
+                        if (typeof message !== "object" || message === null)
+                            return "object expected";
+                        if (message.status != null && message.hasOwnProperty("status")) {
+                            var error = $root.ru.sovcombank.hackaton.proto.Status.verify(message.status);
+                            if (error)
+                                return "status." + error;
+                        }
+                        return null;
+                    };
+
+                    /**
+                     * Creates an Event message from a plain object. Also converts values to their respective internal types.
+                     * @function fromObject
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {Object.<string,*>} object Plain object
+                     * @returns {ru.sovcombank.hackaton.proto.Event} Event
+                     */
+                    Event.fromObject = function fromObject(object) {
+                        if (object instanceof $root.ru.sovcombank.hackaton.proto.Event)
+                            return object;
+                        var message = new $root.ru.sovcombank.hackaton.proto.Event();
+                        if (object.status != null) {
+                            if (typeof object.status !== "object")
+                                throw TypeError(".ru.sovcombank.hackaton.proto.Event.status: object expected");
+                            message.status = $root.ru.sovcombank.hackaton.proto.Status.fromObject(object.status);
+                        }
+                        return message;
+                    };
+
+                    /**
+                     * Creates a plain object from an Event message. Also converts values to other types if specified.
+                     * @function toObject
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {ru.sovcombank.hackaton.proto.Event} message Event
+                     * @param {$protobuf.IConversionOptions} [options] Conversion options
+                     * @returns {Object.<string,*>} Plain object
+                     */
+                    Event.toObject = function toObject(message, options) {
+                        if (!options)
+                            options = {};
+                        var object = {};
+                        if (options.defaults)
+                            object.status = null;
+                        if (message.status != null && message.hasOwnProperty("status"))
+                            object.status = $root.ru.sovcombank.hackaton.proto.Status.toObject(message.status, options);
+                        return object;
+                    };
+
+                    /**
+                     * Converts this Event to JSON.
+                     * @function toJSON
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @instance
+                     * @returns {Object.<string,*>} JSON object
+                     */
+                    Event.prototype.toJSON = function toJSON() {
+                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                    };
+
+                    /**
+                     * Gets the default type url for Event
+                     * @function getTypeUrl
+                     * @memberof ru.sovcombank.hackaton.proto.Event
+                     * @static
+                     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                     * @returns {string} The default type url
+                     */
+                    Event.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                        if (typeUrlPrefix === undefined) {
+                            typeUrlPrefix = "type.googleapis.com";
+                        }
+                        return typeUrlPrefix + "/ru.sovcombank.hackaton.proto.Event";
+                    };
+
+                    return Event;
                 })();
 
                 return proto;
