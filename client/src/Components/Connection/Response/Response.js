@@ -46,7 +46,7 @@ const ResponseBody = observer(() => {
                             <tr key={rowIndex}>
                                 {Array.from({ length: cols }).map((_, colIndex) => (
                                     <td key={colIndex}>
-                                        {data.advStatus.data.rows[rowIndex].values[colIndex].value}
+                                        {/* {data.advStatus.data.rows[rowIndex].values[colIndex].value} */}
                                     </td>
                                 ))}
                             </tr>
