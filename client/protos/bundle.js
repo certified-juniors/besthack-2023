@@ -1,13 +1,13 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
 "use strict";
 
-var $protobuf = require("protobufjs/minimal");
+import { Reader, Writer, util, roots } from "protobufjs/minimal";
 
 // Common aliases
-var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+var $Reader = Reader, $Writer = Writer, $util = util;
 
 // Exported root namespace
-var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+var $root = roots["default"] || (roots["default"] = {});
 
 $root.ru = (function() {
 
@@ -320,7 +320,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     AdvInfo.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -577,7 +577,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     AdvInfoData.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -849,7 +849,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     DataRow.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -1166,7 +1166,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     ValueRef.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -1537,7 +1537,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     AdvInfoFieldRef.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -1745,7 +1745,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     Event.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -2106,7 +2106,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     Status.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -2432,7 +2432,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     ExchangeInfoMessage.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -2764,7 +2764,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     Header.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -3084,7 +3084,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     Request.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -3412,7 +3412,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     OwnCommand.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -3744,7 +3744,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     Parameter.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -4105,7 +4105,7 @@ $root.ru = (function() {
                      * @returns {Object.<string,*>} JSON object
                      */
                     Response.prototype.toJSON = function toJSON() {
-                        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        return this.constructor.toObject(this, util.toJSONOptions);
                     };
 
                     /**
@@ -4138,4 +4138,4 @@ $root.ru = (function() {
     return ru;
 })();
 
-module.exports = $root.ru.sovcombank.hackaton.proto;
+export default $root.ru.sovcombank.hackaton.proto;
