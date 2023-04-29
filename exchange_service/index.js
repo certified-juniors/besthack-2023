@@ -25,7 +25,7 @@ function collectFinhubApi(server) {
     const finhubApi = swagger({
         url: 'https://finnhub.io/static/swagger.json',
     });
-    
+
     finhubApi.then((api) => {
         for (let key in api.spec.paths) {
             let command = api.spec.paths[key];
@@ -167,6 +167,7 @@ function collectFinhubApi(server) {
 
         });
         attachLogic(api, socket);
+
     });
 }
 
