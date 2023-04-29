@@ -19,7 +19,7 @@ const Connection = observer(() => {
         Socket.socket.on("brokerCommandsUpdate", (response) => {
             setAllBrokerCommands(response);
         })
-    }, [Socket.socket])
+    }, [Socket.socket, Status.status])
     
 
     return (
@@ -30,9 +30,9 @@ const Connection = observer(() => {
                         <a href="/terminal"><button>Назад</button></a>
                         <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
-                    <div className="connectionStatus">
+                    {/* <div className="connectionStatus"> */}
                         <p>Status: <span>{status}</span></p>
-                    </div>
+                    {/* </div> */}
                 </div>
                 <div className="connectionBody">
                     <ConnectionBody
