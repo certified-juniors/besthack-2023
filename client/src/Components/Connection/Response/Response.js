@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket"; 
 import TimeStamp from "../../../Store/timeStamp";
 
-import { ProtoMessageDecoder } from "../../../Api/ParseProto";
+import { ProtoMessageDecoder } from "../../../api/ParseProto";
 
 const ResponseBody = observer(() => {
     const [rows, setRows] = useState(0);
