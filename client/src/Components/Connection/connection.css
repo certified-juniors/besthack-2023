@@ -208,3 +208,20 @@ table tr:nth-child(even) {
 .responseTime {
     color: whitesmoke;
 }
+
+.information-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.details {
+    color: whitesmoke;
+}
+
+.type {
+    color: whitesmoke;
+}
+
+.next-time {
+    color: whitesmoke;
+}

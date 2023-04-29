@@ -31,6 +31,11 @@ const ResponseBody = observer(() => {
 
     return (
         <div className="responsePage">
+            <div className="information-container">
+                <p className="details">details: </p>
+                <p className="type">type: </p>
+                <p className="next-time">next time: </p>
+            </div>
             <div className="responsepgContent">
                 <table>
                     <thead>
