@@ -1,0 +1,29 @@
+/* Response.proto */
+
+syntax = "proto3";
+
+import "MessageEnums.proto";
+import "Status.proto";
+
+package ru.sovcombank.hackaton.proto;
+option java_multiple_files  = true;
+option java_outer_classname = "ResponseProto";
+option optimize_for         = SPEED;
+
+/**
+  Тело ответа сообщения.
+  Поле command            - должно быть обязательно заполнено. (по умолчанию значение ctHandshake)
+  Поле answerType         - должно быть обязательно заполнено. (по умолчанию значение atNotSupported).
+  Поле errorText          - Заполняется только при значении поля answerType = atNotSupported или atAnswerError.
+  Поле status             - заполняется только при значении поля command = ctStatus.
+
+  Значение поля answerType зависит от возможности сервиса или сервера выполнить запрошенную команду.
+  Важно, что ответ должен быть отправлен на каждый запрос, но не нужно отвечать на события.
+*/
+
+message Response {
+  CommandType       command     = 1;  // Тип команды на которую отвечаем. (ctHandshake - ответ на приветствие, ctExecCommand - ответ на исполнение команды, ctStatus - ответ на запрос статуса сервиса.)
+  AnswerType        answerType  = 2;  // Тип ответа
+  optional  string  errorText   = 3;  // Описание ошибки в случае если тип ответа atNotSupported или atAnswerError
+  optional  Status  status      = 4;  // Статус
+}

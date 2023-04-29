@@ -1,0 +1,116 @@
+.team{
+    background-color: white;
+}
+
+.teamAboutUs h1 {
+    text-align: left;
+    margin-left: 15%;
+    margin-top: 5%;
+    font-size: 350%;
+    font-weight: 700;
+    color: #19593E;
+
+}
+
+.teamWelcomeText p {
+    color: #19593E;
+    text-align: left;
+    font-size: 120%;
+    font-weight: 300;
+    margin: 1% 15% 5% 15%;
+}
+
+.teamPage {
+    margin-left: 15%;
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+
+.teamTitle {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 5;
+}
+
+.teamTitle h1 {
+    margin-top: 10%;
+    top: 50%;
+    margin-left: 30%;
+    vertical-align: middle;
+    font-size: 90px;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.05);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    color: #1f6f4e24;
+}
+
+.ourTeamFirst {
+    display: grid;
+    grid-template-columns: 35% 60%;
+    text-align: left;
+    grid-gap: 5%;
+    margin-bottom: 5%;
+}
+
+.ourTeamFirst h2 {
+    padding-top: 5%;
+    font-size: 180%;
+    font-weight: 700;
+    line-height: 80%;
+    color: #19593E;
+}
+
+.ourTeamFirst h4 {
+    font-size: 110%;
+    font-weight: 600;
+    padding-bottom: 1%;
+    color: #19593eb3;
+}
+
+.ourTeamFirst p {
+    font-size: 110%;
+    font-weight: 200;
+}
+
+.ourTeamFirst img {
+    width: 100%;
+    height: auto;
+    border-radius: 5%;
+}
+
+.ourTeamSecond {
+    display: grid;
+    grid-template-columns: 60% 35%;
+    text-align: left;
+    grid-gap: 5%;
+    margin-bottom: 5%;
+}
+
+.ourTeamSecond img {
+    width: 100%;
+    height: auto;
+    border-radius: 5%;
+}
+
+.ourTeamSecond h2 {
+    padding-top: 5%;
+    font-size: 180%;
+    font-weight: 700;
+    line-height: 80%;
+    color: #19593E;
+}
+
+.ourTeamSecond h4 {
+    padding-top: 0;
+    font-size: 110%;
+    font-weight: 600;
+    padding-bottom: 1%;
+    color: #19593eb3;
+}
+
+.ourTeamSecond p {
+    font-size: 110%;
+    font-weight: 200;
+}

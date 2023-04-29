@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package ru.sovcombank.hackaton.proto;
+option java_multiple_files  = true;
+option java_outer_classname = "HeaderProto";
+option optimize_for         = SPEED;
+
+/**
+  Заголовок сообщения.
+  Поля: messageNum, timestamp, sender, receiver - не должны быть пустыми.
+  Поле  messageNumAnswer - заполняется на основании поля messageNum сообщения на которое формируется ответ.
+        Данное поле заполняется только для сообщений response.
+*/
+message Header {
+  string            messageNum        = 1; // Номер сообщения
+  int64             timestamp         = 2; // Время создания сообщения в миллисекундах от начала эпохи.
+  string            sender            = 3; // Идентификатор отправителя
+  string            receiver          = 4; // Идентификатор получателя
+  optional  string  messageNumAnswer  = 5; // Номер сообщения на которое сформирован ответ
+};

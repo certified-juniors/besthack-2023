@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package ru.sovcombank.hackaton.proto;
+option java_outer_classname = "MessageEnumsProto";
+option optimize_for         = SPEED;
+
+enum CommandType {
+  ctHandshake   = 0;  // Приветствие
+  ctStatus      = 1;  // Статус сервиса
+  ctExecCommand = 2;  // Исполнение команды сервиса
+}
+
+enum AnswerType {
+  atNotSupported= 0;  // Запрос не поддерживается
+  atAnswerOK    = 1;  // Запрос исполнен
+  atAnswerError = 2;  // Исполнение запроса привело к ошибке
+}
+
+enum DataType {
+  dtString      = 0;  // Строка
+  dtInteger     = 1;  // Целочисленное
+  dtFloat       = 2;  // Число с плавающей запятой
+  dtBoolean     = 3;  // Булево значение
+  dtDateTime    = 4;  // Дата время
+}
+
+enum StatusType {
+  stNotReady    = 0;  // Сервис не готов к работе
+  stReady       = 1;  // Сервис готов к работе
+  stPerformed   = 2;  // Сервис выполняет свою задачу
+}

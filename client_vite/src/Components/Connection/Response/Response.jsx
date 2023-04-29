@@ -7,14 +7,12 @@ const ResponseBody = ({ socket }) => {
     const [resTime, setResTime] = useState("");
 
     useEffect(() => {
-        // ОБРАБОТКА СОБЫТИЙ
         socket.on("sentBrokerTable", (data) => {
             console.log(data);
             setData(data);
             setRows(data.advStatus.data.rows.length);
             setCols(data.advStatus.fields.length);
         });
-        // ОБРАБОТКА ОТВЕТОВ
         socket.on("brokerCommandResponse", (data) => {
             const resTime = Date.now() - data.header.timestamp;
             setResTime(resTime + " ms");
