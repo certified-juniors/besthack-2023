@@ -2,7 +2,6 @@ import React from "react";
 import { LineChart, Line } from 'recharts';
 
 const Graphics = (props) => {
-    console.log(data);
     const data = [
         {name: 'Page A', uv: 400, pv: 2400, amt: 2400}, 
         {name: 'Page B', uv: 200, pv: 2400, amt: 2400},

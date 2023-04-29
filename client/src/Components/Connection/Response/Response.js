@@ -12,7 +12,7 @@ const ResponseBody = observer(() => {
     const [rows, setRows] = useState(0);
     const [cols, setCols] = useState(0);
     const [data, setData] = useState([]);
-    const [resTimeEvent, setResTimeEvent] = useState("");
+    const [resTimeEvent, setResTimeEvent] = useState("undefined");
     const [details, setDetails] = useState("undefined");
     const [nextTime, setNextTime] = useState("undefined");
     const [showGraph, setShowGraph] = useState(false);
@@ -33,17 +33,19 @@ const ResponseBody = observer(() => {
             setCols(status.advStatus.fields.length);
             setResTimeEvent(Date.now() - data.header.timestamp + " ms");
         });
-    }, [Socket.socket]);
 
+        
+    }, [Socket.socket]);
+    
     return (
         <div className="responsePage">
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{details}</span></p>
                 <p className="next-time">next time: <span>{nextTime}</span></p>
                 {!showGraph ?
-                <button className="createGrpahics" onClick={setShowGraph(true)}>Создать график</button>
+                <button className="createGrpahics" onClick={() => setShowGraph(!showGraph)}>Создать график</button>
                 :
-                <button className="closeGraphics" onClick={setShowGraph(false)}>Показать таблицу</button>}
+                <button className="closeGraphics" onClick={() => setShowGraph(!showGraph)}>Показать таблицу</button>}
             </div>
             <div className="responsepgContent">
                 {!showGraph ?
@@ -71,7 +73,7 @@ const ResponseBody = observer(() => {
                     </tbody>
                 </table>
                 :
-                <Graphics />}
+                <Graphics data={data}/>}
             </div>
             <div className="resTimeContainer">
                 <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span></p>
