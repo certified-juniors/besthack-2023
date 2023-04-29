@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket"; 
-import {OnRecieve, getEventTimeStamp} from "../../../api/OnRecieve";
+import Status from "../../../Store/status";
+import {OnRecieve, getEventTimeStamp, getType, getNextTime, getDetails} from "../../../api/OnRecieve";
 
 import ProtoMessageDecoder from "../../../api/ParseProto";
 
@@ -10,13 +11,17 @@ const ResponseBody = observer(() => {
     const [cols, setCols] = useState(0);
     const [data, setData] = useState([]);
     const [resTimeEvent, setResTimeEvent] = useState("");
+    const [details, setDetails] = useState("undefined");
+    const [nextTime, setNextTime] = useState("undefined");
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
-            console.log(OnRecieve(data));
-            console.log(getEventTimeStamp(data));
+            setDetails(getDetails(data));
+            setNextTime(getNextTime(data) - Date.now());
+            Status.status = getType(data);
 
             data = ProtoMessageDecoder(data);
+
             const status = data.event.status;
             setData(status);
             setRows(status.advStatus.data.rows.length);
@@ -28,9 +33,9 @@ const ResponseBody = observer(() => {
     return (
         <div className="responsePage">
             <div className="information-container">
-                <p className="details">details: </p>
-                <p className="type">type: </p>
-                <p className="next-time">next time: </p>
+                <p className="details">details: <span>{details}</span></p>
+                {/* <p className="type">type: <span>{type}</span></p> */}
+                <p className="next-time">next time: <span>{nextTime}</span></p>
             </div>
             <div className="responsepgContent">
                 <table>

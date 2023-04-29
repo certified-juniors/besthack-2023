@@ -33,3 +33,28 @@ export function getCaption(response) {
     const caption = getEventStatusData(response);
     return caption.advStatus.caption;
 }
+
+export function getFields(response) {
+    const fields = getEventStatusData(response);
+    return fields.advStatus.fields;
+}
+
+export function getData(response) {
+    const data = getEventStatusData(response);
+    return data.advStatus.data;
+}
+
+export function getFullOrIncrement(response) {
+    const fullOrIncrement = getData(response);
+    return fullOrIncrement.fullOrIncrement;
+}
+
+export function getDataRows(response) {
+    const rows = getData(response);
+    return rows.rows;
+}
+
+export function getDataFields(response) {
+    const fields = getData(response);
+    return fields.fields;
+}

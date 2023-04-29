@@ -210,8 +210,11 @@ table tr:nth-child(even) {
 }
 
 .information-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    margin-left: 50px;
 }
 
 .details {
