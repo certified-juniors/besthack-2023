@@ -16,7 +16,6 @@ const App = observer(() => {
           <Route path="/terminal" element={<Broker />}></Route>
           <Route path="/terminal/connection/*" element={<Connection />}></Route>
           <Route path="/about" element={<About />}></Route>
-          <Route path="/graphics" element={<Graphics />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

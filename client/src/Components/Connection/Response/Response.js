@@ -3,6 +3,8 @@ import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket"; 
 import Status from "../../../Store/status";
 import {OnRecieve, getEventTimeStamp, getType, getNextTime, getDetails} from "../../../api/OnRecieve";
+import Graphics from "../../Graphics/Graphics";
+
 
 import ProtoMessageDecoder from "../../../api/ParseProto";
 
@@ -13,6 +15,7 @@ const ResponseBody = observer(() => {
     const [resTimeEvent, setResTimeEvent] = useState("");
     const [details, setDetails] = useState("undefined");
     const [nextTime, setNextTime] = useState("undefined");
+    const [showGraph, setShowGraph] = useState(false);
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
@@ -37,10 +40,14 @@ const ResponseBody = observer(() => {
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{details}</span></p>
                 <p className="next-time">next time: <span>{nextTime}</span></p>
-                <a href="/graphics"><button className="createGrpahics">Создать график</button></a>
+                {!showGraph ?
+                <button className="createGrpahics" onClick={setShowGraph(true)}>Создать график</button>
+                :
+                <button className="closeGraphics" onClick={setShowGraph(false)}>Показать таблицу</button>}
             </div>
             <div className="responsepgContent">
-                <table>
+                {!showGraph ?
+                    <table>
                     <thead>
                         <tr>
                             {Array.from({ length: cols }).map((_, index) =>
@@ -63,6 +70,8 @@ const ResponseBody = observer(() => {
                         ))}
                     </tbody>
                 </table>
+                :
+                <Graphics />}
             </div>
             <div className="resTimeContainer">
                 <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span></p>
