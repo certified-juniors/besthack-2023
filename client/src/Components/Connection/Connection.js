@@ -32,9 +32,8 @@ const Connection = observer(() => {
                         <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
                     <div className="connectionStatus">
-                        <button onClick={() => setStatus(Status.getStatus()) }>Обновить</button>
+                        <button onClick={() => setStatus(Status.getStatus())}>Обновить</button>
                         <p>Status: <span>{status}</span></p>
-                        <p>Type: </p>
                     </div>
                 </div>
                 <div className="connectionBody">
