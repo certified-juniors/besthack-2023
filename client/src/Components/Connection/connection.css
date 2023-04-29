@@ -170,7 +170,7 @@ table tr:nth-child(even) {
 .responsePage {
     display: flex;
     flex-direction: column;
-    height: auto;
+    height: 68vh;
 }
 
 .resTimeContainer {
