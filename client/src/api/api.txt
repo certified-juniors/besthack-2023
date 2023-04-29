@@ -1,3 +1,4 @@
-brokerListUpdate - Возвращает список имен брокеров
-getBrokerCommands - Получение выбранной команды
-brokerCommandsUpdate - 
+brokerListUpdate - Возвращает список имен брокеров (имена всех брокеров JSON)
+getBrokerCommands - Получение сервиса, по которому отправляем команды (имя брокера)
+brokerCommandsUpdate - отправляем команды по полученному сервису (JSON с командами)
+sentBrokerCommand - отправка введенной команды (JSON)
