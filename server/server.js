@@ -30,17 +30,13 @@ io.on("connection", (socket) => {
 
         // подписываемся БИ сервис
         console.log(`Клиент ${socket.id} подписался на ${broker}`);
-        services.forEach((client) => {
-            if (client.name === broker) {
-                client.subsribes.push(socket);
-            }
-        });
         socket.leaveAll();
         socket.join(broker);
     });
 
     //Отправка данных по команде
     socket.on("sentBrokerCommand", (commandjson) => {
+        console.log(`Клиент ${socket.id} отправил команду ${commandjson}`);
         commandjson = JSON.parse(commandjson);
         // find receiver in clients by command alias
         const receiver = services.find((client) =>
@@ -59,10 +55,7 @@ io.on("connection", (socket) => {
             receiver: receiver.name,
         };
 
-        waitings[header.messageNum] = {
-            socket,
-            command: commandjson,
-        };
+        socket.join(header.messageNum);
 
         const exchangeInfoMessage = EMProto.create({
             header,
@@ -93,7 +86,7 @@ const server = net.createServer((socket) => {
         lastMessageNum: 0,
         createAt: Date.now(),
         supportedCommands: [],
-        subsribes: [],
+        lastEvent: null,
     });
 
     // Обработка входящих сообщений
@@ -113,10 +106,10 @@ const server = net.createServer((socket) => {
                 handleRequest(socket, message);
                 break;
             case "event":
-                handleEvent(socket, message, data);
+                handleEvent(socket, data);
                 break;
             case "response":
-                handleResponse(socket, message);
+                handleResponse(socket, data, message);
                 break;
             default:
                 console.error(`Unknown message type: ${message.body}`);
@@ -134,8 +127,6 @@ const server = net.createServer((socket) => {
         console.log("Client disconnected.");
     });
 });
-
-let waitings = {};
 
 // ЗАПРОСЫ
 function handleRequest(socket, message) {
@@ -207,11 +198,12 @@ function handleRequest(socket, message) {
 }
 
 // СОБЫТИЯ
-function handleEvent(socket, message, data) {
+function handleEvent(socket, data) {
     const service = services.find((service) => service.socket === socket);
 
     // отправляем событие всем подписчикам
     io.to(service.name).emit("sentBrokerTable", data);
+    service.lastEvent = data;
 }
 
 // Запуск сервера TCP
@@ -220,13 +212,14 @@ server.listen(tcpPort, () => {
     console.log(`TCP server listening on port ${tcpPort}.`);
 });
 
-function handleResponse(socket, message) {
+function handleResponse(socket, data, message) {
     // console.log('Header:', message.header);
     // const response = message.response;
-    if (Object.keys(waitings).includes(message.header.messageNumAnswer)) {
-        const waiting = waitings[message.header.messageNumAnswer];
-        waiting.socket.emit("brokerCommandResponse", message);
-    }
+    const receiver = message.header.messageNumAnswer;
+    
+    // отправляем ответ всем подписчикам
+    io.to(receiver).emit("sentBrokerCommand", data);
+    
 }
 
 function brokerList() {
