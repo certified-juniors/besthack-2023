@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { MainPage, NavBar, Broker, Connection, About } from "./Components/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { io } from "socket.io-client";
+import { observer } from "mobx-react-lite";
+import Socket from "./Store/socket";
 
 import './App.css';
 
-function App() {
-  const [socket, setSocket] = useState(io("http://localhost:8080"));
-  console.log(socket);
+const App = observer(() => {
 
   return (
     <div className="App">
@@ -15,17 +15,13 @@ function App() {
         <NavBar />
         <Routes>
           <Route exact path="/" element={<MainPage />}></Route>
-          <Route path="/terminal" element={<Broker
-            socket={socket}
-          />}></Route>
-          <Route path="/terminal/connection/*" element={<Connection
-            socket={socket}
-          />}></Route>
+          <Route path="/terminal" element={<Broker />}></Route>
+          <Route path="/terminal/connection/*" element={<Connection />}></Route>
           <Route path="/about" element={<About />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
   );
-}
+})
 
 export default App;

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./connection.css";
 import ConnectionBody from "./Body/Body";
 import ResponseBody from "./Response/Response";
+import { observer } from "mobx-react-lite";
+import Socket from "../../Store/socket";
 
-const Connection = ({ socket }) => {
+const Connection = observer(() => {
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
     const pathname = url.pathname;
@@ -13,18 +15,18 @@ const Connection = ({ socket }) => {
     const [status, setStatus] = useState("undefined");
 
     useEffect(() => {
-        socket.on("brokerStatusUpdate", (response) => {
+        Socket.socket.on("brokerStatusUpdate", (response) => {
             console.log(response, 1);
             setStatus(response);
         })
 
-        socket.emit("getBrokerCommands", dir)
+        Socket.socket.emit("getBrokerCommands", dir)
          
-        socket.on("brokerCommandsUpdate", (response) => {
+        Socket.socket.on("brokerCommandsUpdate", (response) => {
             console.log(response);
             setAllBrokerCommands(response);
         })
-    }, [socket])
+    }, [Socket.socket])
 
     return (
         <div className="connectionPage">
@@ -39,15 +41,13 @@ const Connection = ({ socket }) => {
                 <div className="connectionBody">
                     <ConnectionBody
                         commands={allBrokerCommands}
-                        socket={socket}
                         />
                     <ResponseBody
-                        socket={socket}
                     />
                 </div>
             </div>
         </div>
     )
-}
+});
 
 export default Connection;
