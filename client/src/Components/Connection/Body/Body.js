@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite"
 import Socket from "../../../Store/socket";
+import TimeStamp from "../../../Store/timeStamp";
 
 const ConnectionBody = observer(({ commands }) => {
   const [selectedCommand, setSelectedCommand] = useState(null);
@@ -18,6 +19,7 @@ const ConnectionBody = observer(({ commands }) => {
     };
 
     Socket.socket.emit("sentBrokerCommand", JSON.stringify(formattedCommand));
+    TimeStamp.resTimeCommand = Date.now();
   };
 
   const handleCommandChange = (event) => {
