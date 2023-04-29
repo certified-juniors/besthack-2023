@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite"
 import Socket from "../../../Store/socket";
 import TimeStamp from "../../../Store/timeStamp";
-import { ProtoMessageDecoder } from "../../../api/ParseProto";
+import ProtoMessageDecoder from "../../../api/ParseProto";
 
 const ConnectionBody = observer(({ commands }) => {
   const [selectedCommand, setSelectedCommand] = useState(null);
