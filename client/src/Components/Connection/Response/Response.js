@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket"; 
 import TimeStamp from "../../../Store/timeStamp";
-
-import { ProtoMessageDecoder } from "../../../api/ParseProto";
+import {OnRecieve, getEventTimeStamp} from "../../../api/OnRecieve";
 
 const ResponseBody = observer(() => {
     const [rows, setRows] = useState(0);
@@ -15,17 +14,17 @@ const ResponseBody = observer(() => {
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
-            data = ProtoMessageDecoder(data);
+            console.log(OnRecieve(data));
+            console.log(getEventTimeStamp(data));
             const status = data.event.status;
-            console.log(data);
             setData(status);
             setRows(status.advStatus.data.rows.length);
             setCols(status.advStatus.fields.length);
         });
         Socket.socket.on("brokerCommandResponse", (data) => {
-            setResTime(Date.now() - data.header.timestamp + " ms");
+            setResTime(Date.now() - getEventTimeStamp(data) + " ms");
             setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
-            setResTimeEvent(Date.now() - data.event.timestamp);
+            setResTimeEvent(Date.now() - getEventTimeStamp(data) + " ms");
         });
     }, [Socket.socket]);
 
