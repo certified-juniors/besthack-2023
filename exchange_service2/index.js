@@ -25,7 +25,7 @@ function collectFinhubApi(server) {
     const finhubApi = swagger({
         url: 'https://finnhub.io/static/swagger.json',
     });
-    
+
     finhubApi.then((api) => {
         for (let key in api.spec.paths) {
             let command = api.spec.paths[key];
@@ -104,20 +104,7 @@ function collectFinhubApi(server) {
                                                 protos.DataRow.create({
                                                     rowIdent: i.toString(),
                                                     incrementDelete: false,
-                                                    values: [
-                                                        protos.ValueRef.create({
-                                                            dataType: protos.DataType.dtInteger,
-                                                            value: i.toString(),
-                                                        }),
-                                                        protos.ValueRef.create({
-                                                            dataType: protos.DataType.dtString,
-                                                            value: getRandomInt(10000, 99999).toString(),
-                                                        }),
-                                                        protos.ValueRef.create({
-                                                            dataType: protos.DataType.dtFloat,
-                                                            value: getRandomArbitrary(0, 20000).toString()
-                                                        }),
-                                                    ]
+                                                    values: randomValues(i)
                                                 })
                                             )
                                         }
@@ -133,20 +120,7 @@ function collectFinhubApi(server) {
                                             protos.DataRow.create({
                                                 rowIdent: lastdatarows.length.toString(),
                                                 incrementDelete: false,
-                                                values: [
-                                                    protos.ValueRef.create({
-                                                        dataType: protos.DataType.dtInteger,
-                                                        value: lastdatarows.length.toString()
-                                                    }),
-                                                    protos.ValueRef.create({
-                                                        dataType: protos.DataType.dtString,
-                                                        value: getRandomInt(10000, 99999).toString(),
-                                                    }),
-                                                    protos.ValueRef.create({
-                                                        dataType: protos.DataType.dtFloat,
-                                                        value: getRandomArbitrary(0, 20000).toString()
-                                                    }),
-                                                ]
+                                                values: randomValues(lastdatarows.length)
                                             })
                                         )
                                     } else {
@@ -167,7 +141,34 @@ function collectFinhubApi(server) {
 
         });
         attachLogic(api, socket);
+
     });
+}
+
+function randomValues(i) {
+    return [
+        protos.DataFieldValue.create({
+            alias: "id",
+            value: protos.ValueRef.create({
+                dataType: protos.DataType.dtInteger,
+                value: i.toString(),
+            }),
+        }),
+        protos.DataFieldValue.create({
+            alias: "name",
+            value: protos.ValueRef.create({
+                dataType: protos.DataType.dtString,
+                value: getRandomInt(10000, 99999).toString(),
+            }),
+        }),
+        protos.DataFieldValue.create({
+            alias: "money",
+            value: protos.ValueRef.create({
+                dataType: protos.DataType.dtFloat,
+                value: getRandomArbitrary(0, 20000).toString()
+            }),
+        }),
+    ];
 }
 
 function attachLogic(api, conn) {

@@ -111,6 +111,7 @@ const server = net.createServer((socket) => {
                 handleRequest(socket, message);
                 break;
             case "event":
+                console.log("Received event:", message.event.status.advStatus.data.rows);
                 handleEvent(socket, data);
                 break;
             case "response":
