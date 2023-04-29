@@ -189,6 +189,14 @@ function randomValues(i) {
             alias: "money",
             value: createValueInDataField(protos.DataType.dtFloat, getRandomArbitrary(0, 20000)),
         }),
+        protos.DataFieldValue.create({
+            alias: "date",
+            value: createValueInDataField(protos.DataType.dtDateTime, Date.now()),
+        }),
+        protos.DataFieldValue.create({
+            alias: "active",
+            value: createValueInDataField(protos.DataType.dtBoolean, Boolean(getRandomInt(0, 1))),
+        }),
     ].map((item) => {
         return returnWithChance(item, 0.95);
     }).filter((item) => {
