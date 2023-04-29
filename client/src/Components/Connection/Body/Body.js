@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite"
 import Socket from "../../../Store/socket";
 import TimeStamp from "../../../Store/timeStamp";
+import { ProtoMessageDecoder } from "../../../api/ParseProto";
 
 const ConnectionBody = observer(({ commands }) => {
   const [selectedCommand, setSelectedCommand] = useState(null);
   const [commandData, setCommandData] = useState({});
+
+  const [resTime, setResTime] = useState("");
+  const [resTimeCommand, setResTimeCommand] = useState("");
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
@@ -21,6 +25,15 @@ const ConnectionBody = observer(({ commands }) => {
     Socket.socket.emit("sentBrokerCommand", JSON.stringify(formattedCommand));
     TimeStamp.resTimeCommand = Date.now();
   };
+
+  useEffect(() => {
+    Socket.socket.on("brokerCommandResponse", (data) => {
+      data = ProtoMessageDecoder(data);
+      console.log(data);
+      setResTime(Date.now() - data.header.timestamp + " ms");
+      setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
+    });
+  }, [Socket.socket]);
 
   const handleCommandChange = (event) => {
     const selectedCommandName = event.target.value;
@@ -84,6 +97,16 @@ const ConnectionBody = observer(({ commands }) => {
           </>
         )}
       </form>
+      {
+        (resTime !== "") ? (
+          <div className="resTimeContainer" style={{ fontSize: 12, margin: 'auto 0' }}>
+            <div>
+              <p>Задержка ответа: <span>{resTime}</span></p>
+              <p>Задержка выполнения команды: <span>{resTimeCommand}</span></p>
+            </div>
+          </div>
+        ) : null
+      }
     </div>
   );
 });
