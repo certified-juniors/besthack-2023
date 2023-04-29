@@ -19,8 +19,6 @@ io.on("connection", (socket) => {
     //Отправка списка брокеров
     socket.emit("brokerListUpdate", brokerList());
 
-    // //Отправка статуса брокера
-    // socket.emit("brokerStatusUpdate", status);
 
     // //Отправка комманд брокера
     socket.on("getBrokerCommands", (broker) => {
@@ -32,6 +30,13 @@ io.on("connection", (socket) => {
         console.log(`Клиент ${socket.id} подписался на ${broker}`);
         socket.leaveAll();
         socket.join(broker);
+
+        // отправляем последний event если есть
+        const service = services.find((client) => client.name === broker);
+        if (service && service.lastEvent) {
+            console.log(`Клиент ${socket.id} получает последний event`);
+            socket.emit("brokerEvent", service.lastEvent);
+        }
     });
 
     //Отправка данных по команде
@@ -216,7 +221,7 @@ function handleResponse(socket, data, message) {
     // console.log('Header:', message.header);
     // const response = message.response;
     const receiver = message.header.messageNumAnswer;
-    
+
     // отправляем ответ всем подписчикам
     io.to(receiver).emit("sentBrokerCommand", data);
     
