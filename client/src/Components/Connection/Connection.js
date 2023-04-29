@@ -21,7 +21,7 @@ const Connection = observer(() => {
         })
 
         Socket.socket.emit("getBrokerCommands", dir)
-         
+
         Socket.socket.on("brokerCommandsUpdate", (response) => {
             console.log(response);
             setAllBrokerCommands(response);
@@ -32,7 +32,10 @@ const Connection = observer(() => {
         <div className="connectionPage">
             <div className="connectionpgContent">
                 <div className="connectionHeader">
-                    <p>Вы подключены к <span>{status}</span></p>
+                    <div className="connectionView">
+                        <a href="/terminal"><button>Назад</button></a>
+                        <p>Вы подключены к <span>{status}</span></p>
+                    </div>
                     <div className="connectionStatus">
                         <button onClick={() => { console.log("Update") }}>Обновить</button>
                         <p>Status: <span>{status}</span></p>
@@ -41,7 +44,7 @@ const Connection = observer(() => {
                 <div className="connectionBody">
                     <ConnectionBody
                         commands={allBrokerCommands}
-                        />
+                    />
                     <ResponseBody
                     />
                 </div>

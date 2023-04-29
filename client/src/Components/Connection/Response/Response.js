@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket"; 
+import TimeStamp from "../../../Store/timeStamp";
 
 import { ProtoMessageDecoder } from "../../../api/ParseProto";
 
@@ -9,19 +10,20 @@ const ResponseBody = observer(() => {
     const [cols, setCols] = useState(0);
     const [data, setData] = useState([]);
     const [resTime, setResTime] = useState("");
+    const [resTimeCommand, setResTimeCommand] = useState("");
+    const [resTimeEvent, setResTimeEvent] = useState("");
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
-            console.log(data);
-            data = ProtoMessageDecoder(data);
             console.log(data);
             setData(data);
             setRows(data.advStatus.data.rows.length);
             setCols(data.advStatus.fields.length);
         });
         Socket.socket.on("brokerCommandResponse", (data) => {
-            const resTime = Date.now() - data.header.timestamp;
-            setResTime(resTime + " ms");
+            setResTime(Date.now() - data.header.timestamp + " ms");
+            setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
+            setResTimeEvent(Date.now() - data.exchange_service.header.timestamp);
         });
     }, [Socket.socket]);
 
@@ -54,11 +56,11 @@ const ResponseBody = observer(() => {
                     </tbody>
                 </table>
             </div>
-            { resTime ? 
             <div className="resTimeContainer">
-                <p className="responseTime">Response time: <span>{resTime}</span></p>
+                <p className="responseTimeDelay">Response Delay: <span>{resTime}</span></p>
+                <p className="responseTimeCommand">Response Time Command: <span>{resTimeCommand}</span></p>
+                <p className="responseTimeEvent">Response Time Event: <span>{resTimeEvent}</span></p>
             </div>
-            : null}
         </div>
     );
 });
