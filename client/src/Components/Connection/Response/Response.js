@@ -22,6 +22,7 @@ const ResponseBody = observer(() => {
             Status.setStatus(getType(data));
 
             data = ProtoMessageDecoder(data);
+            console.log(data);
 
             const status = data.event.status;
             setData(status);
@@ -34,7 +35,7 @@ const ResponseBody = observer(() => {
     return (
         <div className="responsePage">
             <div className="information-container">
-                <p className="details">details: <span>{details}</span></p>
+                <p className="details">Детали последнего обновления: <span>{details}</span></p>
                 {/* <p className="type">type: <span>{type}</span></p> */}
                 <p className="next-time">next time: <span>{nextTime}</span></p>
             </div>
@@ -53,7 +54,9 @@ const ResponseBody = observer(() => {
                             <tr key={rowIndex}>
                                 {Array.from({ length: cols }).map((_, colIndex) => (
                                     <td key={colIndex}>
-                                        {data.advStatus.data.rows[rowIndex].values[colIndex].value.value}
+                                        { (!data.advStatus.data.rows[rowIndex].values[colIndex]) ? null :
+                                            data.advStatus.data.rows[rowIndex].values[colIndex].value.value
+                                        }
                                     </td>
                                 ))}
                             </tr>
