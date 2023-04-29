@@ -15,11 +15,12 @@ const ResponseBody = observer(() => {
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
-            ProtoMessageDecoder(data);
-            console.log(data);
-            setData(data);
-            setRows(data.advStatus.data.rows.length);
-            setCols(data.advStatus.fields.length);
+            data = ProtoMessageDecoder(data);
+            const status = data.event.status;
+            
+            setData(status);
+            setRows(status.advStatus.data.rows.length);
+            setCols(status.advStatus.fields.length);
         });
         Socket.socket.on("brokerCommandResponse", (data) => {
             setResTime(Date.now() - data.header.timestamp + " ms");
@@ -34,14 +35,10 @@ const ResponseBody = observer(() => {
                 <table>
                     <thead>
                         <tr>
-                            {Array.from({ length: cols }).map((_, index) => {
-                                console.log(data.advStatus.fields[index].caption);
-                                return (
-                                    (
-                                        !data.advStatus.fields[index].caption) ? {} :
+                            {Array.from({ length: cols }).map((_, index) =>
+                                    (!data.advStatus.fields[index].caption) ? {} :
                                         <th key={index}>{data.advStatus.fields[index].caption}</th>
-                                )
-                            })}
+                            )}
                         </tr>
                     </thead>
                     <tbody>
