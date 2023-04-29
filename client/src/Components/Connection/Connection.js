@@ -5,22 +5,18 @@ import ResponseBody from "./Response/Response";
 import { observer } from "mobx-react-lite";
 import Socket from "../../Store/socket";
 import Name from "../../Store/broker";
+import Status from "../../Store/status";
 
 const Connection = observer(() => {
     const [allBrokerCommands, setAllBrokerCommands] = useState([]);
     const [status, setStatus] = useState("undefined");
 
     useEffect(() => {
-        
-        Socket.socket.on("brokerStatusUpdate", (response) => {
-            console.log(response, 1);
-            setStatus(response);
-        })
+        setStatus(Status.getStatus());
 
         Socket.socket.emit("getBrokerCommands", Name.getName());
 
         Socket.socket.on("brokerCommandsUpdate", (response) => {
-            console.log(response);
             setAllBrokerCommands(response);
         })
     }, [Socket.socket])
