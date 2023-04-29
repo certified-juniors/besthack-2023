@@ -1,8 +1,7 @@
+const { Socket } = require('socket.io');
 const proto = require('./protos/bundle.js');
 
-// const { handleRequest, handleEvent } = require('./handlers.js');
-
-const clients = {};
+const clients = [];
 
 const exchangeInfoMessageProto = proto.ExchangeInfoMessage;
 
@@ -11,7 +10,7 @@ const net = require('net');
 const server = net.createServer((socket) => {
     console.log('Client connected.');
 
-    clients[socket.remoteAddress] = {
+    clients.push({
         socket: socket,
         state: 'connected',
         name: '',
@@ -20,11 +19,17 @@ const server = net.createServer((socket) => {
         createAt: Date.now(),
         supportedCommands: [],
         subsribes: [],
-    };
+    });
 
     // Обработка входящих сообщений
     socket.on('data', (data) => {
-        clients[socket.remoteAddress].lastMessageNum++;
+        // увеличиваем счетчик сообщений
+        clients.forEach(client => {
+            if (client.socket === socket) {
+                client.lastMessageNum++;
+            }
+        });
+
         const message = exchangeInfoMessageProto.decode(data);
 
         // Обработка сообщения
@@ -63,9 +68,11 @@ function handleRequest(socket, message) {
     const request = message.request;
     console.log('Received request:', request);
 
+    const client = clients.find(client => client.socket === socket);
+
     const header = {
-        messageNum: (clients[socket.remoteAddress].lastMessageNum).toString(),
-        timestamp: (Date.now()).toString(),
+        messageNum: client.lastMessageNum.toString(),
+        timestamp: Date.now().toString(),
         sender: "server",
         receiver: message.header.sender,
         messageNumAnswer: message.header.messageNum,
@@ -73,8 +80,8 @@ function handleRequest(socket, message) {
 
     // рукопожатие
     if (request.command === proto.CommandType.ctHandshake
-        && !clients[socket.remoteAddress].handshake
-        && clients[socket.remoteAddress].createAt + 5000 > Date.now()) {
+        && !client.handshake
+        && client.createAt + 5000 > Date.now()) {
         const response = {
             command: proto.CommandType.ctHandshake,
             answerType: proto.AnswerType.atAnswerOK,
@@ -83,14 +90,14 @@ function handleRequest(socket, message) {
         const responseBuffer = exchangeInfoMessageProto.encode(responseMessage).finish();
         socket.write(responseBuffer);
 
-        clients[socket.remoteAddress].handshake = true;
-        clients[socket.remoteAddress].name = message.header.sender;
+        client.handshake = true;
+        client.name = message.header.sender;
 
         console.log('Handshake OK.');
     }
 
     // проверка рукопожатия
-    if (!clients[socket.remoteAddress].handshake) {
+    if (!client.handshake) {
         console.log('Handshake required.');
 
         const response = {
@@ -110,7 +117,7 @@ function handleRequest(socket, message) {
 
     // записываем команды, которые предоставляет клиент
     if (request.supportedCommands) {
-        clients[socket.remoteAddress].supportedCommands = request.supportedCommands;
+        client.supportedCommands = request.supportedCommands;
     }
 
 }
@@ -118,10 +125,11 @@ function handleRequest(socket, message) {
 // СОБЫТИЯ
 function handleEvent(socket, message) {
     const event = message.event;
-    console.log('Received event:', event);
+    const client = clients.find(client => client.socket === socket);
+    // console.log('Received event:', event);
 
     // отправляем событие всем подписчикам
-    clients[socket.remoteAddress].subsribes.forEach(sub => {
+    client.subsribes.forEach(sub => {
         sub.emit("sentBrokerTable", event.status)
     });
 }
@@ -139,7 +147,7 @@ server.listen(tcpPort, () => {
     })
 
     io.on("connection", socket => {
-        console.log(socket.id);
+        console.log(`${socket.id} подключился к серверу`);
 
         //Отправка списка брокеров
         socket.emit("brokerListUpdate", brokerList())
@@ -154,7 +162,8 @@ server.listen(tcpPort, () => {
             socket.emit("brokerCommandsUpdate", getCommands(broker))
 
             // подписываемся БИ сервис
-            Object.values(clients).forEach(client => {
+            console.log(`Клиент ${socket.id} подписался на ${broker}`);
+            clients.forEach(client => {
                 if (client.name === broker) {
                     client.subsribes.push(socket);
                 }
@@ -165,7 +174,7 @@ server.listen(tcpPort, () => {
         socket.on("sentBrokerCommand", commandjson => {
             commandjson = JSON.parse(commandjson);
             // find receiver in clients by command alias
-            const receiver = Object.values(clients).find(client => client.supportedCommands.map(c => c.alias).includes(commandjson.alias));
+            const receiver = clients.find(client => client.supportedCommands.map(c => c.alias).includes(commandjson.alias));
             
             if (!receiver) {
                 console.log("Receiver not found");
@@ -205,8 +214,8 @@ server.listen(tcpPort, () => {
 
 
 function handleResponse(socket, message) {
-    console.log('Header:', message.header);
-    const response = message.response;
+    // console.log('Header:', message.header);
+    // const response = message.response;
     if (Object.keys(waitings).includes(message.header.messageNumAnswer)) {
         const waiting = waitings[message.header.messageNumAnswer];
         waiting.socket.emit("brokerCommandResponse", message);
@@ -214,11 +223,11 @@ function handleResponse(socket, message) {
 }
 
 function brokerList() {
-    return Object.values(clients).map(client => client.name);
+    return clients.map(client => client.name);
 }
 
 function getCommands(broker) {
-    const client = Object.values(clients).find(client => client.name === broker);
+    const client = clients.find(client => client.name === broker);
     console.log(client, broker);
     if (!client) {
         return [];

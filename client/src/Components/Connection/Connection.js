@@ -14,6 +14,7 @@ const Connection = ({ socket }) => {
 
     useEffect(() => {
         socket.on("brokerStatusUpdate", (response) => {
+            console.log(response, 1);
             setStatus(response);
         })
 
