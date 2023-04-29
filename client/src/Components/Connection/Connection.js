@@ -4,23 +4,20 @@ import ConnectionBody from "./Body/Body";
 import ResponseBody from "./Response/Response";
 import { observer } from "mobx-react-lite";
 import Socket from "../../Store/socket";
+import Name from "../../Store/broker";
 
 const Connection = observer(() => {
-    const currentUrl = window.location.href;
-    const url = new URL(currentUrl);
-    const pathname = url.pathname;
-    const dir = pathname.split("/")[3];
-
     const [allBrokerCommands, setAllBrokerCommands] = useState([]);
     const [status, setStatus] = useState("undefined");
 
     useEffect(() => {
+        
         Socket.socket.on("brokerStatusUpdate", (response) => {
             console.log(response, 1);
             setStatus(response);
         })
 
-        Socket.socket.emit("getBrokerCommands", dir)
+        Socket.socket.emit("getBrokerCommands", Name.getName());
 
         Socket.socket.on("brokerCommandsUpdate", (response) => {
             console.log(response);
@@ -28,13 +25,14 @@ const Connection = observer(() => {
         })
     }, [Socket.socket])
 
+
     return (
         <div className="connectionPage">
             <div className="connectionpgContent">
                 <div className="connectionHeader">
                     <div className="connectionView">
                         <a href="/terminal"><button>Назад</button></a>
-                        <p>Вы подключены к <span>{status}</span></p>
+                        <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
                     <div className="connectionStatus">
                         <button onClick={() => { console.log("Update") }}>Обновить</button>
