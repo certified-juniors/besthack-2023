@@ -31,6 +31,28 @@
     border-bottom: 1px solid whitesmoke;
 }
 
+.connectionView {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.connectionView button {
+    height: 30px;
+    border-radius: 5px;
+    border: 0;
+    background-color: #004138;
+    color: whitesmoke;
+    margin-right: 10px;
+}
+
+.connectionView button:hover {
+    transition: 0.3s;
+    transform: scale(1.05);
+    background-color: #006457;
+    box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
+}
+
 .connectionStatus {
     width: 16%;
     display: flex;
