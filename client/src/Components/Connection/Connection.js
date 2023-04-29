@@ -10,9 +10,10 @@ import Status from "../../Store/status";
 const Connection = observer(() => {
     const [allBrokerCommands, setAllBrokerCommands] = useState([]);
     const [status, setStatus] = useState("undefined");
+    const [type, setType] = useState("undefined");
 
     useEffect(() => {
-        setStatus(Status.getStatus());
+        
 
         Socket.socket.emit("getBrokerCommands", Name.getName());
 
@@ -31,8 +32,9 @@ const Connection = observer(() => {
                         <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
                     <div className="connectionStatus">
-                        <button onClick={() => { console.log("Update") }}>Обновить</button>
+                        <button onClick={() => setStatus(Status.getStatus()) }>Обновить</button>
                         <p>Status: <span>{status}</span></p>
+                        <p>Type: </p>
                     </div>
                 </div>
                 <div className="connectionBody">
