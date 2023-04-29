@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { observer } from "mobx-react-lite"
+import Socket from "../../../Store/socket";
 
-const ConnectionBody = ({ commands, socket }) => {
+const ConnectionBody = observer(({ commands }) => {
   const [selectedCommand, setSelectedCommand] = useState(null);
   const [commandData, setCommandData] = useState({});
 
@@ -15,7 +17,7 @@ const ConnectionBody = ({ commands, socket }) => {
       })),
     };
 
-    socket.emit("sentBrokerCommand", JSON.stringify(formattedCommand));
+    Socket.socket.emit("sentBrokerCommand", JSON.stringify(formattedCommand));
   };
 
   const handleCommandChange = (event) => {
@@ -82,6 +84,6 @@ const ConnectionBody = ({ commands, socket }) => {
       </form>
     </div>
   );
-};
+});
 
 export default ConnectionBody;
