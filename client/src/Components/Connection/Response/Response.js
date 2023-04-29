@@ -36,8 +36,8 @@ const ResponseBody = observer(() => {
         <div className="responsePage">
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{details}</span></p>
-                {/* <p className="type">type: <span>{type}</span></p> */}
                 <p className="next-time">next time: <span>{nextTime}</span></p>
+                <a href="/graphics"><button className="createGrpahics">Создать график</button></a>
             </div>
             <div className="responsepgContent">
                 <table>
