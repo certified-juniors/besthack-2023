@@ -64,7 +64,7 @@
 .connectionTerminal {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     padding: 20px;
     height: auto;
     border: 0;
@@ -84,7 +84,7 @@
 .connectionTerminalBody {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     overflow-y: scroll;
     width: 100%;
 }

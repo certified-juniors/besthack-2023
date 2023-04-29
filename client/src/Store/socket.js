@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 class Socket {
     socket;

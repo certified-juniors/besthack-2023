@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { MainPage, NavBar, Broker, Connection, About } from "./Components/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { io } from "socket.io-client";
 import { observer } from "mobx-react-lite";
-import Socket from "./Store/socket";
 
 import './App.css';
 

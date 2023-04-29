@@ -10,7 +10,7 @@ const MainPage = () => {
                     <a href="/terminal"><button>Начать работу</button></a>
                 </div>
                 <div className="davidStatue">
-                    <img src="../davidStatue.png" />
+                    <img alt="Давид" src="../davidStatue.png" />
                 </div>
             </div>
         </div>
