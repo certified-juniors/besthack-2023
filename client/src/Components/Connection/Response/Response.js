@@ -21,6 +21,7 @@ const ResponseBody = observer(() => {
             Status.status = getType(data);
 
             data = ProtoMessageDecoder(data);
+            console.log(data);
 
             const status = data.event.status;
             setData(status);
@@ -52,7 +53,9 @@ const ResponseBody = observer(() => {
                             <tr key={rowIndex}>
                                 {Array.from({ length: cols }).map((_, colIndex) => (
                                     <td key={colIndex}>
-                                        {data.advStatus.data.rows[rowIndex].values[colIndex].value.value}
+                                        { (!data.advStatus.data.rows[rowIndex].values[colIndex]) ? null :
+                                            data.advStatus.data.rows[rowIndex].values[colIndex].value.value
+                                        }
                                     </td>
                                 ))}
                             </tr>
