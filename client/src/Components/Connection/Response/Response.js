@@ -15,6 +15,7 @@ const ResponseBody = observer(() => {
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
+            data = ProtoMessageDecoder(data);
             console.log(data);
             setData(data);
             setRows(data.advStatus.data.rows.length);
