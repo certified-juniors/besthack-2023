@@ -1,0 +1,25 @@
+/* Parameter.proto */
+
+syntax = "proto3";
+
+import "ValueRef.proto";
+
+package ru.sovcombank.hackaton.proto;
+option java_multiple_files  = true;
+option java_outer_classname = "ParameterProto";
+option optimize_for         = SPEED;
+
+/**
+  Тип параметра для типа собственной команды
+  Поле alias - обязательно для заполнения.
+  Поля caption, hint - необходимы только для отображения инфо в GUI
+
+  Поле value - при отправке собственной команды с параметрами при приветствии используется для описания типа поля  и предоставления значения по умолчанию,
+                при запросе на исполнение собственной команды используется для передачи значения параметра.
+*/
+message Parameter {
+  string            alias   = 1;  // Идентификатор параметра
+  optional string   caption = 2;  // Заголовок параметра
+  optional string   hint    = 3;  // Подсказка
+  optional ValueRef value   = 4;  // Значение
+}

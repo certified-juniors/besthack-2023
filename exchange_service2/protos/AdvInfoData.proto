@@ -1,0 +1,26 @@
+/* AdvInfoData.proto */
+
+syntax = "proto3";
+import "DataRow.proto";
+
+package ru.sovcombank.hackaton.proto;
+option java_multiple_files  = true;
+option java_outer_classname = "AdvInfoDataProto";
+option optimize_for         = SPEED;
+
+/**
+  Тип данных для типа расширенного отображения статуса.
+  Поле fullOrIncrement - обязательно для заполнения.
+
+  Если поле fullOrIncrement = false, а поле rows не содержит данных, то со стороны GUI данные в статусе необходимо стирать полностью.
+
+  Поле fullOrIncrement регламентирует правила изменения данных в строках расширенного статуса.
+  При значении false данные в GUI полностью заменяются данными из коллекции rows, в обратном случае действует следующее правило:
+    1. Если строки с данными из поля rows нет в GUI значит ее нужно добавить
+    2. Если строка с данными из поля rows есть в GUI значит значения полей в GUI нужно заменить значениями полей из пришедшей строки
+    3. Если строка с данными из поля rows помечена флагом incrementDelete = true значит эта строка должна быть удалена из GUI
+*/
+message AdvInfoData {
+  bool      fullOrIncrement = 1;  // Флаг указывающий на полное обновление данных или инкрементальное
+  repeated  DataRow rows    = 2;  // Записи со значениями полей
+}
