@@ -9,6 +9,8 @@ function initServer(server) {
     collectFinhubApi(server);
 }
 
+const DELAY = 1000;
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -137,7 +139,7 @@ function collectFinhubApi(server) {
                 });
                 const eventBuffer = protos.ExchangeInfoMessage.encode(event).finish();
                 socket.write(eventBuffer);
-            }, 5000)
+            }, DELAY)
 
         });
         attachLogic(api, socket);
@@ -146,7 +148,7 @@ function collectFinhubApi(server) {
 }
 
 function randomValues(i) {
-    return [
+    return shuffle([
         protos.DataFieldValue.create({
             alias: "id",
             value: protos.ValueRef.create({
@@ -168,8 +170,29 @@ function randomValues(i) {
                 value: getRandomArbitrary(0, 20000).toString()
             }),
         }),
-    ];
+    ]);
+
+
 }
+
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+
 
 function attachLogic(api, conn) {
     conn.on('data', (data) => {

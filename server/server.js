@@ -14,11 +14,21 @@ const io = new Server(8080, {
 });
 
 io.on("connection", (socket) => {
+    onFrontConnect(socket);
+});
+
+// Создание сервера TCP
+const net = require("net");
+const server = net.createServer((socket) => {
+    onTCPConnect(socket);
+});
+
+// Клиенты фронтенда
+function onFrontConnect(socket) {
     console.log(`${socket.id} подключился к серверу`);
 
     //Отправка списка брокеров
-    socket.emit("brokerListUpdate", brokerList());
-
+    socket.emit("brokerListUpdate", brokerList(services));
 
     // //Отправка комманд брокера
     socket.on("getBrokerCommands", (broker) => {
@@ -40,28 +50,26 @@ io.on("connection", (socket) => {
     });
 
     //Отправка данных по команде
-    socket.on("sentBrokerCommand", (commandjson) => {
-        commandjson = JSON.parse(commandjson);
+    socket.on("sentBrokerCommand", (commandraw) => {
+        const commandjson = JSON.parse(commandraw);
         // find receiver in clients by command alias
-        const receiver = services.find((client) =>
-        client.supportedCommands.map((c) => c.alias).includes(commandjson.alias)
+        const receiver = services.find((client) => client.supportedCommands.map((c) => c.alias).includes(commandjson.alias)
         );
-        
+
         if (!receiver) {
             console.log("Receiver not found");
             return;
         }
-        
+
         const header = {
             messageNum: (receiver.lastMessageNum++).toString(),
             timestamp: Date.now().toString(),
             sender: "server",
             receiver: receiver.name,
         };
-        
+
         socket.join(header.messageNum);
-        console.log(`Клиент ${socket.id} отправил команду, ожидает ответа ${header.messageNum}`);
-        
+
         const exchangeInfoMessage = EMProto.create({
             header,
             request: {
@@ -69,18 +77,17 @@ io.on("connection", (socket) => {
                 commandForExec: commandjson,
             },
         });
-        
+
         const exchangeInfoMessageBuffer = EMProto
             .encode(exchangeInfoMessage)
             .finish();
 
         receiver.socket.write(exchangeInfoMessageBuffer);
     });
-});
+}
 
-// Создание сервера TCP
-const net = require("net");
-const server = net.createServer((socket) => {
+// Клиенты БИ сервисов
+function onTCPConnect(socket) {
     console.log("Client connected.");
 
     services.push({
@@ -123,16 +130,23 @@ const server = net.createServer((socket) => {
         }
     });
 
-    // Обработка ошибок
-    socket.on("error", (err) => {
-        console.error(`Socket error: ${err}`);
-    });
-
     // Обработка закрытия соединения
     socket.on("close", () => {
-        console.log("Client disconnected.");
+        // Удаляем клиента из списка
+        services.forEach((client, index) => {
+            if (client.socket === socket) {
+                services.splice(index, 1);
+            }
+        }
+        );
     });
-});
+
+    // Обработка ошибок
+    socket.on("error", (err) => {
+        console.error(err);
+    }
+    );
+}
 
 // ЗАПРОСЫ
 function handleRequest(socket, message) {
@@ -212,12 +226,7 @@ function handleEvent(socket, data) {
     service.lastEvent = data;
 }
 
-// Запуск сервера TCP
-const tcpPort = 1234;
-server.listen(tcpPort, () => {
-    console.log(`TCP server listening on port ${tcpPort}.`);
-});
-
+// ОТВЕТЫ
 function handleResponse(data, message) {
     // console.log('Header:', message.header);
     // const response = message.response;
@@ -229,7 +238,13 @@ function handleResponse(data, message) {
     io.socketsLeave(receiver);
 }
 
-function brokerList() {
+// Запуск сервера TCP
+const tcpPort = 1234;
+server.listen(tcpPort, () => {
+    console.log(`TCP server listening on port ${tcpPort}.`);
+});
+
+function brokerList(services) {
     console.log("Broker list:", services.map((client) => client.name));
     return services.map((client) => client.name);
 }
