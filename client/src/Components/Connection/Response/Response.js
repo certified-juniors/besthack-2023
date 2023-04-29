@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket"; 
 import TimeStamp from "../../../Store/timeStamp";
 
-import { ProtoMessageDecoder } from "../../../api/ParseProto";
+import { ProtoMessageDecoder } from "../../../Api/ParseProto";
 
 const ResponseBody = observer(() => {
     const [rows, setRows] = useState(0);
@@ -15,6 +15,7 @@ const ResponseBody = observer(() => {
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
+            ProtoMessageDecoder(data);
             console.log(data);
             setData(data);
             setRows(data.advStatus.data.rows.length);

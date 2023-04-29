@@ -1,9 +1,11 @@
-import proto from "./bundle";
-const EMProto = proto.ExchangeInfoMessage;
+import proto from './bundle';
+import { Buffer } from 'buffer';
 
 export function ProtoMessageDecoder(messageBuffer) {
-    console.log(EMProto, messageBuffer);
-    const message = EMProto.decode(messageBuffer);
-    console.log(message);
+    const buffer = Buffer.from(messageBuffer);
+
+    const EMProto = proto.ExchangeInfoMessage;
+
+    const message = EMProto.decode(buffer);
     return message;
 }
