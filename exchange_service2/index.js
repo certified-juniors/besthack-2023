@@ -190,7 +190,7 @@ function randomValues(i) {
             value: createValueInDataField(protos.DataType.dtFloat, getRandomArbitrary(0, 20000)),
         }),
     ].map((item) => {
-        return returnWithChance(item, 0.99);
+        return returnWithChance(item, 0.95);
     }).filter((item) => {
         return item != null;
     }));
