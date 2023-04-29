@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { MainPage, NavBar, Broker, Connection, About } from "./Components/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -8,24 +8,6 @@ import './App.css';
 function App() {
   const [socket, setSocket] = useState(io("http://localhost:8080"));
   console.log(socket);
-  
-  // useEffect(() => {
-  //   const newSocket = io("http://localhost:8080");
-  //   console.log(socket);
-  //   setSocket(newSocket);
-  // }, [socket])
-
-  const broker = [
-    {
-      name: "Sber",
-    },
-    {
-      name: "Tinkoff",
-    },
-    {
-      name: "Finnhub",
-    }
-  ]
 
   return (
     <div className="App">
