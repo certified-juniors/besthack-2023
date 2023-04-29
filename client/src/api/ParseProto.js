@@ -3,8 +3,6 @@ import { Buffer } from 'buffer';
 
 const EMProto = proto.ExchangeInfoMessage;
 
-export function ProtoMessageDecoder(messageBuffer) {
-    const buffer = Buffer.from(messageBuffer);
-    const message = EMProto.decode(buffer);
-    return message;
+export default function ProtoMessageDecoder(messageBuffer) {
+    return EMProto.decode(Buffer.from(messageBuffer));
 }
