@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket"; 
+import TimeStamp from "../../../Store/timeStamp";
+import {OnRecieve, getEventTimeStamp} from "../../../api/OnRecieve";
 
 import { ProtoMessageDecoder } from "../../../api/ParseProto";
 
@@ -12,14 +14,17 @@ const ResponseBody = observer(() => {
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
-            data = ProtoMessageDecoder(data);
+            console.log(OnRecieve(data));
+            console.log(getEventTimeStamp(data));
             const status = data.event.status;
-            console.log(data);
             setData(status);
             setRows(status.advStatus.data.rows.length);
             setCols(status.advStatus.fields.length);
-
-            setResTimeEvent(Date.now() - data.header.timestamp + " ms");
+        });
+        Socket.socket.on("brokerCommandResponse", (data) => {
+            setResTime(Date.now() - data.header.timestamp + " ms");
+            setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
+            setResTimeEvent(Date.now() - data.event.timestamp);
         });
     }, [Socket.socket]);
 
@@ -40,7 +45,7 @@ const ResponseBody = observer(() => {
                             <tr key={rowIndex}>
                                 {Array.from({ length: cols }).map((_, colIndex) => (
                                     <td key={colIndex}>
-                                        {data.advStatus.data.rows[rowIndex].values[colIndex].value.DataFieldValue}
+                                        {data.advStatus.data.rows[rowIndex].values[colIndex].value.value}
                                     </td>
                                 ))}
                             </tr>
