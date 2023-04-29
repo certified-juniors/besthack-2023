@@ -13,6 +13,10 @@ const ResponseBody = ({ socket }) => {
             setRows(data.advStatus.data.rows.length);
             setCols(data.advStatus.fields.length);
         });
+        socket.on("brokerCommandResponse", (data) => {
+            const resTime = Date.now() - data.header.timestamp;
+            setResTime(resTime + " ms");
+        });
     }, [socket]);
 
     return (

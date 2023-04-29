@@ -1,0 +1,24 @@
+/* Status.proto */
+syntax = "proto3";
+
+import "MessageEnums.proto";
+import "AdvInfo.proto";
+
+package ru.sovcombank.hackaton.proto;
+option java_multiple_files  = true;
+option java_outer_classname = "StatusProto";
+option optimize_for         = SPEED;
+
+/**
+  Тип состояния сервиса
+
+  Поле: type - обязательно для заполнения (значение по умолчанию stNotReady)
+  Поля: details, nextTime, advStatus - опциональны.
+*/
+
+message Status {
+  StatusType  type              = 1;  // Тип статуса сервиса
+  optional    string  details   = 2;  // Детальное описание статуса сервиса
+  optional    int64   nextTime  = 3;  // Время следующей отправки статуса
+  optional    AdvInfo advStatus = 4;  // Расширенная информация статуса
+};
