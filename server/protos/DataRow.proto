@@ -1,6 +1,6 @@
-/* DataRow.proto */
 syntax = "proto3";
-import "ValueRef.proto";
+
+import "DataFieldValue.proto";
 
 package ru.sovcombank.hackaton.proto;
 option java_multiple_files  = true;
@@ -16,7 +16,7 @@ option optimize_for         = SPEED;
 */
 
 message DataRow {
-  string    rowIdent        = 1;  // Идентификатор записи
-  bool      incrementDelete = 2;  // Инкрементальное удаление записи (Удаление записи при инкрементальной передаче данных)
-  repeated  ValueRef values = 3;  // Описание значения поля
+  string    rowIdent                = 1;  // Идентификатор записи
+  bool      incrementDelete         = 2;  // Инкрементальное удаление записи (Удаление записи при инкрементальной передаче данных)
+  repeated  DataFieldValue  values  = 3;  // Описание поля с установкой значения поля
 }

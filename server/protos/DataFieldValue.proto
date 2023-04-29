@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "ValueRef.proto";
+
+package ru.sovcombank.hackaton.proto;
+option java_multiple_files  = true;
+option java_outer_classname = "DataFieldValueProto";
+option optimize_for         = SPEED;
+
+/**
+    Тип писания значения для поля данных AdvInfoData
+    Поле alias   - обязательно для заполнения. (Идентификатор поля для которого устанавливается значение)
+    Поле value   - обязательно для заполнения, содержит данные о значении и типе значения поля.
+*/
+
+message DataFieldValue {
+  string  alias   = 1;  // Идентификатор поля для которого устанавливается значение
+  ValueRef value  = 2;  // Описание значения поля
+}

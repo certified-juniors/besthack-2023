@@ -1,5 +1,3 @@
-/* AdvInfo.proto */
-
 syntax = "proto3";
 
 import "AdvInfoData.proto";

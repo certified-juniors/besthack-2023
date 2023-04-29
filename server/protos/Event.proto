@@ -1,5 +1,3 @@
-/* Event.proto */
-
 syntax = "proto3";
 
 import "Status.proto";

@@ -41,27 +41,27 @@ io.on("connection", (socket) => {
 
     //Отправка данных по команде
     socket.on("sentBrokerCommand", (commandjson) => {
-        console.log(`Клиент ${socket.id} отправил команду ${commandjson}`);
         commandjson = JSON.parse(commandjson);
         // find receiver in clients by command alias
         const receiver = services.find((client) =>
-            client.supportedCommands.map((c) => c.alias).includes(commandjson.alias)
+        client.supportedCommands.map((c) => c.alias).includes(commandjson.alias)
         );
-
+        
         if (!receiver) {
             console.log("Receiver not found");
             return;
         }
-
+        
         const header = {
             messageNum: (receiver.lastMessageNum++).toString(),
             timestamp: Date.now().toString(),
             sender: "server",
             receiver: receiver.name,
         };
-
+        
         socket.join(header.messageNum);
-
+        console.log(`Клиент ${socket.id} отправил команду, ожидает ответа ${header.messageNum}`);
+        
         const exchangeInfoMessage = EMProto.create({
             header,
             request: {
@@ -69,7 +69,7 @@ io.on("connection", (socket) => {
                 commandForExec: commandjson,
             },
         });
-
+        
         const exchangeInfoMessageBuffer = EMProto
             .encode(exchangeInfoMessage)
             .finish();
@@ -114,7 +114,7 @@ const server = net.createServer((socket) => {
                 handleEvent(socket, data);
                 break;
             case "response":
-                handleResponse(socket, data, message);
+                handleResponse(data, message);
                 break;
             default:
                 console.error(`Unknown message type: ${message.body}`);
@@ -217,14 +217,15 @@ server.listen(tcpPort, () => {
     console.log(`TCP server listening on port ${tcpPort}.`);
 });
 
-function handleResponse(socket, data, message) {
+function handleResponse(data, message) {
     // console.log('Header:', message.header);
     // const response = message.response;
+    console.log("Received response:", message.header.messageNumAnswer);
     const receiver = message.header.messageNumAnswer;
-
     // отправляем ответ всем подписчикам
-    io.to(receiver).emit("sentBrokerCommand", data);
-    
+    io.to(receiver).emit("brokerCommandResponse", data);
+    // Убрать комнату
+    io.socketsLeave(receiver);
 }
 
 function brokerList() {
