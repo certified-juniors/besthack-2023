@@ -24,7 +24,7 @@ const ResponseBody = observer(() => {
         Socket.socket.on("brokerCommandResponse", (data) => {
             setResTime(Date.now() - data.header.timestamp + " ms");
             setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
-            setResTimeEvent(Date.now() - data.exchange_service.header.timestamp);
+            setResTimeEvent(Date.now() - data.event.timestamp);
         });
     }, [Socket.socket]);
 
