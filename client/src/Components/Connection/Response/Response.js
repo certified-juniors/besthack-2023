@@ -17,8 +17,9 @@ const ResponseBody = observer(() => {
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
             setDetails(getDetails(data));
+            console.log(OnRecieve(data));
             setNextTime(getNextTime(data) - Date.now());
-            Status.status = getType(data);
+            Status.setStatus(getType(data));
 
             data = ProtoMessageDecoder(data);
 

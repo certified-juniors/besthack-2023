@@ -12,15 +12,14 @@ const Connection = observer(() => {
     const [status, setStatus] = useState("undefined");
 
     useEffect(() => {
-        setStatus(Status.getStatus());
-
         Socket.socket.emit("getBrokerCommands", Name.getName());
-
+        setStatus(Status.getStatus());
+        
         Socket.socket.on("brokerCommandsUpdate", (response) => {
             setAllBrokerCommands(response);
         })
     }, [Socket.socket])
-
+    
 
     return (
         <div className="connectionPage">
@@ -31,7 +30,6 @@ const Connection = observer(() => {
                         <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
                     <div className="connectionStatus">
-                        <button onClick={() => { console.log("Update") }}>Обновить</button>
                         <p>Status: <span>{status}</span></p>
                     </div>
                 </div>

@@ -7,6 +7,10 @@ class Status {
         makeAutoObservable(this);
     }
 
+    setStatus(status) {
+        this.status = status;
+    }   
+
     getStatus() {
         return this.status;
     }
