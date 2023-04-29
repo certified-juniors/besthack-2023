@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./broker.css";
 import { observer } from "mobx-react-lite";
 import Socket from "../../Store/socket";
+import Name from "../../Store/broker";
 
 const Broker = observer(() => {
     const [allBrokers, setAllBrokers] = useState([]);
@@ -27,7 +28,7 @@ const Broker = observer(() => {
                                     to={`/terminal/connection/${broker}`}
                                     className="linkTo"
                                 >
-                                    <button onClick={() => console.log(`Connection to ${broker}`)}>
+                                    <button onClick={() => (Name.name = broker)}>
                                         Подключиться
                                     </button>
                                 </Link>

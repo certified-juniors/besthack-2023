@@ -17,7 +17,7 @@ const ResponseBody = observer(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
             data = ProtoMessageDecoder(data);
             const status = data.event.status;
-            
+            console.log(data);
             setData(status);
             setRows(status.advStatus.data.rows.length);
             setCols(status.advStatus.fields.length);
@@ -46,7 +46,7 @@ const ResponseBody = observer(() => {
                             <tr key={rowIndex}>
                                 {Array.from({ length: cols }).map((_, colIndex) => (
                                     <td key={colIndex}>
-                                        {data.advStatus.data.rows[rowIndex].values[colIndex].value}
+                                        {data.advStatus.data.rows[rowIndex].values[colIndex].value.DataFieldValue}
                                     </td>
                                 ))}
                             </tr>
