@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./broker.css";
-import { observer } from "mobx-react-lite";
-import Socket from "../../Store/socket";
 
-const Broker = observer(() => {
+const Broker = ({ socket }) => {
     const [allBrokers, setAllBrokers] = useState([]);
 
     useEffect(() => {
-        Socket.socket.on("brokerListUpdate", (response) => {
+        socket.on("brokerListUpdate", (response) => {
             console.log(response);
             setAllBrokers(response);
         });
-    }, [Socket.socket]);
+    }, [socket]);
 
     return (
         <div className="terminalPage">
@@ -38,6 +36,6 @@ const Broker = observer(() => {
             </div>
         </div>
     );
-});
+};
 
 export default Broker;

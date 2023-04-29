@@ -1,0 +1,22 @@
+syntax = "proto3";
+import "MessageEnums.proto";
+import "OwnCommand.proto";
+
+package ru.sovcombank.hackaton.proto;
+option java_multiple_files  = true;
+option java_outer_classname = "RequestProto";
+option optimize_for         = SPEED;
+
+/**
+  Тело запроса сообщения.
+  Поле command            - должно быть обязательно заполнено. (по умолчанию значение ctHandshake)
+  Поле commandForExec     - заполняется только при значении поля command = ctExecCommand.
+  Поле supportedCommands  - заполняется только при значении поля command = ctHandshake.
+                            Данное поле служит для уведомления сервера о поддерживаемых командах при приветствии.
+*/
+
+message Request {
+  CommandType command                   = 1;  // Тип команды запроса (ctHandshake - запрос на приветствие, ctExecCommand - запрос на исполнение команды, ctStatus - запрос статуса сервиса.)
+  optional OwnCommand commandForExec    = 2;  // Тип собственной команды сервиса для исполнения.
+  repeated OwnCommand supportedCommands = 3;  // Список собственных команд сервиса
+};

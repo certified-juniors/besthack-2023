@@ -1,0 +1,3 @@
+brokerListUpdate - Возвращает список имен брокеров
+getBrokerCommands - Получение выбранной команды
+brokerCommandsUpdate - 

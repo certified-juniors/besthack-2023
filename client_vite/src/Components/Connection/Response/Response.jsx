@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { observer } from "mobx-react-lite";
-import Socket from "../../../Store/socket"; 
 
-const ResponseBody = observer(() => {
+const ResponseBody = ({ socket }) => {
     const [rows, setRows] = useState(0);
     const [cols, setCols] = useState(0);
     const [data, setData] = useState([]);
     const [resTime, setResTime] = useState("");
 
     useEffect(() => {
-        Socket.socket.on("sentBrokerTable", (data) => {
+        socket.on("sentBrokerTable", (data) => {
             console.log(data);
             setData(data);
             setRows(data.advStatus.data.rows.length);
             setCols(data.advStatus.fields.length);
         });
-        Socket.socket.on("brokerCommandResponse", (data) => {
+        socket.on("brokerCommandResponse", (data) => {
             const resTime = Date.now() - data.header.timestamp;
             setResTime(resTime + " ms");
         });
-    }, [Socket.socket]);
+    }, [socket]);
 
     return (
         <div className="responsePage">
@@ -57,6 +55,6 @@ const ResponseBody = observer(() => {
             : null}
         </div>
     );
-});
+};
 
 export default ResponseBody;
