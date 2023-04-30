@@ -84,6 +84,37 @@ function onFrontConnect(socket) {
 
         receiver.socket.write(exchangeInfoMessageBuffer);
     });
+
+    //Обновить статус
+    socket.on("brokerStatusUpdate", (broker) => {
+        socket.join('waitStatus');
+        // request for status
+        const receiver = services.find((client) => client.name === broker);
+        if (!receiver) {
+            console.log("Receiver not found");
+            return;
+        }
+
+        const header = {
+            messageNum: (receiver.lastMessageNum++).toString(),
+            timestamp: Date.now().toString(),
+            sender: "server",
+            receiver: receiver.name,
+        };
+
+        const exchangeInfoMessage = EMProto.create({
+            header,
+            request: {
+                command: proto.CommandType.ctStatus,
+            },
+        });
+
+        const exchangeInfoMessageBuffer = EMProto
+            .encode(exchangeInfoMessage)
+            .finish();
+
+        receiver.socket.write(exchangeInfoMessageBuffer);
+    });
 }
 
 // Клиенты БИ сервисов
@@ -137,8 +168,7 @@ function onTCPConnect(socket) {
             if (client.socket === socket) {
                 services.splice(index, 1);
             }
-        }
-        );
+        });
     });
 
     // Обработка ошибок
@@ -229,10 +259,16 @@ function handleEvent(socket, data) {
 // ОТВЕТЫ
 function handleResponse(data, message) {
     // console.log('Header:', message.header);
-    // const response = message.response;
     console.log("Received response:", message.header.messageNumAnswer);
-    const receiver = message.header.messageNumAnswer;
     // отправляем ответ всем подписчикам
+    if (message.response.command == proto.CommandType.ctStatus) {
+        console.log("Status response");
+        io.to("waitStatus").emit("sentBrokerTable", data);
+        io.socketsLeave("waitStatus");
+        return;
+    }
+    const receiver = message.header.messageNumAnswer;
+    console.log("Broker command response");
     io.to(receiver).emit("brokerCommandResponse", data);
     // Убрать комнату
     io.socketsLeave(receiver);

@@ -17,6 +17,7 @@
     background-color: #000000bd;
     margin-left: 50px;
     margin-right: 50px;
+    /* margin-top: 50px; */
     border-radius: 20px;
 }
 
@@ -25,7 +26,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 10%;
+    height: 5%;
     width: 100%;
     color: white;
     border-bottom: 1px solid whitesmoke;
@@ -88,7 +89,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
-    height: auto;
+    height: 45vh;
     border: 0;
     background-color: #000000bf;
     overflow-y: scroll;
@@ -133,6 +134,7 @@
 .connectionTerminalBody button:hover {
     transition: 0.3s;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
+    background-color: #006457;
     transform: scale(1.05);
 }
 
@@ -249,6 +251,12 @@ table tr:nth-child(even) {
 }
 
 
+.closeGraphics:hover {
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
+    background-color: #006457;
+    transform: scale(1.05);
+}
 .closeGraphics {
     height: 3vw;
 }
