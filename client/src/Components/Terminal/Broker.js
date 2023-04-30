@@ -18,7 +18,7 @@ const Broker = observer(() => {
         <div className="terminalPage">
             <div className="terminalpgContent">
                 <div className="activeBrokers">
-                    <h1>Брокеры</h1>
+                    <h1>Сервисы биржевой информации</h1>
                     <div className="brokerName">
                         {allBrokers.map((broker, index) => (
                             <div key={index} className="brokerInfo">
