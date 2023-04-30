@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket";
-import Status from "../../../Store/status";
+import StatusForEvent from "../../../Store/status";
 import { lastTable, updateTable } from "../../../api/OnRecieve";
 import Graphics from "../../Graphics/Graphics";
 
@@ -26,7 +26,7 @@ const ResponseBody = observer(() => {
                 if (!isNaN(mytable.nextTime)) {
                     setShowNextTime(mytable.nextTime - Date.now());
                 }
-                Status.setStatus(mytable.statusType);
+                StatusForEvent.setStatusForEvent(mytable.statusType);
             }
         });
 

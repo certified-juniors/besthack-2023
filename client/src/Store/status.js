@@ -1,19 +1,19 @@
 import { makeAutoObservable } from "mobx";
 
-class Status {
+class StatusForEvent {
     status = "undefined";
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    setStatus(status) {
+    setStatusForEvent(status) {
         this.status = status;
     }   
 
-    getStatus() {
+    getStatusForEvent() {
         return this.status;
     }
 }
 
-export default new Status();
+export default new StatusForEvent();

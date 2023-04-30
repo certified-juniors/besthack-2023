@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite"
 import Socket from "../../../Store/socket";
-import Status from "../../../Store/status";
 import TimeStamp from "../../../Store/timeStamp";
 import ProtoMessageDecoder from "../../../api/ParseProto";
 
@@ -32,8 +31,8 @@ const ConnectionBody = observer(({ commands }) => {
     Socket.socket.on("brokerCommandResponse", (data) => {
       data = ProtoMessageDecoder(data);
       console.log(data);
-      Status.setStatus(data.response.answerType);
-      switch (Status.getStatus()) {
+      console.log("data.response.answerType", data.response.answerType);
+      switch (data.response.answerType) {
         case 0:
           setStatus("Не поддерживается");
           setErrorText("");
