@@ -20,6 +20,10 @@ const Connection = observer(() => {
             setAllBrokerCommands(response);
         })
     }, [Socket.socket, Status.status])
+
+    function handleUpdateStatus() {
+        Socket.socket.emit("brokerStatusUpdate", Name.getName());
+    }
     
 
     return (
@@ -30,9 +34,10 @@ const Connection = observer(() => {
                         <a href="/terminal"><button>Назад</button></a>
                         <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
-                    {/* <div className="connectionStatus"> */}
+                    <div className="connectionStatus">
+                        <button onClick={handleUpdateStatus()}>Обновить</button>
                         <p>Status: <span>{status}</span></p>
-                    {/* </div> */}
+                    </div>
                 </div>
                 <div className="connectionBody">
                     <ConnectionBody
