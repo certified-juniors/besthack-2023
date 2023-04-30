@@ -164,9 +164,7 @@ function generateAdvStatus() {
                 );
             } else {
                 // choose random row and mark incrementDelete = true
-                let index = getRandomInt(0, lastdatarows.length);
-                index = index == lastdatarows.length ? index - 1 : index;
-                lastdatarows[index].incrementDelete = true;
+                lastdatarows[getRandomInt(0, lastdatarows.length - 1)].incrementDelete = true;
             }
             return protos.AdvInfoData.create({
                 fullOrIncrement,
