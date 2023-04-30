@@ -11,6 +11,7 @@ const ConnectionBody = observer(({ commands }) => {
   const [status, setStatus] = useState("");
   const [resTime, setResTime] = useState("");
   const [resTimeCommand, setResTimeCommand] = useState("");
+  const [errorText, setErrorText] = useState("");
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
@@ -32,7 +33,22 @@ const ConnectionBody = observer(({ commands }) => {
       data = ProtoMessageDecoder(data);
       console.log(data);
       Status.setStatus(data.response.answerType);
-      setStatus(data.response.answerType);
+      switch (Status.getStatus()) {
+        case 0:
+          setStatus("Не поддерживается");
+          break;
+        case 1:
+          setStatus("ОК");
+          break;
+        case 2:
+          setStatus("Ошибка");
+          setErrorText(data.response.errorText);
+          console.log(data.response.errorText);
+          break;
+        default:
+          setStatus("");
+          break;
+      }
       setResTime(Date.now() - data.header.timestamp + " ms");
       setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
     });
@@ -107,6 +123,12 @@ const ConnectionBody = observer(({ commands }) => {
               <p>Задержка ответа: <span>{resTime}</span></p>
               <p>Задержка выполнения команды: <span>{resTimeCommand}</span></p>
               <p>Статус: <span>{status}</span></p>
+              { (errorText!== "") ? (
+              <p>Ошибка: <span>{errorText}</span></p>
+              ) : (
+                null
+              )
+              }
             </div>
           </div>
         ) : null

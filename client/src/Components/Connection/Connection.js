@@ -9,12 +9,27 @@ import Status from "../../Store/status";
 
 const Connection = observer(() => {
     const [allBrokerCommands, setAllBrokerCommands] = useState([]);
-    const [status, setStatus] = useState("undefined");
+    const [status, setStatus] = useState();
     const [type, setType] = useState("undefined");
 
     useEffect(() => {
         Socket.socket.emit("getBrokerCommands", Name.getName());
-        setStatus(Status.getStatus());
+        switch (Status.getStatus()) {
+            case 0:
+                setStatus("Не готов")
+                break;
+            case 1:
+                setStatus("Готов");
+                break;
+            case 2:
+                setStatus("Выполняется");
+                break;
+            default:
+                setStatus("");
+                break;
+        }
+
+        // setStatus(Status.getStatus());
         
         Socket.socket.on("brokerCommandsUpdate", (response) => {
             setAllBrokerCommands(response);
