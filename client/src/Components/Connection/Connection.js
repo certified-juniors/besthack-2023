@@ -12,34 +12,37 @@ const Connection = observer(() => {
     const [status, setStatus] = useState();
     const [type, setType] = useState("undefined");
 
+    let count = 0;  // Костыль
+    
     useEffect(() => {
         Socket.socket.emit("getBrokerCommands", Name.getName());
-        switch (Status.getStatus()) {
-            case 0:
-                setStatus("Не готов")
-                break;
-            case 1:
-                setStatus("Готов");
-                break;
-            case 2:
-                setStatus("Выполняется");
-                break;
-            default:
-                setStatus("");
-                break;
-        }
 
-        // setStatus(Status.getStatus());
-        
+        if (count == 0) {
+            switch (Status.getStatus()) {
+                case 0:
+                    setStatus("Не готов")
+                    break;
+                case 1:
+                    setStatus("Готов");
+                    break;
+                case 2:
+                    setStatus("Выполняется");
+                    break;
+                default:
+                    setStatus("");
+                    break;
+            }
+        }
+        count++;
         Socket.socket.on("brokerCommandsUpdate", (response) => {
             setAllBrokerCommands(response);
         })
-    }, [Socket.socket, Status.status])
+    }, [Socket.socket])
 
     function handleUpdateStatus() {
         Socket.socket.emit("brokerStatusUpdate", Name.getName());
     }
-    
+
 
     return (
         <div className="connectionPage">
@@ -50,7 +53,7 @@ const Connection = observer(() => {
                         <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
                     <div className="connectionStatus">
-                        <button onClick={()=>{handleUpdateStatus()}}>Обновить</button>
+                        <button onClick={() => { handleUpdateStatus() }}>Обновить</button>
                         <p>Status: <span>{status}</span></p>
                     </div>
                 </div>
