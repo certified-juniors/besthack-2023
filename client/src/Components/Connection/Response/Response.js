@@ -19,7 +19,7 @@ const ResponseBody = observer(() => {
             const mytable = updateTable(data);
             setTable(mytable);
             setResTimeEvent(Date.now() - mytable.timestamp + " ms");
-            setShowNextTime(mytable.nextTime - Date.now() + " ms");
+            setShowNextTime((mytable.nextTime - Date.now()) + " ms");
             console.log(mytable.nextTime);
             Status.setStatus(mytable.statusType);
         });
