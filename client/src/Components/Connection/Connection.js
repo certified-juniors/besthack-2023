@@ -12,9 +12,11 @@ const Connection = observer(() => {
     const [status, setStatus] = useState();
     
     useEffect(() => {
-        Socket.socket.emit("getBrokerCommands", Name.getName());
-
-        switch (StatusForEvent.getStatusForEvent()) {
+        if (StatusForEvent.name !== Name.getName()) { // кринж какой-то, на сонную голову не придумал ничего лучше
+            Socket.socket.emit("getBrokerCommands", Name.getName());
+            StatusForEvent.name = Name.getName();
+        }
+        switch (StatusForEvent.status) {
             case 0:
                 setStatus("Не готов")
                 break;
