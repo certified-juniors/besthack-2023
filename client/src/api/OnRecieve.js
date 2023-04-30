@@ -108,17 +108,6 @@ function getDataRows(message) {
     return data.rows;
 }
 
-// возвращает массив полей (AdvInfoFieldRef)
-/**
- * Массив полей таблицы
- * @param {ExchangeInfoMessage} message
- * @returns {AdvInfoFieldRef} fields
- */
-function getDataFields(response) {
-    const status = getEventStatus(response);
-    return status.advStatus.fields;
-}
-
 // возвращает флаг fullOrIncrement (boolean)
 /**
  * Флаг fullOrIncrement
@@ -241,7 +230,7 @@ export function updateTable(response) {
         // Работаем с предыдущей таблицей
         const rowIdent = previousTable.rowIdents[i];
         const previousRowIndex = previousTable.rowIdents.indexOf(rowIdent);
-        if (previousRowIndex == -1) {
+        if (previousRowIndex === -1) {
             // 1. Если строки с данными из поля rows нет в GUI значит ее нужно добавить
             for (let j = 0; j < columns.length; j++) {
                 previousTable.columns[j].push(columns[j][i]);
