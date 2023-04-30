@@ -36,7 +36,7 @@ const ConnectionBody = observer(({ commands }) => {
       setResTime(Date.now() - data.header.timestamp + " ms");
       setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
     });
-  }, [Socket.socket]);
+  }, [Socket.socket, Status.status]);
 
   const handleCommandChange = (event) => {
     const selectedCommandName = event.target.value;
