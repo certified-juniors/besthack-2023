@@ -54,7 +54,8 @@ function getDetails(message) {
  */
 function getNextTime(message) {
     const status = getEventStatus(message);
-    return Number(status.nextTime);
+    console.log('status', status);
+    return status.nextTime;
 }
 
 /**

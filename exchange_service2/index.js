@@ -9,7 +9,7 @@ function initServer(server) {
     collectFinhubApi(server);
 }
 
-const DELAY = 1000;
+const DELAY = 500;
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -133,7 +133,7 @@ function generateAdvStatus() {
         fields: FIELDS,
         data: (() => {
             if (lastdatarows.length == 0) {
-                let count = getRandomInt(10, 20);
+                let count = getRandomInt(300, 500);
                 for (let i = 0; i < count; i++) {
                     lastdatarows.push(
                         protos.DataRow.create({
@@ -198,7 +198,7 @@ function randomValues(i) {
             value: createValueInDataField(protos.DataType.dtBoolean, Boolean(getRandomInt(0, 1))),
         }),
     ].map((item) => {
-        return returnWithChance(item, 0.95);
+        return returnWithChance(item, 0.99);
     }).filter((item) => {
         return item != null;
     }));

@@ -198,7 +198,7 @@ function randomValues(i) {
             value: createValueInDataField(protos.DataType.dtBoolean, Boolean(getRandomInt(0, 1))),
         }),
     ].map((item) => {
-        return returnWithChance(item, 0.95);
+        return returnWithChance(item, 0.99);
     }).filter((item) => {
         return item != null;
     }));
