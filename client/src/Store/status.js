@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 class StatusForEvent {
     status = "undefined";
+    name = "undefined";
 
     constructor() {
         makeAutoObservable(this);
