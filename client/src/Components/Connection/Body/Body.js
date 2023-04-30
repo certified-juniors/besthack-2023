@@ -92,7 +92,7 @@ const ConnectionBody = observer(({ commands }) => {
   };
 
   const options = [
-    <option key="default" value="">
+    <option key="default" value="" selected disabled>
       Выберите пункт
     </option>,
     ...commands.map((command, index) => (
@@ -121,8 +121,8 @@ const ConnectionBody = observer(({ commands }) => {
         (resTime !== "") ? (
           <div className="resTimeContainer">
             <div className="statusBar">
-              <p>Задержка ответа: <span>{resTime}</span></p>
-              <p>Задержка выполнения команды: <span>{resTimeCommand}</span></p>
+              <p>Задержка с запроса: <span>{resTimeCommand}</span></p>
+              <p>Задержка с ответа: <span>{resTime}</span></p>
               <p>Статус: {status}</p>
               { (errorText!== "") ? (
               <p>Ошибка: <span>{errorText}</span></p>

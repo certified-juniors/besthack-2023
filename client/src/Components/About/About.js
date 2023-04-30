@@ -42,7 +42,7 @@ const About = () => {
                         <p> Когда он начинал программировать, он надевал на себя костюм кошки, ползал на стуле и мурлыкал, когда его код работал правильно.</p>
                     </div>
                     <div>
-                        <img alt="Крайников" src="../Krainikov.png" />
+                        <img alt="Крайников" src="../Krainikov.jpg"/>
                     </div>
                 </div>
                 <div className="ourTeamFirst">

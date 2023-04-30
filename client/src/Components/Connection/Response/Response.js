@@ -30,7 +30,7 @@ const ResponseBody = observer(() => {
             }
         });
 
-    }, []);
+    }, [Socket.pause]);
 
     function getNumberIndex(field, i) {
         if (table.types[i] === 1 || table.types[i] === 2) {
@@ -45,10 +45,10 @@ const ResponseBody = observer(() => {
 
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{table.details}</span></p>
-                <p className="next-time">next time: <span>{showNextTime} ms</span></p>
+                <p className="next-time">Обновится через: <span>{showNextTime} ms</span></p>
                 <div className="graph">
                     <select className="select" onChange={(e) => setOption(e.target.value)}>
-                        <option key="default" value="choose option" selected="true" disabled="disabled">Выберите опцию</option>
+                        <option key="default" value="choose option" selected="true" disabled="disabled">Выберите ось Y</option>
                         {table.fields.filter((field, i) => (getNumberIndex(field, i))).map((field,i) => (
                             <option value={index[i]} key={index[i]}>{field}</option>
                         ))}

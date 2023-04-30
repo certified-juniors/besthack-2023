@@ -50,7 +50,7 @@ const Connection = observer(() => {
                     </div>
                     <div className="connectionStatus">
                         <button onClick={() => { handleUpdateStatus() }}>Обновить</button>
-                        <p>Status: <span>{status}</span></p>
+                        <p>Статус сервиса: <span>{status}</span></p>
                     </div>
                 </div>
                 <div className="connectionBody">
