@@ -164,7 +164,7 @@ function generateAdvStatus() {
                 );
             } else {
                 // choose random row and mark incrementDelete = true
-                let index = getRandomInt(0, lastdatarows.length - 1);
+                let index = getRandomInt(0, lastdatarows.length - 2);
                 lastdatarows[index].incrementDelete = true;
             }
             return protos.AdvInfoData.create({
@@ -194,7 +194,7 @@ function randomValues(i) {
             value: createValueInDataField(protos.DataType.dtDateTime, Date.now()),
         }),
         protos.DataFieldValue.create({
-            alias: "active",
+            alias: "is_active",
             value: createValueInDataField(protos.DataType.dtBoolean, Boolean(getRandomInt(0, 1))),
         }),
     ].map((item) => {

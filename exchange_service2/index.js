@@ -194,7 +194,7 @@ function randomValues(i) {
             value: createValueInDataField(protos.DataType.dtDateTime, Date.now()),
         }),
         protos.DataFieldValue.create({
-            alias: "active",
+            alias: "is_active",
             value: createValueInDataField(protos.DataType.dtBoolean, Boolean(getRandomInt(0, 1))),
         }),
     ].map((item) => {

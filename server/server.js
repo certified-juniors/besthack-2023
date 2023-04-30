@@ -118,7 +118,7 @@ function onTCPConnect(socket) {
                 handleRequest(socket, message);
                 break;
             case "event":
-                console.log("Received event:", message.event.status.advStatus.data.rows);
+                console.log("Received event:", Number(message.header.timestamp));
                 handleEvent(socket, data);
                 break;
             case "response":
