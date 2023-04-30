@@ -2,7 +2,7 @@
     /* margin-top: 10vh; */
     padding-top: 8vh;
     padding-bottom: 2vh;
-    background-color: #0000003d;
+    background-color: transparent;
 }
 
 .connectionpgContent {
@@ -93,9 +93,12 @@
     border: 0;
     background-color: #000000bf;
     overflow-y: scroll;
-    overflow-x: hidden;
+    hyphens: auto;
+    overflow-wrap: break-word;
     border-radius: 20px;
 }
+
+
 
 .fieldsInput input {
     width: 100%;
@@ -219,10 +222,11 @@ table tr:nth-child(even) {
 
 .resTimeContainer {
     display: flex;
-    height: 10%;
+    height: 40px;
     align-items: center;
     justify-content: space-between;
     color: whitesmoke;
+    margin-left: 50px;
 }
 
 .responseTime {
@@ -310,4 +314,25 @@ table tr:nth-child(even) {
 
 .closeGraphics {
     height: 3vw;
+}
+
+.resTimeContainer button{
+    width: 20%;
+    height: 30px;
+    background-color: #004138;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    /* margin-left: auto;
+    margin-right: auto; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.resTimeContainer button:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+    background-color: #158b7b;
+    box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
 }

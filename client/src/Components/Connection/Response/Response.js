@@ -21,7 +21,10 @@ const ResponseBody = observer(() => {
                 const mytable = updateTable(data);
                 setTable(mytable);
                 setResTimeEvent(Date.now() - mytable.timestamp + " ms");
-                setShowNextTime(mytable.nextTime - Date.now() + " ms");
+                console.log(showNextTime)
+                if (!isNaN(mytable.nextTime)) {
+                    setShowNextTime(mytable.nextTime - Date.now());
+                }
                 Status.setStatus(mytable.statusType);
             }
         });
@@ -33,7 +36,7 @@ const ResponseBody = observer(() => {
 
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{table.details}</span></p>
-                <p className="next-time">next time: <span>{showNextTime}</span></p>
+                <p className="next-time">next time: <span>{showNextTime} ms</span></p>
                 <div className="graph">
                     <select className="select" onChange={(e) => setOption(e.target.value)}>
                         <option key="default" value="choose option" selected="true" disabled="disabled">Выберите опцию</option>
@@ -74,8 +77,6 @@ const ResponseBody = observer(() => {
             <div>
                 <div className="resTimeContainer">
                     <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span></p>
-                </div>
-                <div>
                     <button className="pause-button" onClick={() => Socket.pause = !Socket.pause}>{Socket.pause ? "Продолжить" : "Пауза"}</button>
                 </div>
             </div>

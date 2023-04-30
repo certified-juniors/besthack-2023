@@ -124,7 +124,7 @@ const ConnectionBody = observer(({ commands }) => {
             <div className="statusBar">
               <p>Задержка ответа: <span>{resTime}</span></p>
               <p>Задержка выполнения команды: <span>{resTimeCommand}</span></p>
-              <p>Статус: <span>{status}</span></p>
+              <p>Статус: {status}</p>
               { (errorText!== "") ? (
               <p>Ошибка: <span>{errorText}</span></p>
               ) : (
