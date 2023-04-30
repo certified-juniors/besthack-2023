@@ -187,7 +187,7 @@ function randomValues(i) {
         }),
         protos.DataFieldValue.create({
             alias: "money",
-            value: createValueInDataField(protos.DataType.dtFloat, getRandomArbitrary(0, 20000)),
+            value: createValueInDataField(protos.DataType.dtFloat, getRandomArbitrary(0, 200)),
         }),
         protos.DataFieldValue.create({
             alias: "date",
@@ -276,7 +276,7 @@ function mainlogic(api, conn, proto) {
                             ];
                             return types[getRandomInt(0, 2)];
                         })(),
-                        details: randomString(getRandomInt(100, 200)),
+                        details: randomString(getRandomInt(10, 20)),
                         nextTime: Date.now() + DELAY,
                         advStatus: generateAdvStatus(),
                     }),
