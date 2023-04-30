@@ -7,6 +7,14 @@ import './App.css';
 
 const App = observer(() => {
 
+  document.addEventListener('mousemove', e => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const x = Math.round(e.pageX / w * 100);
+    const y = Math.round(e.pageY / h * 100);
+    document.body.style.background = `radial-gradient(at ${x}% ${y}%, rgba(10, 73, 128, 1), rgba(0, 0, 0, 1))`;
+  });
+
   return (
     <div className="App">
       <BrowserRouter>

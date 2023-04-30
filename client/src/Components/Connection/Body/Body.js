@@ -54,7 +54,7 @@ const ConnectionBody = observer(({ commands }) => {
       setResTime(Date.now() - data.header.timestamp + " ms");
       setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
     });
-  }, [Socket.socket, Status.status]);
+  }, []);
 
   const handleCommandChange = (event) => {
     const selectedCommandName = event.target.value;
@@ -78,7 +78,7 @@ const ConnectionBody = observer(({ commands }) => {
       const command = commands.find((cmd) => cmd.alias === selectedCommand);
       if (command) {
         return command.parameters?.map((parameter, index) => (
-          <div key={index}>
+          <div key={index} className="fieldsInput">
             <p>{parameter.alias}</p>
             <input
               name={parameter.alias}
@@ -120,8 +120,8 @@ const ConnectionBody = observer(({ commands }) => {
       </form>
       {
         (resTime !== "") ? (
-          <div className="resTimeContainer" style={{ fontSize: 12, margin: 'auto 0' }}>
-            <div>
+          <div className="resTimeContainer">
+            <div className="statusBar">
               <p>Задержка ответа: <span>{resTime}</span></p>
               <p>Задержка выполнения команды: <span>{resTimeCommand}</span></p>
               <p>Статус: <span>{status}</span></p>

@@ -215,7 +215,7 @@ function randomString(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
-    for (let i = 0; i < charactersLength; i++)        
+    for (let i = 0; i < length; i++)        
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     return result;
 }
@@ -276,7 +276,7 @@ function mainlogic(api, conn, proto) {
                             ];
                             return types[getRandomInt(0, 2)];
                         })(),
-                        details: randomString(getRandomInt(10, 20)),
+                        details: randomString(getRandomInt(100, 200)),
                         nextTime: Date.now() + DELAY,
                         advStatus: generateAdvStatus(),
                     }),
