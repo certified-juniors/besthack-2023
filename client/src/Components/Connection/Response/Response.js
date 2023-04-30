@@ -34,7 +34,7 @@ const ResponseBody = observer(() => {
                 <p className="next-time">next time: <span>{showNextTime}</span></p>
                 <div className="graph">
                     <select className="select" onChange={(e)=>setOption(e.target.value)}>
-                        { table.fields.map((field, i) => <option value={i}>{field}</option>) }
+                        {table.fields.filter((field,i) => (table.types[i]==1 || table.types[i]==2)).map((field,i)=><option value={i}>{field}</option>)}
                     </select>
                     {!showGraph ?
                         <button className="createGraphics" onClick={() => setShowGraph(!showGraph)}>Создать график</button>
