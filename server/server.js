@@ -173,7 +173,12 @@ function onTCPConnect(socket) {
 
     // Обработка ошибок
     socket.on("error", (err) => {
-        console.error(err);
+        services.forEach((client, index) => {
+            if (client.socket === socket) {
+                services.splice(index, 1);
+            }
+        });
+        socket.end()
     }
     );
 }
