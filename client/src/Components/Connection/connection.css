@@ -315,6 +315,16 @@ table tr:nth-child(even) {
     height: 3vw;
 }
 
+.resTimeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.resTimeContainer p {
+    margin-left: 50px;
+}
+
 .resTimeContainer button{
     width: 20%;
     height: 30px;
