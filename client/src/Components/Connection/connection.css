@@ -311,3 +311,15 @@ table tr:nth-child(even) {
 .closeGraphics {
     height: 3vw;
 }
+
+.pauseButton {
+    height: 40px;
+    width: 80px;
+    background-color: #004138;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}

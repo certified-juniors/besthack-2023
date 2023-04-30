@@ -89,7 +89,7 @@ const ResponseBody = observer(() => {
                     <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span> Получено: <span>{bytes}</span> байт </p>
                 </div>
                 <div>
-                    <button className="pause-button" onClick={() => Socket.pause = !Socket.pause}>{Socket.pause ? "Продолжить" : "Пауза"}</button>
+                    <button className="pauseButton" onClick={() => Socket.pause = !Socket.pause}>{Socket.pause ? "Продолжить" : "Пауза"}</button>
                 </div>
             </div>
         </div>
