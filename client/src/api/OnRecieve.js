@@ -180,7 +180,7 @@ export function updateTable(response) {
 
     const aliases = fields.map(field => field.alias);
     const captions = fields.map(field => field.caption);
-    const types = fields.map(field => field.type);
+    const types = fields.map(field => field.dataType);
 
     const sortedRows = rows;
     let columns = fields.map(field => []);

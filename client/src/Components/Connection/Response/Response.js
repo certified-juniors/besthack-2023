@@ -29,9 +29,10 @@ const ResponseBody = observer(() => {
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{table.details}</span></p>
                 <p className="next-time">next time: <span>{table.nextTime}</span></p>
+                {console.log(table)}
                 <div className="graph">
                     <select className="select" onChange={(e)=>setOption(e.target.value)}>
-                        { table.fields.map((field, i) => <option value={i}>{field}</option>) }
+                        {table.fields.filter((field,i) => (table.types[i]==1 || table.types[i]==2)).map((field,i)=><option value={i}>{field}</option>)}
                     </select>
                     {!showGraph ?
                         <button className="createGraphics" onClick={() => setShowGraph(!showGraph)}>Создать график</button>
