@@ -1,7 +1,7 @@
 const { Header } = require("../protos/bundle")
 
 let messageNum = -1;
-const sender = 'vanya23';
+const sender = 'The ExchangeService 2';
 
 function createHeader(receiver, messageNumAnswer) {
     messageNum++;
