@@ -11,6 +11,7 @@ const ResponseBody = observer(() => {
     const [table, setTable] = useState(lastTable);
     const [showGraph, setShowGraph] = useState(false);
     const [showGraphRes, setShowGraphRes] = useState(true);
+    const [showNextTime, setShowNextTime] = useState("");
     const [option, setOption] = useState("");
 
     useEffect(() => {
@@ -18,6 +19,8 @@ const ResponseBody = observer(() => {
             const mytable = updateTable(data);
             setTable(mytable);
             setResTimeEvent(Date.now() - mytable.timestamp + " ms");
+            setShowNextTime(mytable.nextTime - Date.now() + " ms");
+            console.log(mytable.nextTime);
             Status.setStatus(mytable.statusType);
         });
 
@@ -28,7 +31,7 @@ const ResponseBody = observer(() => {
             
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{table.details}</span></p>
-                <p className="next-time">next time: <span>{table.nextTime}</span></p>
+                <p className="next-time">next time: <span>{showNextTime}</span></p>
                 <div className="graph">
                     <select className="select" onChange={(e)=>setOption(e.target.value)}>
                         { table.fields.map((field, i) => <option value={i}>{field}</option>) }
