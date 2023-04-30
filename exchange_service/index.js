@@ -187,7 +187,7 @@ function randomValues(i) {
         }),
         protos.DataFieldValue.create({
             alias: "money",
-            value: createValueInDataField(protos.DataType.dtFloat, getRandomArbitrary(0, 20000)),
+            value: createValueInDataField(protos.DataType.dtFloat, getRandomArbitrary(0, 200)),
         }),
         protos.DataFieldValue.create({
             alias: "date",
