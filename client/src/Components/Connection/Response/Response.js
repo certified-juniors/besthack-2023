@@ -13,14 +13,17 @@ const ResponseBody = observer(() => {
     const [showGraphRes, setShowGraphRes] = useState(true);
     const [showNextTime, setShowNextTime] = useState("");
     const [option, setOption] = useState("choose option");
+    const [pause, setPause] = useState(false);
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
-            const mytable = updateTable(data);
-            setTable(mytable);
-            setResTimeEvent(Date.now() - mytable.timestamp + " ms");
-            setShowNextTime(mytable.nextTime - Date.now()+ " ms");
-            Status.setStatus(mytable.statusType);
+            if (!Socket.pause) {
+                const mytable = updateTable(data);
+                setTable(mytable);
+                setResTimeEvent(Date.now() - mytable.timestamp + " ms");
+                setShowNextTime(mytable.nextTime - Date.now() + " ms");
+                Status.setStatus(mytable.statusType);
+            }
         });
 
     }, []);
@@ -39,7 +42,7 @@ const ResponseBody = observer(() => {
                         ))}
                     </select>
                     {!showGraph ?
-                        <button className="createGraphics" disabled={option==="choose option" ? true : false} onClick={() => (setShowGraph(!showGraph))}>Создать график</button>
+                        <button className="createGraphics" disabled={option === "choose option" ? true : false} onClick={() => (setShowGraph(!showGraph))}>Создать график</button>
                         :
                         <button className="closeGraphics" onClick={() => (setShowGraph(!showGraph))}>Показать таблицу</button>}
                 </div>
@@ -68,8 +71,13 @@ const ResponseBody = observer(() => {
                     :
                     <Graphics data={table.columns[option]} />}
             </div>
-            <div className="resTimeContainer">
-                <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span></p>
+            <div>
+                <div className="resTimeContainer">
+                    <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span></p>
+                </div>
+                <div>
+                    <button className="pause-button" onClick={() => Socket.pause = !Socket.pause}>{Socket.pause ? "Продолжить" : "Пауза"}</button>
+                </div>
             </div>
         </div>
     );
