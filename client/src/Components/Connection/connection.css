@@ -89,7 +89,7 @@
     grid-template-rows: 5% 75% 20%;
     padding: 20px;
     height: 80%;
-    width: auto;
+    width: 250px;
     border: 0;
     background-color: #000000bf;
     overflow-y: scroll;
@@ -224,9 +224,8 @@ table tr:nth-child(even) {
     display: flex;
     height: 40px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     color: whitesmoke;
-    margin-left: 50px;
 }
 
 .responseTime {
