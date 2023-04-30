@@ -14,7 +14,7 @@ export let lastTable = {
  * @param {ArrayBuffer} response 
  * @returns {ExchangeInfoMessage} message
  */
-function OnRecieve(response) {
+export function onRecieve(response) {
     return ProtoMessageDecoder(response);
 }
 
@@ -172,7 +172,7 @@ function getTypedValue(type, value) {
  * @returns {Array} table.rowIdents - массив идентификаторов строк таблицы
  */
 export function updateTable(response) {
-    const message = OnRecieve(response);
+    const message = onRecieve(response);
     const fullOrIncrement = getFullOrIncrement(message); //Boolean
 
     const rows = getDataRows(message);
