@@ -303,10 +303,7 @@ function mainlogic(api, conn, proto) {
                     response: protos.Response.create({
                         command: protos.CommandType.ctExecCommand,
                         answerType: protos.AnswerType.atAnswerError,
-                        status: protos.Status.create({
-                            type: protos.StatusType.stError,
-                            details: randomString(getRandomInt(10, 20)),
-                        })
+                        errorText: randomString(getRandomInt(10, 20)),
                     })
                 });
                 const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
