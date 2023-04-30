@@ -2,7 +2,7 @@ import ProtoMessageDecoder from "./ParseProto";
 
 export let lastTable = {
     details: "",
-    nextTime: "",
+    nextTime: 0,
     timestamp: 0,
     columns: [],
     rowIdents: [],
@@ -54,7 +54,7 @@ function getDetails(message) {
  */
 function getNextTime(message) {
     const status = getEventStatus(message);
-    return status.nextTime;
+    return Number(status.nextTime);
 }
 
 /**
