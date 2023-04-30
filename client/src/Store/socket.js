@@ -7,6 +7,7 @@ class Socket {
     constructor() {
         makeAutoObservable(this);
         this.socket = io("http://localhost:8080");
+        this.pause = false;
     }
 }
 
