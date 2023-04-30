@@ -46,7 +46,7 @@ const Connection = observer(() => {
 
     return (
         <div className="connectionPage">
-            <div className="connectionpgContent">
+            {/* <div className="connectionpgContent"> */}
                 <div className="connectionHeader">
                     <div className="connectionView">
                         <a href="/terminal"><button>Назад</button></a>
@@ -64,7 +64,7 @@ const Connection = observer(() => {
                     <ResponseBody
                     />
                 </div>
-            </div>
+            {/* </div> */}
         </div>
     )
 });

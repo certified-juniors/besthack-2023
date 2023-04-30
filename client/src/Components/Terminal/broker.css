@@ -1,28 +1,26 @@
 .terminalPage {
     height: 80vh;
-    background-size: 100%;
-    background: #797979 url(../../images/japaneseCandles.jpg) no-repeat;
     padding-top: 15vh;
     padding-bottom: 5vh;
-    background-attachment: fixed;
-    background-size: cover;
 }
 
 .terminalpgContent {
-    display: grid;
-    grid-template-columns: 25% 75%;
+    display: flex;
     height: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
+    width: 100%;
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 .activeBrokers {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     border: 0;
     border-radius: 20px;
-    margin-right: 25px;
+    margin-right: 90px;
+    margin-left: 25px;
     background-color: #000000bd;
     padding-left: 20px;
     padding-right: 20px;
@@ -44,10 +42,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 2px;
+    margin-top: 5px;
+    border-bottom:1px solid rgb(245, 245, 245);
 }
 
 .brokerInfo p {
     color: whitesmoke;
+    font-size: 17px;
+    margin-left: 10px;
 }
 
 .brokerInfo a {
@@ -55,26 +58,32 @@
     justify-content: right;
     align-items: center;
     height: 100%;
-    width: 80%;
 }
 
 .brokerInfo button {
-    height: 60%;
-    width: 50%;
+    height: 80%;
+    /* width: 100%; */
     border: 0;
-    border-radius: 2px;
+    border-radius: 15px;
     background-color: #004138;
     color: whitesmoke;
     align-items: center;
     justify-content: center;
-    margin-right: 5px;
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .brokerInfo button:hover {
     transition: 0.3s;
     transform: scale(1.1);
-    background-color: #006457;
+    background-color: #158b7b;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
+}
+
+.brokerInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .chooseBroker {

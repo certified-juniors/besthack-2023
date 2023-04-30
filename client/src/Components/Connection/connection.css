@@ -1,22 +1,19 @@
 .connectionPage {
-    height: 100vh;
-    background-size: 100%;
-    background: #797979 url(../../images/japaneseCandles.jpg) no-repeat;
-    padding-top: 15vh;
-    padding-bottom: 5vh;
-    background-attachment: fixed;
-    background-size: cover;
+    /* margin-top: 10vh; */
+    padding-top: 8vh;
+    padding-bottom: 2vh;
+    background-color: #000000bd;
 }
 
 .connectionpgContent {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color: #000000bd;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 20px;
 }
 
@@ -35,34 +32,38 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: 20%;
 }
 
 .connectionView button {
-    height: 30px;
+    height: 40px;
+    width: 70px;
     border-radius: 5px;
     border: 0;
     background-color: #004138;
     color: whitesmoke;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .connectionView button:hover {
     transition: 0.3s;
-    transform: scale(1.05);
-    background-color: #006457;
+    transform: scale(1.1);
+    background-color: #158b7b;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
 }
 
 .connectionStatus {
-    width: 16%;
+    width: 15%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-right: 15px;
 }
 
 .connectionStatus button {
-    height: 30px;
+    height: 40px;
+    width: 80px;
     border-radius: 5px;
     border: 0;
     background-color: #004138;
@@ -71,28 +72,34 @@
 
 .connectionStatus button:hover {
     transition: 0.3s;
-    transform: scale(1.05);
-    background-color: #006457;
+    transform: scale(1.1);
+    background-color: #158b7b;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
 }
 
 .connectionBody {
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 20% 75%;
     padding-top: 1.5%;
-    height: 84%;
+    height: 80%;
 }
 
 .connectionTerminal {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-rows: 5% 75% 20%;
     padding: 20px;
-    height: 45vh;
+    height: 80%;
+    width: auto;
     border: 0;
     background-color: #000000bf;
     overflow-y: scroll;
+    overflow-x: hidden;
     border-radius: 20px;
+}
+
+.fieldsInput input {
+    width: 100%;
+    height: auto;
 }
 
 .connectionTerminal select {
@@ -112,7 +119,7 @@
 }
 
 .connectionTerminalBody input {
-    width: 265px;
+    width: 240px;
     height: 20px;
     border-radius: 5px;
     border: none;
@@ -126,15 +133,29 @@
     border: none;
     border-radius: 5px;
     margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    /* margin-left: auto;
+    margin-right: auto; */
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .connectionTerminalBody button:hover {
     transition: 0.3s;
+    transform: scale(1.1);
+    background-color: #158b7b;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
-    background-color: #006457;
-    transform: scale(1.05);
+}
+
+.statusBar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height:60%;
+}
+
+.statusBar p {
+    word-wrap:break-word;
+    font-size: 12px;
 }
 
 .responsepgContent {
@@ -201,8 +222,6 @@ table tr:nth-child(even) {
     height: 10%;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
-    margin-left: 50px;
     color: whitesmoke;
 }
 
@@ -211,11 +230,12 @@ table tr:nth-child(even) {
 }
 
 .information-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
-    margin-left: 50px;
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-left: 15px;
 }
 
 .details {
@@ -231,7 +251,7 @@ table tr:nth-child(even) {
 }
 
 .graph {
-    height: 10%;
+    /* height: 10%; */
 }
 
 .select {
@@ -251,9 +271,9 @@ table tr:nth-child(even) {
 
 .createGraphics:hover {
     transition: 0.3s;
+    transform: scale(1.1);
+    background-color: #158b7b;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
-    background-color: #006457;
-    transform: scale(1.05);
 }
 
 .closeGraphics {
@@ -268,9 +288,9 @@ table tr:nth-child(even) {
 
 .closeGraphics:hover {
     transition: 0.3s;
+    transform: scale(1.1);
+    background-color: #158b7b;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
-    background-color: #006457;
-    transform: scale(1.05);
 }
 
 .closeGraphics {
