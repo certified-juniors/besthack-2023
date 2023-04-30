@@ -2,16 +2,6 @@ import React from "react";
 import { LineChart, Line, XAxis, YAxis} from 'recharts';
 
 const Graphics = (colValues) => {
-    // const data = [
-    //     {name: 2400, uv: 400}, 
-    //     {name: 200, uv: 200},
-    //     {name: 800, uv: 100},
-    //     {name: 900, uv: 300},
-    //     {name: 600, uv: 500},
-    //     {name: 100, uv: 800},
-    //     {name: 300, uv: 600},
-    // ];
-    console.log(colValues);
     const data = colValues.data.map((val, i) => {
         return { name: i, uv: val }
     });

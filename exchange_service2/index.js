@@ -1,5 +1,5 @@
 const protos = require('./protos/bundle');
-const createHeader = require('./utils/header_creator');
+const createHeader = require('./utils/header_creator').createHeader;
 const net = require('net');
 let commands = [];
 let is_ready = false;
@@ -9,7 +9,7 @@ function initServer(server) {
     collectFinhubApi(server);
 }
 
-const DELAY = 1000;
+const DELAY = require('./utils/header_creator').DELAY;
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -179,11 +179,11 @@ function randomValues(i) {
     return shuffle([
         protos.DataFieldValue.create({
             alias: "id",
-            value: createValueInDataField(protos.DataType.dtInteger, i),
+            value: createValueInDataField(protos.DataType.dtInteger, getRandomInt(100, 999)),
         }),
         protos.DataFieldValue.create({
             alias: "name",
-            value: createValueInDataField(protos.DataType.dtString, getRandomInt(10000, 99999)),
+            value: createValueInDataField(protos.DataType.dtString, randomString(getRandomInt(4, 10))),
         }),
         protos.DataFieldValue.create({
             alias: "money",
@@ -191,14 +191,14 @@ function randomValues(i) {
         }),
         protos.DataFieldValue.create({
             alias: "date",
-            value: createValueInDataField(protos.DataType.dtDateTime, Date.now()),
+            value: createValueInDataField(protos.DataType.dtDateTime, getRandomInt(0, Date.now())),
         }),
         protos.DataFieldValue.create({
             alias: "is_active",
             value: createValueInDataField(protos.DataType.dtBoolean, Boolean(getRandomInt(0, 1))),
         }),
     ].map((item) => {
-        return returnWithChance(item, 0.95);
+        return returnWithChance(item, 0.99);
     }).filter((item) => {
         return item != null;
     }));
@@ -215,7 +215,7 @@ function randomString(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
-    for (let i = 0; i < charactersLength; i++)        
+    for (let i = 0; i < length; i++)        
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     return result;
 }
@@ -276,7 +276,7 @@ function mainlogic(api, conn, proto) {
                             ];
                             return types[getRandomInt(0, 2)];
                         })(),
-                        details: randomString(getRandomInt(10, 20)),
+                        details: randomString(getRandomInt(100, 200)),
                         nextTime: Date.now() + DELAY,
                         advStatus: generateAdvStatus(),
                     }),

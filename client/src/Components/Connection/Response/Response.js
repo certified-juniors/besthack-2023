@@ -12,19 +12,18 @@ const ResponseBody = observer(() => {
     const [showGraph, setShowGraph] = useState(false);
     const [showGraphRes, setShowGraphRes] = useState(true);
     const [showNextTime, setShowNextTime] = useState("");
-    const [option, setOption] = useState("");
+    const [option, setOption] = useState("choose option");
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
             const mytable = updateTable(data);
             setTable(mytable);
             setResTimeEvent(Date.now() - mytable.timestamp + " ms");
-            setShowNextTime((mytable.nextTime - Date.now()) + " ms");
-            console.log(mytable.nextTime);
+            setShowNextTime(mytable.nextTime - Date.now()+ " ms");
             Status.setStatus(mytable.statusType);
         });
 
-    }, [Socket.socket]);
+    }, []);
 
     return (
         <div className="responsePage">
@@ -34,13 +33,13 @@ const ResponseBody = observer(() => {
                 <p className="next-time">next time: <span>{showNextTime}</span></p>
                 <div className="graph">
                     <select className="select" onChange={(e) => setOption(e.target.value)}>
-                        <option defaultValue="">Выберите значение</option>
+                        <option key="default" value="choose option" selected="true" disabled="disabled">Выберите опцию</option>
                         {table.fields.filter((field, i) => (table.types[i] === 1 || table.types[i] === 2)).map((field, i) => (
                             <option value={i} key={i}>{field}</option>
                         ))}
                     </select>
                     {!showGraph ?
-                        <button className="createGraphics" onClick={() => (setShowGraph(!showGraph))}>Создать график</button>
+                        <button className="createGraphics" disabled={option==="choose option" ? true : false} onClick={() => (setShowGraph(!showGraph))}>Создать график</button>
                         :
                         <button className="closeGraphics" onClick={() => (setShowGraph(!showGraph))}>Показать таблицу</button>}
                 </div>

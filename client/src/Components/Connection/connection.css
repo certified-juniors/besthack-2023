@@ -269,11 +269,26 @@ table tr:nth-child(even) {
     margin-right: auto;
 }
 
-.createGraphics:hover {
+.createGraphics:disabled {
+    height: 40px;
+    background-color: #343737;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.createGraphics:active:hover {
     transition: 0.3s;
     transform: scale(1.1);
     background-color: #158b7b;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
+}
+
+.select {
+    margin-right: 10px;
 }
 
 .closeGraphics {
