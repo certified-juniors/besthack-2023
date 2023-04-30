@@ -24,7 +24,7 @@ function getRandomArbitrary(min, max) {
 const FIELDS = [
     protos.AdvInfoFieldRef.create({
         alias: "id",
-        caption: "Идентификатор",
+        caption: "Целое число",
         dataType: protos.DataType.dtInteger
     }),
     protos.AdvInfoFieldRef.create({
