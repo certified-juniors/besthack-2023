@@ -1,5 +1,5 @@
 const protos = require('./protos/bundle');
-const createHeader = require('./utils/header_creator');
+const createHeader = require('./utils/header_creator').createHeader;
 const net = require('net');
 let commands = [];
 let is_ready = false;
@@ -9,7 +9,7 @@ function initServer(server) {
     collectFinhubApi(server);
 }
 
-const DELAY = 500;
+const DELAY = require('./utils/header_creator').DELAY;
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -133,7 +133,7 @@ function generateAdvStatus() {
         fields: FIELDS,
         data: (() => {
             if (lastdatarows.length == 0) {
-                let count = getRandomInt(300, 500);
+                let count = getRandomInt(10, 20);
                 for (let i = 0; i < count; i++) {
                     lastdatarows.push(
                         protos.DataRow.create({
@@ -179,11 +179,11 @@ function randomValues(i) {
     return shuffle([
         protos.DataFieldValue.create({
             alias: "id",
-            value: createValueInDataField(protos.DataType.dtInteger, i),
+            value: createValueInDataField(protos.DataType.dtInteger, getRandomInt(100, 999)),
         }),
         protos.DataFieldValue.create({
             alias: "name",
-            value: createValueInDataField(protos.DataType.dtString, getRandomInt(10000, 99999)),
+            value: createValueInDataField(protos.DataType.dtString, randomString(getRandomInt(4, 10))),
         }),
         protos.DataFieldValue.create({
             alias: "money",
@@ -191,7 +191,7 @@ function randomValues(i) {
         }),
         protos.DataFieldValue.create({
             alias: "date",
-            value: createValueInDataField(protos.DataType.dtDateTime, Date.now()),
+            value: createValueInDataField(protos.DataType.dtDateTime, getRandomInt(0, Date.now())),
         }),
         protos.DataFieldValue.create({
             alias: "is_active",
