@@ -13,11 +13,12 @@ const ResponseBody = observer(() => {
     const [showGraphRes, setShowGraphRes] = useState(true);
     const [showNextTime, setShowNextTime] = useState("");
     const [option, setOption] = useState("choose option");
-    const [pause, setPause] = useState(false);
+    const [bytes, setBytes] = useState(0);
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
             if (!Socket.pause) {
+                setBytes(data.byteLength)
                 const mytable = updateTable(data);
                 setTable(mytable);
                 setResTimeEvent(Date.now() - mytable.timestamp + " ms");
@@ -73,7 +74,7 @@ const ResponseBody = observer(() => {
             </div>
             <div>
                 <div className="resTimeContainer">
-                    <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span></p>
+                    <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span> Получено: <span>{bytes}</span> байт </p>
                 </div>
                 <div>
                     <button className="pause-button" onClick={() => Socket.pause = !Socket.pause}>{Socket.pause ? "Продолжить" : "Пауза"}</button>
