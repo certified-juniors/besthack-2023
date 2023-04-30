@@ -36,17 +36,19 @@ const ConnectionBody = observer(({ commands }) => {
       switch (Status.getStatus()) {
         case 0:
           setStatus("Не поддерживается");
+          setErrorText("");
           break;
         case 1:
           setStatus("ОК");
+          setErrorText("");
           break;
         case 2:
           setStatus("Ошибка");
           setErrorText(data.response.errorText);
-          console.log(data.response.errorText);
           break;
         default:
           setStatus("");
+          setErrorText("");
           break;
       }
       setResTime(Date.now() - data.header.timestamp + " ms");

@@ -28,18 +28,21 @@ const ResponseBody = observer(() => {
 
     return (
         <div className="responsePage">
-            
+
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{table.details}</span></p>
                 <p className="next-time">next time: <span>{showNextTime}</span></p>
                 <div className="graph">
-                    <select className="select" onChange={(e)=>setOption(e.target.value)}>
-                        {table.fields.filter((field,i) => (table.types[i]==1 || table.types[i]==2)).map((field,i)=><option value={i}>{field}</option>)}
+                    <select className="select" onChange={(e) => setOption(e.target.value)}>
+                        <option defaultValue="">Выберите занчение</option>
+                        {table.fields.filter((field, i) => (table.types[i] === 1 || table.types[i] === 2)).map((field, i) => (
+                            <option value={i} key={i}>{field}</option>
+                        ))}
                     </select>
                     {!showGraph ?
-                        <button className="createGraphics" onClick={() => setShowGraph(!showGraph)}>Создать график</button>
+                        <button className="createGraphics" onClick={() => (setShowGraph(!showGraph))}>Создать график</button>
                         :
-                        <button className="closeGraphics" onClick={() => setShowGraph(!showGraph)}>Показать таблицу</button>}
+                        <button className="closeGraphics" onClick={() => (setShowGraph(!showGraph))}>Показать таблицу</button>}
                 </div>
             </div>
             <div className="responsepgContent">
