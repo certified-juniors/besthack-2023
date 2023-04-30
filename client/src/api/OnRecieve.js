@@ -220,6 +220,7 @@ export function updateTable(response) {
             timestamp: getEventTimeStamp(message),
             caption: getCaption(message),
             details: getDetails(message),
+            nextTime: getNextTime(message),
             statusType: getType(message),
             rowIdents,
         }

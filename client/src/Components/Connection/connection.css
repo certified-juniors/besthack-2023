@@ -1,5 +1,5 @@
 .connectionPage {
-    height: 200vh;
+    height: 100vh;
     background-size: 100%;
     background: #797979 url(../../images/japaneseCandles.jpg) no-repeat;
     padding-top: 15vh;
@@ -17,7 +17,6 @@
     background-color: #000000bd;
     margin-left: 50px;
     margin-right: 50px;
-    /* margin-top: 50px; */
     border-radius: 20px;
 }
 
@@ -236,20 +235,36 @@ table tr:nth-child(even) {
 }
 
 .select {
-    background-color: darkolivegreen;
-    color: white;
-    padding: 10px;
-    margin: 10px;
+    margin-bottom: 10px;
 }
 
 .createGraphics {
-    /* height: 3vw; */
-    padding: 10px;
-    border-radius: 10%;
-    background-color: goldenrod;
-    color: white;
+    height: 40px;
+    background-color: #004138;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+.createGraphics:hover {
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
+    background-color: #006457;
+    transform: scale(1.05);
+}
+
+.closeGraphics {
+    background-color: #004138;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .closeGraphics:hover {
     transition: 0.3s;
@@ -257,6 +272,7 @@ table tr:nth-child(even) {
     background-color: #006457;
     transform: scale(1.05);
 }
+
 .closeGraphics {
     height: 3vw;
 }
