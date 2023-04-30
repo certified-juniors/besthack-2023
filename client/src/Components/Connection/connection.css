@@ -1,5 +1,5 @@
 .connectionPage {
-    height: 80vh;
+    height: 200vh;
     background-size: 100%;
     background: #797979 url(../../images/japaneseCandles.jpg) no-repeat;
     padding-top: 15vh;
@@ -139,7 +139,7 @@
 .responsepgContent {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 60vh;
     padding: 20px;
     background-color: #000000bd;
     margin-left: 50px;
@@ -192,7 +192,7 @@ table tr:nth-child(even) {
 .responsePage {
     display: flex;
     flex-direction: column;
-    height: 68vh;
+    height: 100%;
 }
 
 .resTimeContainer {
@@ -228,3 +228,4 @@ table tr:nth-child(even) {
 .next-time {
     color: whitesmoke;
 }
+

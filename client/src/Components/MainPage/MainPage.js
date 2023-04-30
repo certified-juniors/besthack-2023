@@ -2,6 +2,7 @@ import React from "react";
 import "./mainpage.css"
 
 const MainPage = () => {
+
     return (
         <div className="mainPage">
             <div className="mainpgContent">
