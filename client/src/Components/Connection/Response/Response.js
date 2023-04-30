@@ -13,11 +13,13 @@ const ResponseBody = observer(() => {
     const [showGraphRes, setShowGraphRes] = useState(true);
     const [showNextTime, setShowNextTime] = useState("");
     const [option, setOption] = useState("choose option");
-    const [pause, setPause] = useState(false);
+    const [bytes, setBytes] = useState(0);
+    let index = [];
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
             if (!Socket.pause) {
+                setBytes(data.byteLength)
                 const mytable = updateTable(data);
                 setTable(mytable);
                 setResTimeEvent(Date.now() - mytable.timestamp + " ms");
@@ -31,6 +33,14 @@ const ResponseBody = observer(() => {
 
     }, []);
 
+    function getNumberIndex(field, i) {
+        if (table.types[i] === 1 || table.types[i] === 2) {
+            index.push(i);
+            return true;
+        }
+        else return false;
+    }
+
     return (
         <div className="responsePage">
 
@@ -40,8 +50,8 @@ const ResponseBody = observer(() => {
                 <div className="graph">
                     <select className="select" onChange={(e) => setOption(e.target.value)}>
                         <option key="default" value="choose option" selected="true" disabled="disabled">Выберите опцию</option>
-                        {table.fields.filter((field, i) => (table.types[i] === 1 || table.types[i] === 2)).map((field, i) => (
-                            <option value={i} key={i}>{field}</option>
+                        {table.fields.filter((field, i) => (getNumberIndex(field, i))).map((field,i) => (
+                            <option value={index[i]} key={index[i]}>{field}</option>
                         ))}
                     </select>
                     {!showGraph ?
@@ -50,6 +60,9 @@ const ResponseBody = observer(() => {
                         <button className="closeGraphics" onClick={() => (setShowGraph(!showGraph))}>Показать таблицу</button>}
                 </div>
             </div>
+            {console.log(table)}
+            {console.log(option)}
+            {console.log(table.columns[option])}
             <div className="responsepgContent">
                 {!showGraph ?
                     <table>
