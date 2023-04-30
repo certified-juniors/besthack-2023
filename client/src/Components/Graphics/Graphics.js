@@ -1,5 +1,5 @@
 import React from "react";
-import { LineChart, Line } from 'recharts';
+import { LineChart, Line, XAxis, YAxis} from 'recharts';
 
 const Graphics = (props) => {
     const data = [
@@ -12,8 +12,10 @@ const Graphics = (props) => {
         {name: 'Page G', uv: 600, pv: 2400, amt: 2400},
     ];
 const renderLineChart = (
-  <LineChart width={400} height={400} data={data}>
+  <LineChart width={800} height={320} data={data}>
     <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+    <XAxis dataKey="name" />
+    <YAxis />
   </LineChart>
 );
     return (

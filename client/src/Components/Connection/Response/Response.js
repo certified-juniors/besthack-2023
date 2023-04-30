@@ -16,7 +16,7 @@ const ResponseBody = observer(() => {
     const [details, setDetails] = useState("undefined");
     const [nextTime, setNextTime] = useState("undefined");
     const [showGraph, setShowGraph] = useState(false);
-    const [showGraphRes, setShowGraphRes] = useState(false);
+    const [showGraphRes, setShowGraphRes] = useState(true);
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
