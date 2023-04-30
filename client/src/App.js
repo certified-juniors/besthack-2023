@@ -1,5 +1,5 @@
 import React from "react";
-import { MainPage, NavBar, Broker, Connection, About, Graphics } from "./Components/index";
+import { MainPage, NavBar, Broker, Connection, About } from "./Components/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 

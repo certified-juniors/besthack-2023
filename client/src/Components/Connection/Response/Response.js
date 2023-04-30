@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket";
-import Status from "../../../Store/status";
-import { lastTable, updateTable, onRecieve } from "../../../api/OnRecieve";
+import StatusForEvent from "../../../Store/status";
+import { lastTable, updateTable } from "../../../api/OnRecieve";
 import Graphics from "../../Graphics/Graphics";
 
 
@@ -10,10 +10,10 @@ const ResponseBody = observer(() => {
     const [resTimeEvent, setResTimeEvent] = useState("undefined");
     const [table, setTable] = useState(lastTable);
     const [showGraph, setShowGraph] = useState(false);
-    const [showGraphRes, setShowGraphRes] = useState(true);
     const [showNextTime, setShowNextTime] = useState("");
     const [option, setOption] = useState("choose option");
     const [bytes, setBytes] = useState(0);
+    let index = [];
 
     useEffect(() => {
         Socket.socket.on("sentBrokerTable", (data) => {
@@ -22,24 +22,35 @@ const ResponseBody = observer(() => {
                 const mytable = updateTable(data);
                 setTable(mytable);
                 setResTimeEvent(Date.now() - mytable.timestamp + " ms");
-                setShowNextTime(mytable.nextTime - Date.now() + " ms");
-                Status.setStatus(mytable.statusType);
+                console.log(showNextTime)
+                if (!isNaN(mytable.nextTime)) {
+                    setShowNextTime(mytable.nextTime - Date.now());
+                }
+                StatusForEvent.setStatusForEvent(mytable.statusType);
             }
         });
 
     }, []);
+
+    function getNumberIndex(field, i) {
+        if (table.types[i] === 1 || table.types[i] === 2) {
+            index.push(i);
+            return true;
+        }
+        else return false;
+    }
 
     return (
         <div className="responsePage">
 
             <div className="information-container">
                 <p className="details">Детали последнего обновления: <span>{table.details}</span></p>
-                <p className="next-time">next time: <span>{showNextTime}</span></p>
+                <p className="next-time">next time: <span>{showNextTime} ms</span></p>
                 <div className="graph">
                     <select className="select" onChange={(e) => setOption(e.target.value)}>
                         <option key="default" value="choose option" selected="true" disabled="disabled">Выберите опцию</option>
-                        {table.fields.filter((field, i) => (table.types[i] === 1 || table.types[i] === 2)).map((field, i) => (
-                            <option value={i} key={i}>{field}</option>
+                        {table.fields.filter((field, i) => (getNumberIndex(field, i))).map((field,i) => (
+                            <option value={index[i]} key={index[i]}>{field}</option>
                         ))}
                     </select>
                     {!showGraph ?
@@ -48,6 +59,9 @@ const ResponseBody = observer(() => {
                         <button className="closeGraphics" onClick={() => (setShowGraph(!showGraph))}>Показать таблицу</button>}
                 </div>
             </div>
+            {console.log(table)}
+            {console.log(option)}
+            {console.log(table.columns[option])}
             <div className="responsepgContent">
                 {!showGraph ?
                     <table>
@@ -74,9 +88,7 @@ const ResponseBody = observer(() => {
             </div>
             <div>
                 <div className="resTimeContainer">
-                    <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span> Получено: <span>{bytes}</span> байт </p>
-                </div>
-                <div>
+                    <p className="responseTimeEvent">Задержка события таблицы: <span>{resTimeEvent}</span> Получено: <span>{bytes} байт</span></p>
                     <button className="pause-button" onClick={() => Socket.pause = !Socket.pause}>{Socket.pause ? "Продолжить" : "Пауза"}</button>
                 </div>
             </div>

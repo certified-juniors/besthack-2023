@@ -35,6 +35,7 @@ a {
 .glow-on-hover {
     height: 40px;
     border: none;
+    font-size: 13px;
     outline: none;
     color: #fff;
     background: #111;

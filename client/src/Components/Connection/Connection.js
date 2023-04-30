@@ -5,17 +5,16 @@ import ResponseBody from "./Response/Response";
 import { observer } from "mobx-react-lite";
 import Socket from "../../Store/socket";
 import Name from "../../Store/broker";
-import Status from "../../Store/status";
+import StatusForEvent from "../../Store/status";
 
 const Connection = observer(() => {
     const [allBrokerCommands, setAllBrokerCommands] = useState([]);
     const [status, setStatus] = useState();
-    const [type, setType] = useState("undefined");
     
     useEffect(() => {
         Socket.socket.emit("getBrokerCommands", Name.getName());
 
-        switch (Status.getStatus()) {
+        switch (StatusForEvent.getStatusForEvent()) {
             case 0:
                 setStatus("Не готов")
                 break;
@@ -32,7 +31,7 @@ const Connection = observer(() => {
         Socket.socket.on("brokerCommandsUpdate", (response) => {
             setAllBrokerCommands(response);
         })
-    }, [])
+    }, [StatusForEvent.status])
 
     function handleUpdateStatus() {
         Socket.socket.emit("brokerStatusUpdate", Name.getName());
