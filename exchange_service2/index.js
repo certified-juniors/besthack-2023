@@ -265,21 +265,55 @@ function mainlogic(api, conn, proto) {
         if (command === protos.CommandType.ctStatus) {
             console.log("Status command");
             const response = protos.ExchangeInfoMessage.create({
+                response: protos.Response.create({
+                    command: protos.CommandType.ctStatus,
+                    answerType: protos.AnswerType.atAnswerOK,
+                    status: protos.Status.create({
+                        type: (() => {
+                            let types = [
+                                protos.StatusType.stNotReady,
+                                protos.StatusType.stReady,
+                                protos.StatusType.stPerformed,
+                            ];
+                            return types[getRandomInt(0, 2)];
+                        })(),
+                        details: randomString(getRandomInt(10, 20)),
+                        nextTime: Date.now() + DELAY,
+                        advStatus: generateAdvStatus(),
+                    }),
+                }),
                 header: createHeader(sender, messageNum),
             });
             const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
             conn.write(responseBuffer);
         } else if (command === protos.CommandType.ctExecCommand) {
             console.log("Exec command");
-            const response = protos.ExchangeInfoMessage.create({
-                header: createHeader(sender, messageNum),
-                response: protos.Response.create({
-                    command: protos.CommandType.ctExecCommand,
-                    answerType: protos.AnswerType.atAnswerOK,
-                })
-            });
-            const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
-            conn.write(responseBuffer);
+            // 50% chance to send error
+            if (getRandomInt(0, 1)) {
+                const response = protos.ExchangeInfoMessage.create({
+                    header: createHeader(sender, messageNum),
+                    response: protos.Response.create({
+                        command: protos.CommandType.ctExecCommand,
+                        answerType: protos.AnswerType.atAnswerOK,
+                    })
+                });
+                const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
+                conn.write(responseBuffer);
+            } else {
+                const response = protos.ExchangeInfoMessage.create({
+                    header: createHeader(sender, messageNum),
+                    response: protos.Response.create({
+                        command: protos.CommandType.ctExecCommand,
+                        answerType: protos.AnswerType.atAnswerError,
+                        status: protos.Status.create({
+                            type: protos.StatusType.stError,
+                            details: randomString(getRandomInt(10, 20)),
+                        })
+                    })
+                });
+                const responseBuffer = protos.ExchangeInfoMessage.encode(response).finish();
+                conn.write(responseBuffer);
+            }
         }
     }
 }
