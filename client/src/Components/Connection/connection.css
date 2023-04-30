@@ -260,11 +260,15 @@ table tr:nth-child(even) {
     margin-right: auto;
 }
 
-.createGraphics:hover {
+.createGraphics:active:hover {
     transition: 0.3s;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);
     background-color: #006457;
     transform: scale(1.05);
+}
+
+.select {
+    margin-right: 10px;
 }
 
 .closeGraphics {
