@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite"
 import Socket from "../../../Store/socket";
+import Status from "../../../Store/status";
 import TimeStamp from "../../../Store/timeStamp";
 import ProtoMessageDecoder from "../../../api/ParseProto";
 
 const ConnectionBody = observer(({ commands }) => {
   const [selectedCommand, setSelectedCommand] = useState(null);
   const [commandData, setCommandData] = useState({});
-
+  const [status, setStatus] = useState("");
   const [resTime, setResTime] = useState("");
   const [resTimeCommand, setResTimeCommand] = useState("");
 
@@ -30,10 +31,12 @@ const ConnectionBody = observer(({ commands }) => {
     Socket.socket.on("brokerCommandResponse", (data) => {
       data = ProtoMessageDecoder(data);
       console.log(data);
+      Status.setStatus(data.response.answerType);
+      setStatus(data.response.answerType);
       setResTime(Date.now() - data.header.timestamp + " ms");
       setResTimeCommand(TimeStamp.setResTimeCommand(Date.now()) + " ms");
     });
-  }, [Socket.socket]);
+  }, [Socket.socket, Status.status]);
 
   const handleCommandChange = (event) => {
     const selectedCommandName = event.target.value;
@@ -103,6 +106,7 @@ const ConnectionBody = observer(({ commands }) => {
             <div>
               <p>Задержка ответа: <span>{resTime}</span></p>
               <p>Задержка выполнения команды: <span>{resTimeCommand}</span></p>
+              <p>Статус: <span>{status}</span></p>
             </div>
           </div>
         ) : null

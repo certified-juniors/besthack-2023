@@ -35,7 +35,7 @@ const Connection = observer(() => {
                         <p>Вы подключены к <span>{Name.getName()}</span></p>
                     </div>
                     <div className="connectionStatus">
-                        <button onClick={handleUpdateStatus()}>Обновить</button>
+                        <button onClick={()=>{handleUpdateStatus()}}>Обновить</button>
                         <p>Status: <span>{status}</span></p>
                     </div>
                 </div>

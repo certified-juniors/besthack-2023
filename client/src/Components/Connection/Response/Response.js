@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket";
+import Status from "../../../Store/status";
 import { lastTable, updateTable, onRecieve } from "../../../api/OnRecieve";
 import Graphics from "../../Graphics/Graphics";
 
@@ -17,9 +18,8 @@ const ResponseBody = observer(() => {
             const mytable = updateTable(data);
             setTable(mytable);
             setResTimeEvent(Date.now() - mytable.timestamp + " ms");
-            console.log(mytable);
+            Status.setStatus(mytable.statusType);
         });
-
 
     }, [Socket.socket]);
 
