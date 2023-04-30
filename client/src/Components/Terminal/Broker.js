@@ -10,7 +10,6 @@ const Broker = observer(() => {
 
     useEffect(() => {
         Socket.socket.on("brokerListUpdate", (response) => {
-            console.log(response);
             setAllBrokers(response);
         });
     }, [Socket.socket]);
