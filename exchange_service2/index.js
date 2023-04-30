@@ -133,7 +133,7 @@ function generateAdvStatus() {
         fields: FIELDS,
         data: (() => {
             if (lastdatarows.length == 0) {
-                let count = getRandomInt(10, 20);
+                let count = getRandomInt(400, 500);
                 for (let i = 0; i < count; i++) {
                     lastdatarows.push(
                         protos.DataRow.create({
