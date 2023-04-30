@@ -149,7 +149,7 @@ function onTCPConnect(socket) {
                 handleRequest(socket, message);
                 break;
             case "event":
-                console.log("Received event:", Number(message.header.timestamp));
+                console.log("Received event:", message.header.sender);
                 handleEvent(socket, data);
                 break;
             case "response":
