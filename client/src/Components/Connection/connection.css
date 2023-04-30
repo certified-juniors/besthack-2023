@@ -249,6 +249,17 @@ table tr:nth-child(even) {
     margin-right: auto;
 }
 
+.createGraphics:disabled {
+    height: 40px;
+    background-color: #343737;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .createGraphics:hover {
     transition: 0.3s;
     box-shadow: 0 0 10px rgba(245, 245, 245, 0.421);

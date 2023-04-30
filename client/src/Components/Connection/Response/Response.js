@@ -34,7 +34,7 @@ const ResponseBody = observer(() => {
                 <p className="next-time">next time: <span>{showNextTime}</span></p>
                 <div className="graph">
                     <select className="select" onChange={(e) => setOption(e.target.value)}>
-                        <option key="default" value="choose option">Выберите опцию</option>
+                        <option key="default" value="choose option" selected="true" disabled="disabled">Выберите опцию</option>
                         {table.fields.filter((field, i) => (table.types[i] === 1 || table.types[i] === 2)).map((field, i) => (
                             <option value={i} key={i}>{field}</option>
                         ))}
