@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Socket from "../../../Store/socket";
 import StatusForEvent from "../../../Store/status";
-import { lastTable, updateTable, onRecieve } from "../../../api/OnRecieve";
+import { lastTable, updateTable } from "../../../api/OnRecieve";
 import Graphics from "../../Graphics/Graphics";
 
 
@@ -10,7 +10,6 @@ const ResponseBody = observer(() => {
     const [resTimeEvent, setResTimeEvent] = useState("undefined");
     const [table, setTable] = useState(lastTable);
     const [showGraph, setShowGraph] = useState(false);
-    const [showGraphRes, setShowGraphRes] = useState(true);
     const [showNextTime, setShowNextTime] = useState("");
     const [option, setOption] = useState("choose option");
     const [bytes, setBytes] = useState(0);

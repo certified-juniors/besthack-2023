@@ -10,7 +10,6 @@ import StatusForEvent from "../../Store/status";
 const Connection = observer(() => {
     const [allBrokerCommands, setAllBrokerCommands] = useState([]);
     const [status, setStatus] = useState();
-    const [type, setType] = useState("undefined");
     
     useEffect(() => {
         Socket.socket.emit("getBrokerCommands", Name.getName());
