@@ -229,3 +229,26 @@ table tr:nth-child(even) {
     color: whitesmoke;
 }
 
+.graph {
+    height: 10%;
+}
+
+.select {
+    background-color: darkolivegreen;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+}
+
+.createGraphics {
+    /* height: 3vw; */
+    padding: 10px;
+    border-radius: 10%;
+    background-color: goldenrod;
+    color: white;
+}
+
+
+.closeGraphics {
+    height: 3vw;
+}
